@@ -17,6 +17,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".RatingsActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name=".LoginActivity"
             android:label="@string/app_name" >
         </activity>

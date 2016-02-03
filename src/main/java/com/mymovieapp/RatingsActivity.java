@@ -7,34 +7,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 /**
  * Created by Corey on 2/2/16.
  */
-public class WelcomeActivity extends Activity {
+public class RatingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
-        Button registerButton = (Button) findViewById(R.id.btn_registration);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_ratings);
+        Button logoutButton = (Button) findViewById(R.id.btn_logout);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(WelcomeActivity.this, RegistrationActivity.class);
+                Intent it = new Intent(RatingsActivity.this, LoginActivity.class);
                 startActivity(it);
             }
         });
-        Button loginButton = (Button) findViewById(R.id.btn_login);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(WelcomeActivity.this, LoginActivity.class);
-                startActivity(it);
-            }
-        });
-        EditText username = (EditText) findViewById(R.id.et_username);
     }
 
     @Override

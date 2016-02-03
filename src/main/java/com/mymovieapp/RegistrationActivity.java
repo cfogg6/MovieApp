@@ -1,34 +1,19 @@
 package com.mymovieapp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-
-public class LoginActivity extends Activity {
+/**
+ * Created by Corey on 2/2/16.
+ */
+public class RegistrationActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        Button loginButton = (Button) findViewById(R.id.btn_registration);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(LoginActivity.this, RegistrationActivity.class);
-                startActivity(it);
-            }
-        });
-        TextView title = (TextView) findViewById(R.id.tv_login_title);
-        title.setText("Popcorn Salt");
-        EditText username = (EditText) findViewById(R.id.et_username);
+        setContentView(R.layout.activity_registration);
     }
 
     @Override

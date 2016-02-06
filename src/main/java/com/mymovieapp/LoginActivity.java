@@ -34,7 +34,7 @@ public class LoginActivity extends Activity {
                     Intent it = new Intent(LoginActivity.this, RatingsActivity.class);
                     startActivity(it);
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });

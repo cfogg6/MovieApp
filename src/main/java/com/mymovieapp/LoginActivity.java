@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class LoginActivity extends Activity {
@@ -19,16 +20,32 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button loginButton = (Button) findViewById(R.id.btn_login);
+        Button cancelButton = (Button) findViewById(R.id.btn_cancel);
+
+        TextView title = (TextView) findViewById(R.id.tv_login_title);
+        title.setText("Popcorn Salt");
+        final EditText username = (EditText) findViewById(R.id.et_username);
+        final EditText password = (EditText) findViewById(R.id.et_password);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(LoginActivity.this, RatingsActivity.class);
+                if (username.getText().toString().equals("user") && password.getText().toString().equals("pass")) {
+                    Intent it = new Intent(LoginActivity.this, RatingsActivity.class);
+                    startActivity(it);
+                } else {
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(LoginActivity.this, WelcomeActivity.class);
                 startActivity(it);
             }
         });
-        TextView title = (TextView) findViewById(R.id.tv_login_title);
-        title.setText("Popcorn Salt");
-        EditText username = (EditText) findViewById(R.id.et_username);
     }
 
     @Override

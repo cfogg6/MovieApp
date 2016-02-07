@@ -14,25 +14,45 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et_username"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_below="@+id/et_username"
+        android:id="@+id/et_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dip" />
+        android:layout_marginTop="5dip"
+        android:text="password"
+        android:layout_centerVertical="true"
+        android:autoText="false"
+        android:clickable="false"
+        android:password="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/btn_login"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/et_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dip" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/btn_cancel"
+        android:layout_below="@+id/btn_login"
+        android:layout_alignRight="@+id/btn_login"
+        android:layout_alignEnd="@+id/btn_login"
+        android:layout_alignLeft="@+id/btn_login"
+        android:layout_alignStart="@+id/btn_login" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_username"
+        android:text="username"
+        android:layout_above="@+id/et_password"
+        android:layout_centerHorizontal="true"
+        android:nestedScrollingEnabled="false"
+        android:selectAllOnFocus="false"
+        android:clickable="false" />
 
 </RelativeLayout>

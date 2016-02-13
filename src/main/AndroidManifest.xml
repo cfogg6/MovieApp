@@ -2,11 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mymovieapp" >
 
+    <!--  Internet Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/app_name" >
@@ -29,9 +33,17 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-        android:name=".EditProfileActivity"
+        android:name=".ShowProfileActivity"
         android:label="@string/app_name" >
     </activity>
+
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="H7m3kYzm0ZbCWzvMFOVdtmD121p5f2g75MidLacY" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="N1kYDgql8IHxKCOME9K92d9FFKFzptgYPgWZNNqm" />
+
     </application>
 
 </manifest>

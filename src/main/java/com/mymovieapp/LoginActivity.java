@@ -12,11 +12,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.Parse;
+import com.parse.ParseObject;
+
 
 public class LoginActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Parse.enableLocalDatastore(this);
+
+        Parse.initialize(this);
+
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button loginButton = (Button) findViewById(R.id.btn_login);
@@ -31,7 +42,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (username.getText().toString().equals("user") && password.getText().toString().equals("pass")) {
-                    Intent it = new Intent(LoginActivity.this, RatingsActivity.class);
+                    Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
                     startActivity(it);
                 } else {
                     Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
@@ -46,6 +57,10 @@ public class LoginActivity extends Activity {
                 startActivity(it);
             }
         });
+    }
+
+    public String getUsername() {
+        return ((EditText) findViewById(R.id.et_username)).getText().toString();
     }
 
     @Override

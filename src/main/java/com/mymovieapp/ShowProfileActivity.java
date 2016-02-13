@@ -1,25 +1,27 @@
 package com.mymovieapp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.parse.Parse;
 
 /**
  * Created by Corey on 2/12/16.
  */
-public class EditProfileActivity extends Activity {
+public class ShowProfileActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_show_profile);
+
+        TextView nameView = (TextView) findViewById(R.id.tV_name);
+        TextView emailView = (TextView) findViewById(R.id.tV_email);
+        TextView majorView = (TextView) findViewById(R.id.tV_major);
+        TextView interestsView = (TextView) findViewById(R.id.tV_interests);
     }
 
     @Override

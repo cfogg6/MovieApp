@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 
 public class LoginActivity extends Activity {
@@ -23,8 +24,6 @@ public class LoginActivity extends Activity {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
 
-        final ParseQuery query = new ParseQuery("User");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button loginButton = (Button) findViewById(R.id.btn_login);
@@ -32,26 +31,20 @@ public class LoginActivity extends Activity {
 
         TextView title = (TextView) findViewById(R.id.tv_login_title);
         title.setText("Salty Popcorn");
-        final EditText username = (EditText) findViewById(R.id.et_username);
-        final EditText password = (EditText) findViewById(R.id.et_password);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                query.whereEqualTo("username", username.getText().toString());
+                ParseUser currentUser = new ParseUser();
 
-                try {
-                    if (query.count() > 0) {
-                        query.whereEqualTo("password", password.getText().toString());
-                        if (query.count() == 1) {
-                            Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
-                            startActivity(it);
-                        }
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (ParseException e) {
-                    Toast.makeText(LoginActivity.this, "Try again!", Toast.LENGTH_SHORT).show();
+                currentUser.logInInBackground(((EditText) findViewById(R.id.et_username)).getText().toString(),
+                        ((EditText) findViewById(R.id.et_password)).getText().toString());
+
+                if (ParseUser.getCurrentUser() != null) {
+                    Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
+                    startActivity(it);
+                } else {
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });

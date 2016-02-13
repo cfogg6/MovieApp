@@ -11,6 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
 /**
  * Created by Corey on 2/2/16. Modified by Angelo.
  *
@@ -20,6 +26,9 @@ public class RegistrationActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         Button registerButton = (Button) findViewById(R.id.btn_register);
@@ -36,11 +45,62 @@ public class RegistrationActivity extends Activity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (password.getText().toString().equals(confirm_pass.getText().toString())) {
-                    Intent it = new Intent(RegistrationActivity.this, ShowProfileActivity.class);
-                    startActivity(it);
+                String usernametxt = username.getText().toString();
+                String passwordtxt = password.getText().toString();
+                String confirm_passtxt = confirm_pass.getText().toString();
+                String nametxt = name.getText().toString();
+                String emailtxt = email.getText().toString();
+
+                if (usernametxt.equals("")||passwordtxt.equals("")||emailtxt.equals("")||
+                        confirm_passtxt.equals("")||nametxt.equals("")) {
+                    Toast.makeText(RegistrationActivity.this,
+                            "Please Complete the Registration Form",
+                            Toast.LENGTH_LONG).show();
+                } else if (!passwordtxt.equals(confirm_passtxt)){
+                    Toast.makeText(RegistrationActivity.this,
+                            "Passwords do not Match",
+                            Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(RegistrationActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();
+                    ParseUser user = new ParseUser();
+                    user.setUsername(usernametxt);
+                    user.setPassword(passwordtxt);
+                    user.setEmail(emailtxt);
+                    user.put("name", nametxt);
+
+                    ParseQuery<ParseUser> userquery = ParseUser.getQuery();
+                    userquery.whereEqualTo("username", usernametxt);
+                    ParseQuery<ParseUser> mailquery = ParseUser.getQuery();
+                    mailquery.whereEqualTo("email", emailtxt);
+                    try {
+                        if (userquery.count() > 0) {
+                            Toast.makeText(RegistrationActivity.this,
+                                    "Username is Taken",
+                                    Toast.LENGTH_LONG).show();
+                        } else if (mailquery.count() > 0){
+                            Toast.makeText(RegistrationActivity.this,
+                                    "Email is already in use",
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            user.signUpInBackground(new SignUpCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Successfully Registered",
+                                                Toast.LENGTH_SHORT).show();
+                                        Intent it = new Intent(RegistrationActivity.this, ShowProfileActivity.class);
+                                        startActivity(it);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Registration Error", Toast.LENGTH_SHORT)
+                                                .show();
+                                    }
+                                }
+                            });
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

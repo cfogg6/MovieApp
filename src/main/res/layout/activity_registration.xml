@@ -56,7 +56,7 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/et_name"
         android:layout_below="@+id/et_confirm_pass"
-        android:inputType="text|textNoSuggestions"
+        android:inputType="text|textNoSuggestions|textCapWords"
         android:hint="@string/name"
         android:maxLines="1"/>
 

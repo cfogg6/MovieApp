@@ -37,7 +37,7 @@ public class RegistrationActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (password.getText().toString().equals(confirm_pass.getText().toString())) {
-                    Intent it = new Intent(RegistrationActivity.this, EditProfileActivity.class);
+                    Intent it = new Intent(RegistrationActivity.this, ShowProfileActivity.class);
                     startActivity(it);
                 } else {
                     Toast.makeText(RegistrationActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();

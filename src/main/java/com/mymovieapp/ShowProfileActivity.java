@@ -6,10 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.parse.Parse;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
 public class ShowProfileActivity extends Activity {
 
     @Override

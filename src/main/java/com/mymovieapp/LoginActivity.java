@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.LogInCallback;
 import com.parse.Parse;
+import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -38,14 +40,18 @@ public class LoginActivity extends Activity {
                 ParseUser currentUser = new ParseUser();
 
                 currentUser.logInInBackground(((EditText) findViewById(R.id.et_username)).getText().toString(),
-                        ((EditText) findViewById(R.id.et_password)).getText().toString());
-
-                if (ParseUser.getCurrentUser() != null) {
-                    Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
-                    startActivity(it);
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
-                }
+                        ((EditText) findViewById(R.id.et_password)).getText().toString(),
+                        new LogInCallback() {
+                            @Override
+                            public void done(ParseUser parseUser, ParseException e) {
+                                if (parseUser != null) {
+                                    Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
+                                    startActivity(it);
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
 

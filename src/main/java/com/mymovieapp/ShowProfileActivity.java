@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.parse.Parse;
+import com.parse.ParseQuery;
 
 /**
  * Created by Corey on 2/12/16.
@@ -15,6 +16,8 @@ public class ShowProfileActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final ParseQuery query = new ParseQuery("User");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_profile);
 

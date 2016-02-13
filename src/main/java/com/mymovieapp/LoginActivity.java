@@ -13,7 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 
 public class LoginActivity extends Activity {
@@ -21,12 +25,9 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Parse.enableLocalDatastore(this);
-
         Parse.initialize(this);
 
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
+        final ParseQuery query = new ParseQuery("User");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -34,18 +35,27 @@ public class LoginActivity extends Activity {
         Button cancelButton = (Button) findViewById(R.id.btn_cancel);
 
         TextView title = (TextView) findViewById(R.id.tv_login_title);
-        title.setText("Popcorn Salt");
+        title.setText("Salty Popcorn");
         final EditText username = (EditText) findViewById(R.id.et_username);
         final EditText password = (EditText) findViewById(R.id.et_password);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (username.getText().toString().equals("user") && password.getText().toString().equals("pass")) {
-                    Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
-                    startActivity(it);
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                query.whereEqualTo("username", username.getText().toString());
+
+                try {
+                    if (query.count() > 0) {
+                        query.whereEqualTo("password", password.getText().toString());
+                        if (query.count() == 1) {
+                            Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
+                            startActivity(it);
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (ParseException e) {
+                    Toast.makeText(LoginActivity.this, "Try again!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

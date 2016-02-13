@@ -1,6 +1,25 @@
 <resources>
-    <string name="app_name">My Movie App</string>
+    <string name="app_name">Salty Popcorn</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="email">E-mail</string>
+
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="prof_name">Name: </string>
+    <string name="prof_email">E-mail: </string>
+    <string name="prof_major">Major: </string>
+    <string name="prof_interest">Interests: </string>
+    <string name="prof_placeholder">Profile Placeholder Image</string>
+
+    <string name="welcome">Welcome to Salty Popcorn!</string>
+    <string name="registration">Register Here!</string>
+    <string name="login_activity">Login Here!</string>
+
     <string name="action_settings">Settings</string>
 </resources>

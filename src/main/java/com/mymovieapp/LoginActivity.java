@@ -3,7 +3,6 @@ package com.mymovieapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,10 +13,7 @@ import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import java.util.List;
 
 
 public class LoginActivity extends Activity {

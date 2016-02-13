@@ -1,8 +1,8 @@
 package com.mymovieapp;
 
-/**
- * Created by Honey on 2/12/2016.
- */
+import com.parse.Parse;
+import com.parse.ParseUser;
+
 public class User {
 
     private String username;
@@ -48,39 +48,39 @@ public class User {
      * Returns a user's login username
      * @return user's login username
      */
-    public String getUsername() {
-        return username;
+    public static String getUsername() {
+        return ParseUser.getCurrentUser().getUsername();
     }
 
     /**
      * Returns a user's name
      * @return user's name
      */
-    public String getName() {
-        return name;
+    public static String getName() {
+        return (String) ParseUser.getCurrentUser().get("name");
     }
 
     /**
      * Returns a user's email
      * @return user's email
      */
-    public String getEmail() {
-        return email;
+    public static String getEmail() {
+        return ParseUser.getCurrentUser().getEmail();
     }
 
     /**
      * Returns a user's major
      * @return user's major
      */
-    public String getMajor() {
-        return major;
+    public static String getMajor() {
+        return (String) ParseUser.getCurrentUser().get("major");
     }
 
     /**
      * Returns a user's interests
      * @return user's interests
      */
-    public String getInterests() {
-        return interests;
+    public static String getInterests() {
+        return (String) ParseUser.getCurrentUser().get("interests");
     }
 }

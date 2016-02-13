@@ -8,23 +8,26 @@ import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
-/**
- * Created by Corey on 2/12/16.
- */
 public class ShowProfileActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final ParseQuery query = new ParseQuery("User");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_profile);
 
+        TextView usernameView = (TextView) findViewById(R.id.tV_username);
         TextView nameView = (TextView) findViewById(R.id.tV_name);
         TextView emailView = (TextView) findViewById(R.id.tV_email);
         TextView majorView = (TextView) findViewById(R.id.tV_major);
         TextView interestsView = (TextView) findViewById(R.id.tV_interests);
+
+        usernameView.setText(User.getUsername());
+        nameView.setText(nameView.getText() + User.getName());
+        emailView.setText(emailView.getText() + User.getEmail());
+        majorView.setText(majorView.getText() + User.getMajor());
+        interestsView.setText(interestsView.getText() + User.getInterests());
     }
 
     @Override

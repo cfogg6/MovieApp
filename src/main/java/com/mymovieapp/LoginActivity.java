@@ -31,21 +31,19 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser currentUser = new ParseUser();
-
-                currentUser.logInInBackground(((EditText) findViewById(R.id.et_username)).getText().toString(),
-                        ((EditText) findViewById(R.id.et_password)).getText().toString(),
-                        new LogInCallback() {
-                            @Override
-                            public void done(ParseUser parseUser, ParseException e) {
-                                if (parseUser != null) {
-                                    Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
-                                    startActivity(it);
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                ParseUser.logInInBackground(((EditText) findViewById(R.id.et_username)).getText().toString(),
+                ((EditText) findViewById(R.id.et_password)).getText().toString(),
+                new LogInCallback() {
+                    @Override
+                    public void done(ParseUser parseUser, ParseException e) {
+                        if (parseUser != null) {
+                            Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
+                            startActivity(it);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 

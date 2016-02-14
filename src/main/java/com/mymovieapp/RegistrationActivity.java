@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -26,9 +25,6 @@ public class RegistrationActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         Button registerButton = (Button) findViewById(R.id.btn_register);

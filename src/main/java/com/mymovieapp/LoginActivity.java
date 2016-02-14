@@ -12,10 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 
@@ -23,9 +20,6 @@ public class LoginActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button loginButton = (Button) findViewById(R.id.btn_login);

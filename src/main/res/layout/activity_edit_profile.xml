@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        >
+    </android.support.v7.widget.Toolbar>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:background="#00ffffff"
+        android:visibility="visible"
+        android:src="@mipmap/bucket"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:minHeight="180dp"
+        android:minWidth="140dp"
+        android:maxHeight="180dp"
+        android:maxWidth="140dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_editDone"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_alignBottom="@+id/imageView"
+        android:text="Done Editing"
+        android:layout_margin="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/prof_name"
+        android:id="@+id/tV_name"
+        android:layout_marginBottom="23dp"
+        android:layout_above="@+id/tV_email"
+        android:layout_alignLeft="@+id/tV_email"
+        android:layout_alignStart="@+id/tV_email" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/et_name"
+        android:layout_marginBottom="23dp"
+        android:layout_alignBaseline="@+id/tV_name"
+        android:layout_toRightOf="@+id/tV_name"
+        android:layout_toEndOf="@+id/tV_name"
+        android:minWidth="270dp"
+        android:inputType="text|textCapWords" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/prof_email"
+        android:id="@+id/tV_email"
+        android:layout_above="@+id/tV_major"
+        android:layout_alignLeft="@+id/tV_major"
+        android:layout_alignStart="@+id/tV_major"
+        android:layout_marginBottom="32dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/et_email"
+        android:layout_marginBottom="23dp"
+        android:layout_alignBaseline="@+id/tV_email"
+        android:layout_toRightOf="@+id/tV_email"
+        android:layout_toEndOf="@+id/tV_email"
+        android:minWidth="270dp"
+        android:inputType="textEmailAddress"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/prof_major"
+        android:id="@+id/tV_major"
+        android:layout_marginBottom="23dp"
+        android:layout_above="@+id/tV_interests"
+        android:layout_alignLeft="@+id/tV_interests"
+        android:layout_alignStart="@+id/tV_interests" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/et_major"
+        android:layout_marginBottom="23dp"
+        android:layout_alignBaseline="@+id/tV_major"
+        android:layout_toRightOf="@+id/tV_major"
+        android:layout_toEndOf="@+id/tV_major"
+        android:minWidth="270dp"
+        android:inputType="text|textCapWords"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/prof_interest"
+        android:id="@+id/tV_interests"
+        android:maxHeight="200dp"
+        android:minHeight="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/et_interests"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/et_interests"
+        android:layout_marginBottom="23dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:inputType="text|textCapSentences"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/tV_username"
+        android:layout_above="@+id/tV_name"
+        android:layout_alignLeft="@+id/tV_name"
+        android:layout_alignStart="@+id/tV_name"
+        android:layout_marginBottom="33dp" />
+
+</RelativeLayout>

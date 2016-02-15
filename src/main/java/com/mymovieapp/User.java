@@ -1,9 +1,8 @@
 package com.mymovieapp;
 
-import com.parse.Parse;
 import com.parse.ParseUser;
 
-public class User {
+public class User extends ParseUser {
 
     private String username;
     private String name;
@@ -48,9 +47,9 @@ public class User {
      * Returns a user's login username
      * @return user's login username
      */
-    public static String getUsername() {
+    /*public static String getUsername() {
         return ParseUser.getCurrentUser().getUsername();
-    }
+    }*/
 
     /**
      * Returns a user's name
@@ -64,9 +63,9 @@ public class User {
      * Returns a user's email
      * @return user's email
      */
-    public static String getEmail() {
+    /*public static String getEmail() {
         return ParseUser.getCurrentUser().getEmail();
-    }
+    }*/
 
     /**
      * Returns a user's major

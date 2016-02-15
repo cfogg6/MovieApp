@@ -1,13 +1,18 @@
 package com.mymovieapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.ParseUser;
 
 /**
  * Edit Profile Activity to edit the fields and update database
@@ -22,19 +27,35 @@ public class EditProfileActivity extends AppCompatActivity{
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        final ParseUser user = ParseUser.getCurrentUser();
         TextView usernameView = (TextView) findViewById(R.id.tV_username);
-        usernameView.setText(User.getUsername());
+        usernameView.setText(user.getUsername());
 
-        EditText editName = (EditText) findViewById(R.id.et_name);
-        EditText editEmail = (EditText) findViewById(R.id.et_email);
-        EditText editMajor = (EditText) findViewById(R.id.et_major);
-        EditText editInterests = (EditText) findViewById(R.id.et_interests);
+        final EditText editName = (EditText) findViewById(R.id.et_name);
+        final EditText editEmail = (EditText) findViewById(R.id.et_email);
+        final EditText editMajor = (EditText) findViewById(R.id.et_major);
+        final EditText editInterests = (EditText) findViewById(R.id.et_interests);
+        Button editDoneButton = (Button) findViewById(R.id.btn_editDone);
 
-        editName.setText(User.getName());
-        editEmail.setText(User.getEmail());
-        editMajor.setText(User.getMajor());
-        editInterests.setText(User.getInterests());
+        editName.setText((String) user.get("name"));
+        editEmail.setText(user.getEmail());
+        editMajor.setText((String) user.get("major"));
+        editInterests.setText((String) user.get("interests"));
 
+        editDoneButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                user.put("name", editName.getText().toString());
+                user.put("major", editMajor.getText().toString());
+                user.put("interests", editInterests.getText().toString());
+                user.setEmail(editEmail.getText().toString());
+
+                user.saveInBackground();
+                Intent it = new Intent(EditProfileActivity.this, ShowProfileActivity.class);
+                startActivity(it);
+            }
+        });
     }
 
     @Override

@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 public class ShowProfileActivity extends AppCompatActivity {
 
     @Override
@@ -18,17 +20,18 @@ public class ShowProfileActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        ParseUser user = ParseUser.getCurrentUser();
         TextView usernameView = (TextView) findViewById(R.id.tV_username);
         TextView nameView = (TextView) findViewById(R.id.tV_name);
         TextView emailView = (TextView) findViewById(R.id.tV_email);
         TextView majorView = (TextView) findViewById(R.id.tV_major);
         TextView interestsView = (TextView) findViewById(R.id.tV_interests);
 
-        usernameView.setText(User.getUsername());
-        nameView.setText(nameView.getText() + User.getName());
-        emailView.setText(emailView.getText() + User.getEmail());
-        majorView.setText(majorView.getText() + User.getMajor());
-        interestsView.setText(interestsView.getText() + User.getInterests());
+        usernameView.setText(user.getUsername());
+        nameView.setText(nameView.getText() + (String)user.get("name"));
+        emailView.setText(emailView.getText() + user.getEmail());
+        majorView.setText(majorView.getText() + (String)user.get("major"));
+        interestsView.setText(interestsView.getText() + (String)user.get("interests"));
     }
 
     @Override
@@ -50,7 +53,9 @@ public class ShowProfileActivity extends AppCompatActivity {
             Toast.makeText(ShowProfileActivity.this, "No Settings", Toast.LENGTH_SHORT).show();
         }
         if (id == R.id.action_logout) {
-            Toast.makeText(ShowProfileActivity.this, "Logout Failed", Toast.LENGTH_SHORT).show();
+            ParseUser.logOut();
+            Intent it = new Intent(ShowProfileActivity.this, WelcomeActivity.class);
+            startActivity(it);
         }
         if (id == R.id.action_editProfile) {
             Intent it = new Intent(ShowProfileActivity.this, EditProfileActivity.class);

@@ -30,8 +30,16 @@ public class ShowProfileActivity extends AppCompatActivity {
         usernameView.setText(user.getUsername());
         nameView.setText(nameView.getText() + (String)user.get("name"));
         emailView.setText(emailView.getText() + user.getEmail());
-        majorView.setText(majorView.getText() + (String)user.get("major"));
-        interestsView.setText(interestsView.getText() + (String)user.get("interests"));
+        if (user.get("major") != null) {
+            majorView.setText(majorView.getText() + (String)user.get("major"));
+        } else {
+            majorView.setText(majorView.getText() + "No Major");
+        }
+        if (user.get("interests") != null) {
+            interestsView.setText(interestsView.getText() + (String)user.get("interests"));
+        } else {
+            interestsView.setText(interestsView.getText() + "No Interests");
+        }
     }
 
     @Override

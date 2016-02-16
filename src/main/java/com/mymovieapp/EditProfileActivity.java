@@ -31,12 +31,14 @@ public class EditProfileActivity extends AppCompatActivity{
         TextView usernameView = (TextView) findViewById(R.id.tV_username);
         usernameView.setText(user.getUsername());
 
+        //Display field titltes
         final EditText editName = (EditText) findViewById(R.id.et_name);
         final EditText editEmail = (EditText) findViewById(R.id.et_email);
         final EditText editMajor = (EditText) findViewById(R.id.et_major);
         final EditText editInterests = (EditText) findViewById(R.id.et_interests);
         Button editDoneButton = (Button) findViewById(R.id.btn_editDone);
 
+        //Populate field values
         editName.setText((String) user.get("name"));
         editEmail.setText(user.getEmail());
         editMajor.setText((String) user.get("major"));

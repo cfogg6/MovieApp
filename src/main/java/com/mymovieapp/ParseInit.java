@@ -14,6 +14,7 @@ public class ParseInit extends Application{
     public void onCreate() {
         super.onCreate();
 
+        //Connect to the Parse backend
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
 

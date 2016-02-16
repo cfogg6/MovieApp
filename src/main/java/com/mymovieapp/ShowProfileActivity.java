@@ -20,6 +20,7 @@ public class ShowProfileActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        //Display field titles
         ParseUser user = ParseUser.getCurrentUser();
         TextView usernameView = (TextView) findViewById(R.id.tV_username);
         TextView nameView = (TextView) findViewById(R.id.tV_name);
@@ -27,6 +28,7 @@ public class ShowProfileActivity extends AppCompatActivity {
         TextView majorView = (TextView) findViewById(R.id.tV_major);
         TextView interestsView = (TextView) findViewById(R.id.tV_interests);
 
+        //Populate fields
         usernameView.setText(user.getUsername());
         nameView.setText(nameView.getText() + (String)user.get("name"));
         emailView.setText(emailView.getText() + user.getEmail());

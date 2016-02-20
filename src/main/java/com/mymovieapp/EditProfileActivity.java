@@ -18,7 +18,7 @@ import com.parse.ParseUser;
  * Edit Profile Activity to edit the fields and update database
  *
  */
-public class EditProfileActivity extends AppCompatActivity{
+public class EditProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

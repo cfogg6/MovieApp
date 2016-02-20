@@ -16,13 +16,13 @@ import org.json.JSONObject;
 /**
  * Created by Corey on 2/20/16.
  */
-public class SearchListAdapter extends ArrayAdapter {
+public class MovieListAdapter extends ArrayAdapter {
     int count = 0;
     LayoutInflater inflater;
     Context context;
     JSONArray movies;
 
-    public SearchListAdapter(Activity parentActivity, int textViewResourceId) {
+    public MovieListAdapter(Activity parentActivity, int textViewResourceId) {
         super(parentActivity, textViewResourceId);
         context = parentActivity;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

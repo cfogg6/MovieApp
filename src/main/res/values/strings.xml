@@ -24,4 +24,8 @@
     <string name="action_settings">Settings</string>
     <string name="action_logout">Log Out</string>
     <string name="action_editProfile">Edit</string>
+
+    <string name="action_search">Search</string>
+    <string name="action_inTheaters">New Releases</string>
+    <string name="action_newDVDs">New DVDs</string>
 </resources>

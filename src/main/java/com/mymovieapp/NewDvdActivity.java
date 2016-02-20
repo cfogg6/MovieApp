@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -27,53 +26,45 @@ import org.json.JSONObject;
 /**
  * Created by Corey on 2/20/16.
  */
-public class SearchActivity extends Activity {
-    String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
+public class NewDvdActivity extends Activity {
+    String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=yedukp76ffytfuy24zsqk7f5";
     final Activity activity = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_new_dvds);
         // Instantiate the RequestQueue.
         final RequestQueue queue = Volley.newRequestQueue(this);
-        Button searchButton = (Button) findViewById(R.id.btn_search);
-        ListView searchResultListView = (ListView) findViewById(R.id.lv_search_results);
-        final MovieListAdapter searchListAdapter = new MovieListAdapter(activity, 0);
-        searchResultListView.setAdapter(searchListAdapter);
-        final EditText searchEditText = (EditText) findViewById(R.id.et_search);
-        LinearLayout searchLinearLayout = (LinearLayout) findViewById(R.id.rl_search);
-        // Add the request to the RequestQueue.
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "&q="
-                        + searchEditText.getText().toString().replace(" ", "+") + "&page_limit=20",
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                // Display the first 500 characters of the response string.
-                                Log.d("result", "Response is: " + response.substring(0, 500));
-                                try {
-                                    searchListAdapter.updateJSON(new JSONObject(response));
-                                    searchListAdapter.notifyDataSetChanged();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
+        ListView newDVDListView = (ListView) findViewById(R.id.lv_search_results);
+        final MovieListAdapter movieListAdapter = new MovieListAdapter(activity, 0);
+        newDVDListView.setAdapter(movieListAdapter);
+        LinearLayout newDVDLinearLayout = (LinearLayout) findViewById(R.id.rl_search);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "&page_limit=20",
+                new Response.Listener<String>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("oh no", "That didn't work!");
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Log.d("result", "Response is: " + response.substring(0, 500));
+                        try {
+                            movieListAdapter.updateJSON(new JSONObject(response));
+                            movieListAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                });
-                queue.add(stringRequest);
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("oh no", "That didn't work!");
             }
         });
+        queue.add(stringRequest);
 
         /**
          * Makes keyboard disappear when you click away from an EditText field
          */
-        searchLinearLayout.setOnTouchListener(new View.OnTouchListener() {
+        newDVDLinearLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (!(v instanceof EditText)) {

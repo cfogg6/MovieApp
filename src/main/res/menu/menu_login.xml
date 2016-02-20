@@ -7,4 +7,10 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_editProfile" android:title="@string/action_editProfile"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_search" android:title="@string/action_search"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_inTheaters" android:title="@string/action_inTheaters"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_newDVDs" android:title="@string/action_newDVDs"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

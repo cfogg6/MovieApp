@@ -5,21 +5,16 @@
     android:gravity="center_horizontal"
     android:id="@+id/rl_search">
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/et_search"
-        android:singleLine="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:id="@+id/btn_search" />
+        android:text="New DVDs"
+        android:id="@+id/tv_new_releases" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="0dip"
         android:id="@+id/lv_search_results"
         android:layout_weight="1" />
+
 </LinearLayout>

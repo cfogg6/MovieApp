@@ -71,6 +71,18 @@ public class ShowProfileActivity extends AppCompatActivity {
             Intent it = new Intent(ShowProfileActivity.this, EditProfileActivity.class);
             startActivity(it);
         }
+        if (id == R.id.action_search) {
+            Intent it = new Intent(ShowProfileActivity.this, SearchActivity.class);
+            startActivity(it);
+        }
+        if (id == R.id.action_inTheaters) {
+            Intent it = new Intent(ShowProfileActivity.this, InTheatersActivity.class);
+            startActivity(it);
+        }
+        if (id == R.id.action_newDVDs) {
+            Intent it = new Intent(ShowProfileActivity.this, NewDvdActivity.class);
+            startActivity(it);
+        }
 
         return super.onOptionsItemSelected(item);
     }

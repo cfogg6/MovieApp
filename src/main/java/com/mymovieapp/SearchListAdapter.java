@@ -19,6 +19,7 @@ public class SearchListAdapter extends ArrayAdapter {
             JSONArray movies = json.getJSONArray("movies");
             count = json.getInt("total");
             Log.d("count", String.valueOf(count));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

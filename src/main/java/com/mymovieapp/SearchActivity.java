@@ -1,13 +1,19 @@
 package com.mymovieapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +24,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.LinkedHashMap;
 
 /**
  * Created by Corey on 2/20/16.
@@ -32,20 +40,25 @@ public class SearchActivity extends Activity {
         // Instantiate the RequestQueue.
         final RequestQueue queue = Volley.newRequestQueue(this);
         Button searchButton = (Button) findViewById(R.id.btn_search);
+        ListView searchResultListView = (ListView) findViewById(R.id.lv_search_results);
+        final SearchListAdapter searchListAdapter = new SearchListAdapter(activity, 0);
+        searchResultListView.setAdapter(searchListAdapter);
         final EditText searchEditText = (EditText) findViewById(R.id.et_search);
+        LinearLayout searchLinearLayout = (LinearLayout) findViewById(R.id.rl_search);
         // Add the request to the RequestQueue.
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "&q="
-                        + searchEditText.getText().toString().replace(" ", "+") + "&page_limit=10",
+                        + searchEditText.getText().toString().replace(" ", "+") + "&page_limit=20",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 // Display the first 500 characters of the response string.
                                 Log.d("result", "Response is: " + response.substring(0, 500));
                                 try {
-                                    new SearchListAdapter(new JSONObject(response), activity, 0);
+                                    searchListAdapter.updateJSON(new JSONObject(response));
+                                    searchListAdapter.notifyDataSetChanged();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -57,6 +70,20 @@ public class SearchActivity extends Activity {
                     }
                 });
                 queue.add(stringRequest);
+            }
+        });
+
+        /**
+         * Makes keyboard disappear when you click away from an EditText field
+         */
+        searchLinearLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (!(v instanceof EditText)) {
+                    InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return true;
             }
         });
     }

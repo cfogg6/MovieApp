@@ -8,7 +8,7 @@ import com.parse.ParseUser;
 /**
  * Initializes the Parse Database Connection for the Application.
  */
-public class ParseInit extends Application{
+public class ParseInit extends Application {
 
     @Override
     public void onCreate() {

@@ -3,7 +3,6 @@ package com.mymovieapp;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -52,7 +51,6 @@ public class SearchActivity extends Activity {
                             @Override
                             public void onResponse(String response) {
                                 // Display the first 500 characters of the response string.
-                                Log.d("result", "Response is: " + response.substring(0, 500));
                                 try {
                                     searchListAdapter.updateJSON(new JSONObject(response));
                                     searchListAdapter.notifyDataSetChanged();
@@ -63,7 +61,6 @@ public class SearchActivity extends Activity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("oh no", "That didn't work!");
                     }
                 });
                 queue.add(stringRequest);

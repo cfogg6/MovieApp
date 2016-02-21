@@ -44,7 +44,6 @@ public class InTheatersActivity extends Activity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.d("result", "Response is: " + response.substring(0, 500));
                         try {
                             movieListAdapter.updateJSON(new JSONObject(response));
                             movieListAdapter.notifyDataSetChanged();
@@ -55,7 +54,6 @@ public class InTheatersActivity extends Activity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("oh no", "That didn't work!");
             }
         });
         queue.add(stringRequest);

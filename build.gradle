@@ -34,4 +34,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile files('libs/Parse-1.13.0.jar')
     compile files('libs/bols-tasks-1.4.0.jar')
+    compile files('libs/volley.jar')
 }

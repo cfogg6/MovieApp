@@ -25,7 +25,9 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        if (myToolbar != null) {
+            setSupportActionBar(myToolbar);
+        }
 
         final ParseUser user = ParseUser.getCurrentUser();
         TextView usernameView = (TextView) findViewById(R.id.tV_username);

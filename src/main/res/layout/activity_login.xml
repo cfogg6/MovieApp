@@ -19,22 +19,22 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/et_username"
+        android:layout_above="@+id/et_password"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/username"
+        android:inputType="text|textNoSuggestions"
+        android:maxLines="1" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/et_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dip"
         android:layout_centerVertical="true"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:maxLines="1" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et_username"
-        android:layout_above="@+id/et_password"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/username"
-        android:inputType="text|textNoSuggestions"
         android:maxLines="1" />
 
     <Button

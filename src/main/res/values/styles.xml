@@ -11,14 +11,25 @@
         <item name="windowActionBar">false</item>
         <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
         <!-- Default action bar background -->
-        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimary">#61950d</item>
         <!-- Status bar Color -->
-        <item name="colorPrimaryDark">#1976D2</item>
+        <item name="colorPrimaryDark">#2f154e</item>
         <!-- colorAccent is used as the default value for colorControlActivated
              which is used to tint widgets -->
-        <item name="colorAccent">#FF4081</item>
+        <item name="colorAccent">#48675f</item>
         <!-- You can also set colorControlNormal, colorControlActivated
             colorControlHighlight and colorSwitchThumbNormal. -->
+    </style>
+
+    <style name="ToolBarTheme" parent="AppTheme.base">
+        <!-- android:textColorPrimary is the  color of the title text
+             in the Toolbar, in the Theme.AppCompat theme:  -->
+        <item name="android:textColorPrimary">#320101</item>
+
+        <!-- android:textColorSecondary is the color of the menu
+             overflow icon (three vertical dots) -->
+        <item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>
+
     </style>
 
 </resources>

@@ -20,6 +20,7 @@ import com.parse.ParseUser;
  */
 public class EditProfileActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,9 @@ public class EditProfileActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (myToolbar != null) {
             setSupportActionBar(myToolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            myToolbar.setNavigationIcon(R.drawable.ic_dehaze_24dp);
         }
 
         final ParseUser user = ParseUser.getCurrentUser();

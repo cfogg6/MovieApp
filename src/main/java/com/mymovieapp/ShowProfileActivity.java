@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ public class ShowProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_profile_drawer);
+
+        ParseUser user = ParseUser.getCurrentUser();
 
         //Initialize Toolbar as ActionBat
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -37,6 +40,11 @@ public class ShowProfileActivity extends AppCompatActivity {
 
         //Initialize Navigation Drawer
         NavigationView navView = (NavigationView) findViewById(R.id.navigation_view);
+        View header = navView.getHeaderView(0);
+        TextView usernameDraw = (TextView) header.findViewById(R.id.tV_username_header);
+        TextView emailDraw = (TextView) header.findViewById(R.id.tV_email_header);
+        usernameDraw.setText(user.getUsername());
+        emailDraw.setText(user.getEmail());
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navView.setNavigationItemSelectedListener(
@@ -82,7 +90,6 @@ public class ShowProfileActivity extends AppCompatActivity {
 
 
         //Display field titles
-        ParseUser user = ParseUser.getCurrentUser();
         TextView usernameView = (TextView) findViewById(R.id.tV_username);
         TextView nameView = (TextView) findViewById(R.id.tV_name);
         TextView emailView = (TextView) findViewById(R.id.tV_email);
@@ -91,7 +98,7 @@ public class ShowProfileActivity extends AppCompatActivity {
 
         //Populate fields
         usernameView.setText(user.getUsername());
-        nameView.setText(nameView.getText() + (String)user.get("name"));
+        nameView.setText(nameView.getText() + (String) user.get("name"));
         emailView.setText(emailView.getText() + user.getEmail());
         if (user.get("major") != null) {
             majorView.setText(majorView.getText() + (String)user.get("major"));

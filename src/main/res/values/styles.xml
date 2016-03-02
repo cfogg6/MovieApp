@@ -24,7 +24,7 @@
     <style name="ToolBarTheme" parent="AppTheme.base">
         <!-- android:textColorPrimary is the  color of the title text
              in the Toolbar, in the Theme.AppCompat theme:  -->
-        <item name="android:textColorPrimary">#320101</item>
+        <item name="android:textColorPrimary">#ffffff</item>
 
         <!-- android:textColorSecondary is the color of the menu
              overflow icon (three vertical dots) -->

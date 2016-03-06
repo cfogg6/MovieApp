@@ -4,22 +4,43 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/profile"
             android:checked="false"
-            android:icon="@drawable/ic_dehaze_24dp"
+            android:icon="@drawable/profile_person"
             android:title="Profile"/>
-        <item android:id="@+id/search"
-            android:checked="false"
-            android:icon="@drawable/ic_dehaze_24dp"
-            android:title="Search"/>
 
-        <item android:id="@+id/new_movies"
+        <item android:id="@+id/home"
             android:checked="false"
-            android:icon="@drawable/ic_dehaze_24dp"
-            android:title="New Movies"/>
+            android:icon="@drawable/ic_home_24dp"
+            android:title="Home"/>
 
-        <item android:id="@+id/new_dvds"
+        <!--<item android:id="@+id/search"-->
+            <!--android:checked="false"-->
+            <!--android:icon="@drawable/ic_dehaze_24dp"-->
+            <!--android:title="Search"/>-->
+
+        <!--<item android:id="@+id/new_movies"-->
+            <!--android:checked="false"-->
+            <!--android:icon="@drawable/ic_dehaze_24dp"-->
+            <!--android:title="New Movies"/>-->
+
+        <!--<item android:id="@+id/new_dvds"-->
+            <!--android:checked="false"-->
+            <!--android:icon="@drawable/ic_dehaze_24dp"-->
+            <!--android:title="New DVDs"/>-->
+
+        <item android:id="@+id/browse_new"
             android:checked="false"
-            android:icon="@drawable/ic_dehaze_24dp"
-            android:title="New DVDs"/>
+            android:icon="@drawable/ic_movies_24dp"
+            android:title="Browse New Movies"/>
+
+        <item android:id="@+id/recomindations"
+            android:checked="false"
+            android:icon="@drawable/ic_recomindation_24dp"
+            android:title="Recomindations"/>
+
+        <item android:id="@+id/signout"
+            android:checked="false"
+            android:icon="@drawable/ic_logout_24dp"
+            android:title="Sign out"/>
 
     </group>
 </menu>

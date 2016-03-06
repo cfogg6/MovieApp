@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="slate">#3d4b5b</color>
+    <color name="colorPrimaryDark">#455b66</color>
+    <color name="accent_material_light">#ffd940</color>
+    <color name="grey">#625d5d</color>
+    <color name="primary_material_light_1">#8c2828</color>
+    <color name="primary_material_light">#607d8b</color>
+    <color name="primary_text_default_material_light">#feffffff</color>
+    <color name="slateblue">#607d8b</color>
+    <color name="darkerslate">#3b4f58</color>
+    <color name="yellow">#ffd631</color>
+</resources>

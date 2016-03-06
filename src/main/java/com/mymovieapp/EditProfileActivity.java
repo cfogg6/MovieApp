@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -25,6 +24,8 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        //Initialize Toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (myToolbar != null) {
             setSupportActionBar(myToolbar);
@@ -37,7 +38,7 @@ public class EditProfileActivity extends AppCompatActivity {
         TextView usernameView = (TextView) findViewById(R.id.tV_username);
         usernameView.setText(user.getUsername());
 
-        //Display field titltes
+        //Display field titles
         final EditText editName = (EditText) findViewById(R.id.et_name);
         final EditText editEmail = (EditText) findViewById(R.id.et_email);
         final EditText editMajor = (EditText) findViewById(R.id.et_major);
@@ -80,16 +81,6 @@ public class EditProfileActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Toast.makeText(EditProfileActivity.this, "No Settings", Toast.LENGTH_SHORT).show();
-        }
-        if (id == R.id.action_logout) {
-            Toast.makeText(EditProfileActivity.this, "Logout Failed", Toast.LENGTH_SHORT).show();
-        }
-        if (id == R.id.action_editProfile) {
-            Toast.makeText(EditProfileActivity.this, "In Edit", Toast.LENGTH_SHORT).show();
-        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -26,7 +26,7 @@ public class ShowProfileActivity extends AppCompatActivity {
 
         ParseUser user = ParseUser.getCurrentUser();
 
-        //Initialize Toolbar as ActionBat
+        //Initialize Toolbar as ActionBar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (myToolbar != null) {
             setSupportActionBar(myToolbar);
@@ -69,20 +69,20 @@ public class ShowProfileActivity extends AppCompatActivity {
                             case R.id.profile:
                                 return true;
 
-                            case R.id.search:
-                                it = new Intent(ShowProfileActivity.this, SearchActivity.class);
-                                startActivity(it);
-                                return true;
+//                            case R.id.search:
+//                                it = new Intent(ShowProfileActivity.this, SearchActivity.class);
+//                                startActivity(it);
+//                                return true;
 
-                            case R.id.new_movies:
-                                it = new Intent(ShowProfileActivity.this, InTheatersActivity.class);
-                                startActivity(it);
-                                return true;
-
-                            case R.id.new_dvds:
-                                it = new Intent(ShowProfileActivity.this, NewDvdActivity.class);
-                                startActivity(it);
-                                return true;
+//                            case R.id.new_movies:
+//                                it = new Intent(ShowProfileActivity.this, InTheatersActivity.class);
+//                                startActivity(it);
+//                                return true;
+//
+//                            case R.id.new_dvds:
+//                                it = new Intent(ShowProfileActivity.this, NewDvdActivity.class);
+//                                startActivity(it);
+//                                return true;
                         }
                         return true;
                     }
@@ -126,31 +126,6 @@ public class ShowProfileActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Toast.makeText(ShowProfileActivity.this, "No Settings", Toast.LENGTH_SHORT).show();
-        }
-        if (id == R.id.action_logout) {
-            ParseUser.logOut();
-            Intent it = new Intent(ShowProfileActivity.this, WelcomeActivity.class);
-            startActivity(it);
-        }
-        if (id == R.id.action_editProfile) {
-            Intent it = new Intent(ShowProfileActivity.this, EditProfileActivity.class);
-            startActivity(it);
-        }
-        if (id == R.id.action_search) {
-            Intent it = new Intent(ShowProfileActivity.this, SearchActivity.class);
-            startActivity(it);
-        }
-        if (id == R.id.action_inTheaters) {
-            Intent it = new Intent(ShowProfileActivity.this, InTheatersActivity.class);
-            startActivity(it);
-        }
-        if (id == R.id.action_newDVDs) {
-            Intent it = new Intent(ShowProfileActivity.this, NewDvdActivity.class);
-            startActivity(it);
-        }
         if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
             return true;

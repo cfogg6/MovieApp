@@ -33,6 +33,7 @@ public class SearchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
         // Instantiate the RequestQueue.
         final RequestQueue queue = Volley.newRequestQueue(this);
         Button searchButton = (Button) findViewById(R.id.btn_search);
@@ -96,10 +97,6 @@ public class SearchActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

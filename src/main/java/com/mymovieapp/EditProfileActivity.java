@@ -31,7 +31,7 @@ public class EditProfileActivity extends AppCompatActivity {
         TextView usernameView = (TextView) findViewById(R.id.tV_username);
         usernameView.setText(user.getUsername());
 
-        //Display field titltes
+        //Display field titles
         final EditText editName = (EditText) findViewById(R.id.et_name);
         final EditText editEmail = (EditText) findViewById(R.id.et_email);
         final EditText editMajor = (EditText) findViewById(R.id.et_major);

@@ -20,7 +20,7 @@ public class RatingsActivity extends Activity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(RatingsActivity.this, WelcomeActivity.class);
+                Intent it = new Intent(RatingsActivity.this, LoginActivity.class);
                 startActivity(it);
             }
         });

@@ -109,7 +109,7 @@ public class RegistrationActivity extends Activity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(RegistrationActivity.this, WelcomeActivity.class);
+                Intent it = new Intent(RegistrationActivity.this, LoginActivity.class);
                 startActivity(it);
             }
         });

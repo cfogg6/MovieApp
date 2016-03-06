@@ -2,6 +2,7 @@ package com.mymovieapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,6 @@ public class MovieListAdapter extends ArrayAdapter {
         try {
             movies = json.getJSONArray("movies");
             count = Math.min(movies.length(), 20);
-            Log.d("count", String.valueOf(count));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -46,6 +46,23 @@ public class MovieListAdapter extends ArrayAdapter {
         final ViewHolder viewHolder;
         if(convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_search, parent, false);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent it = new Intent(context, MovieInfoActivity.class);
+                    try {
+                        it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", movies.getJSONObject(position).toString());
+                        try {
+                            Log.d("input title: ", movies.getJSONObject(position).getString("title"));
+                        } catch (JSONException e) {
+                            Log.d("error", "no JSON");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    context.startActivity(it);
+                }
+            });
             viewHolder = new ViewHolder();
             viewHolder.movieTextView = (TextView) convertView.findViewById(R.id.tv_movie_title);
             convertView.setTag(viewHolder);

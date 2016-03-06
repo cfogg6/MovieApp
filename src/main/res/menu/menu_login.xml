@@ -1,16 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:appcompat="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".LoginActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_logout" android:title="@string/action_logout"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_editProfile" android:title="@string/action_editProfile"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_search" android:title="@string/action_search"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_inTheaters" android:title="@string/action_inTheaters"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_newDVDs" android:title="@string/action_newDVDs"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/menu_search" android:title="menu_search"
+        android:icon="@drawable/ic_search_24dp"
+        appcompat:actionViewClass="android.support.v7.widget.SearchView"
+        appcompat:showAsAction="always"/>
 </menu>

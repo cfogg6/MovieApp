@@ -27,7 +27,6 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button loginButton = (Button) findViewById(R.id.btn_login);
-        Button cancelButton = (Button) findViewById(R.id.btn_cancel);
         RelativeLayout loginRelativeLayout = (RelativeLayout) findViewById(R.id.rl_login);
 
         TextView title = (TextView) findViewById(R.id.tv_login_title);
@@ -52,14 +51,6 @@ public class LoginActivity extends Activity {
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(LoginActivity.this, WelcomeActivity.class);
-                startActivity(it);
-            }
-        });
-
         /**
          * Makes keyboard disappear when you click away from an EditText field
          */
@@ -70,6 +61,14 @@ public class LoginActivity extends Activity {
                     InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);                }
                 return true;
+            }
+        });
+        Button registerButton = (Button) findViewById(R.id.btn_registration);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(it);
             }
         });
     }

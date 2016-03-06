@@ -47,15 +47,12 @@
         android:layout_marginTop="5dip" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cancel"
-        android:id="@+id/btn_cancel"
-        android:layout_below="@+id/btn_login"
-        android:layout_alignRight="@+id/btn_login"
-        android:layout_alignEnd="@+id/btn_login"
-        android:layout_alignLeft="@+id/btn_login"
-        android:layout_alignStart="@+id/btn_login" />
+        android:text="Registration"
+        android:id="@+id/btn_registration"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btn_login" />
 
 </RelativeLayout>

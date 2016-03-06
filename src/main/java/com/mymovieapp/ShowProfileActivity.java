@@ -69,20 +69,20 @@ public class ShowProfileActivity extends AppCompatActivity {
                             case R.id.profile:
                                 return true;
 
-                            case R.id.search:
-                                it = new Intent(ShowProfileActivity.this, SearchActivity.class);
-                                startActivity(it);
-                                return true;
+//                            case R.id.search:
+//                                it = new Intent(ShowProfileActivity.this, SearchActivity.class);
+//                                startActivity(it);
+//                                return true;
 
-                            case R.id.new_movies:
-                                it = new Intent(ShowProfileActivity.this, InTheatersActivity.class);
-                                startActivity(it);
-                                return true;
-
-                            case R.id.new_dvds:
-                                it = new Intent(ShowProfileActivity.this, NewDvdActivity.class);
-                                startActivity(it);
-                                return true;
+//                            case R.id.new_movies:
+//                                it = new Intent(ShowProfileActivity.this, InTheatersActivity.class);
+//                                startActivity(it);
+//                                return true;
+//
+//                            case R.id.new_dvds:
+//                                it = new Intent(ShowProfileActivity.this, NewDvdActivity.class);
+//                                startActivity(it);
+//                                return true;
                         }
                         return true;
                     }

@@ -53,6 +53,10 @@
             android:name=".NewDvdActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".MovieInfoActivity"
+            android:label="@string/app_name" >
+        </activity>
 
         <meta-data
             android:name="com.parse.APPLICATION_ID"

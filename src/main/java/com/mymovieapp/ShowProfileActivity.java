@@ -83,6 +83,10 @@ public class ShowProfileActivity extends AppCompatActivity {
             Intent it = new Intent(ShowProfileActivity.this, NewDvdActivity.class);
             startActivity(it);
         }
+        if (id == R.id.action_recommendations) {
+            Intent it = new Intent(ShowProfileActivity.this, RecommendationsActivity.class);
+            startActivity(it);
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -1,8 +1,11 @@
 package com.mymovieapp;
 
+import com.parse.LogInCallback;
 import com.parse.ParseUser;
 
-public class User extends ParseUser {
+import javax.security.auth.callback.Callback;
+
+public class User {
 
     private String username;
     private String name;
@@ -11,6 +14,7 @@ public class User extends ParseUser {
     private boolean isBanned;
     private String major;
     private String interests;
+    private ParseUser parseUser;
 
     /**
      * Creates a new user who provided their interests
@@ -21,8 +25,9 @@ public class User extends ParseUser {
      * @param major new user's major
      * @param interests new user's interests
      */
-    public User(String username, String name, String password, String email, String major, String interests) {
-        this(username, name, password, email, major);
+    public User(String username, String name, String password, String email, String major,
+                String interests, ParseUser parseUser) {
+        this(username, name, password, email, major, parseUser);
         this.interests = interests;
     }
 
@@ -34,29 +39,31 @@ public class User extends ParseUser {
      * @param email new user's email
      * @param major new user's major
      */
-    public User(String username, String name, String password, String email, String major) {
+    public User(String username, String name, String password, String email, String major,
+                ParseUser parseUser) {
         this.username = username;
         this.name = name;
         this.password = password;
         this.email = email;
         this.major = major;
         isBanned = false;
+        this.parseUser = parseUser;
     }
 
     /**
      * Returns a user's login username
      * @return user's login username
      */
-    /*public static String getUsername() {
-        return ParseUser.getCurrentUser().getUsername();
-    }*/
+    public String getUsername() {
+        return parseUser.getUsername();
+    }
 
     /**
      * Returns a user's name
      * @return user's name
      */
-    public static String getName() {
-        return (String) ParseUser.getCurrentUser().get("name");
+    public String getName() {
+        return parseUser.getString("name");
     }
 
     /**
@@ -71,15 +78,23 @@ public class User extends ParseUser {
      * Returns a user's major
      * @return user's major
      */
-    public static String getMajor() {
-        return (String) ParseUser.getCurrentUser().get("major");
+    public String getMajor() {
+        return parseUser.getString("major");
     }
 
     /**
      * Returns a user's interests
      * @return user's interests
      */
-    public static String getInterests() {
-        return (String) ParseUser.getCurrentUser().get("interests");
+    public String getInterests() {
+        return parseUser.getString("interests");
+    }
+
+    /**
+     * Returns a user's interests
+     * @return user's interests
+     */
+    public void login(String username, String password, LogInCallback logInCallback) {
+        parseUser.logInInBackground(username, password, logInCallback);
     }
 }

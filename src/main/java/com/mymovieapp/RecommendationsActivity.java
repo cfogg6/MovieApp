@@ -13,8 +13,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +21,6 @@ import java.util.List;
  * Created by Corey on 3/6/16.
  */
 public class RecommendationsActivity extends Activity {
-    JSONObject movieReviewJSON = new JSONObject();
     Spinner spinner;
     ArrayList<Rating> ratings = new ArrayList<>();
     ListView listView;
@@ -74,7 +71,6 @@ public class RecommendationsActivity extends Activity {
                         Rating newRating = new Rating(element.getString("title"),
                                 element.getString("username"));
                         newRating.addRating(element.getDouble("rating"));
-
                         int index = ratings.lastIndexOf(newRating);
                         if (index > -1) {
                             ratings.get(index).addRating(element.getDouble("rating"));

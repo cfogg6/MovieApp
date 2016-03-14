@@ -2,6 +2,7 @@ package com.mymovieapp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -49,8 +50,13 @@ public class AdminActivity extends Activity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
+                        for (AdminUser user: users) {
+                            Log.d("users", user.getName());
+                        }
                         int index = users.lastIndexOf(new AdminUser(element.getString("username")));
-                        users.get(index).setLocked(true);
+                        if (element.getInt("strikes") >= 3) {
+                            users.get(index).setLocked(true);
+                        }
                     }
                 } else {
                     e.printStackTrace();

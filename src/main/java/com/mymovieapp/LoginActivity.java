@@ -58,9 +58,15 @@ public class LoginActivity extends Activity {
                                     } catch (ParseException e1) {
                                         e1.printStackTrace();
                                     }
-
-                                    Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
-                                    startActivity(it);
+                                    ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
+                                    bannedQuery.whereEqualTo("username", username);
+                                    try {
+                                        bannedQuery.getFirst();
+                                        Toast.makeText(LoginActivity.this, "This user is banned.", Toast.LENGTH_SHORT).show();
+                                    } catch (ParseException e1) {
+                                        Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
+                                        startActivity(it);
+                                    }
                                 } else {
                                     ParseQuery query = ParseQuery.getQuery("_User");
                                     query.whereEqualTo("username", username);

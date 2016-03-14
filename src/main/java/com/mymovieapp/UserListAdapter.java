@@ -73,7 +73,11 @@ public class UserListAdapter extends ArrayAdapter {
                                     ParseObject.createWithoutData("Banned", bannedObj.getObjectId()).deleteInBackground();
                                 }
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                if (isChecked) {
+                                    ParseObject bannedObj = new ParseObject("Banned");
+                                    bannedObj.put("username", user.getName());
+                                    bannedObj.saveInBackground();
+                                }
                             }
                         }
                     });
@@ -91,12 +95,13 @@ public class UserListAdapter extends ArrayAdapter {
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
+                            lockButton.setVisibility(View.GONE);
                         }
                     });
                     if (!user.isLocked) {
-                        lockButton.setVisibility(View.VISIBLE);
-                    } else {
                         lockButton.setVisibility(View.GONE);
+                    } else {
+                        lockButton.setVisibility(View.VISIBLE);
                     }
                     dialog.show();
                 }

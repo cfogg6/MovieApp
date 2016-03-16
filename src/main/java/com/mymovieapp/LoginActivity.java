@@ -41,7 +41,7 @@ public class LoginActivity extends Activity {
                             @Override
                             public void done(ParseUser parseUser, ParseException e) {
                                 if (parseUser != null) {
-                                    Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
+                                    Intent it = new Intent(LoginActivity.this, ShowProfileDrawerActivity.class);
                                     startActivity(it);
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();

@@ -28,4 +28,7 @@
     <string name="action_search">Search</string>
     <string name="action_inTheaters">New Releases</string>
     <string name="action_newDVDs">New DVDs</string>
+
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
 </resources>

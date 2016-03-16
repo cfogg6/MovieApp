@@ -6,7 +6,7 @@
     <color name="grey">#625d5d</color>
     <color name="primary_material_light_1">#8c2828</color>
     <color name="primary_material_light">#607d8b</color>
-    <color name="primary_text_default_material_light">#feffffff</color>
+    <color name="primary_text_default_material_light">#ffffff</color>
     <color name="slateblue">#607d8b</color>
     <color name="darkerslate">#3b4f58</color>
     <color name="yellow">#ffd631</color>

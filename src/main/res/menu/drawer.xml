@@ -32,10 +32,10 @@
             android:icon="@drawable/ic_movies_24dp"
             android:title="Browse New Movies"/>
 
-        <item android:id="@+id/recomindations"
+        <item android:id="@+id/recommendations"
             android:checked="false"
-            android:icon="@drawable/ic_recomindation_24dp"
-            android:title="Recomindations"/>
+            android:icon="@drawable/ic_recommendation_24dp"
+            android:title="Recommendations"/>
 
         <item android:id="@+id/signout"
             android:checked="false"

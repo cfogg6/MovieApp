@@ -69,6 +69,16 @@ public class ShowProfileActivity extends AppCompatActivity {
                             case R.id.profile:
                                 return true;
 
+                            case R.id.signout:
+                                ParseUser.logOut();
+                                it = new Intent(ShowProfileActivity.this, LoginActivity.class);
+                                startActivity(it);
+                                return true;
+                            case R.id.browse_new:
+                                it = new Intent(ShowProfileActivity.this, NewMovieActivity.class);
+                                startActivity(it);
+                                return true;
+
 //                            case R.id.search:
 //                                it = new Intent(ShowProfileActivity.this, SearchActivity.class);
 //                                startActivity(it);

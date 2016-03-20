@@ -94,4 +94,12 @@ public class LoginActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent it = new Intent(Intent.ACTION_MAIN);
+        it.addCategory(Intent.CATEGORY_HOME);
+        it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(it);
+    }
 }

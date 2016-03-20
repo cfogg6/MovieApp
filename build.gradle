@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
 
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
 buildscript {
     repositories {
         jcenter() // or mavenCentral()
@@ -35,6 +41,8 @@ dependencies {
     compile 'com.android.support:design:23.2.0'
     compile 'com.android.support:cardview-v7:23.2.0'
     compile 'com.android.support:gridlayout-v7:23.2.0'
+    compile 'com.android.support:recyclerview-v7:23.2.0'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
     compile files('libs/Parse-1.13.0.jar')
     compile files('libs/bolts-tasks-1.4.0.jar')
     compile files('libs/volley.jar')

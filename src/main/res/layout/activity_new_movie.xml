@@ -13,11 +13,11 @@
         android:theme="@style/ToolBarTheme"
         />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="0dip"
-        android:layout_below="@id/movie_tabs"
-        android:id="@+id/lv_search_results"
-        android:layout_weight="1" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/movie_tabs"
+        android:id="@+id/mov_rv"
+        />
 
 </RelativeLayout>

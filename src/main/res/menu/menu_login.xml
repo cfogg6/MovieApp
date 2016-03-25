@@ -13,4 +13,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_newDVDs" android:title="@string/action_newDVDs"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_recommendations" android:title="@string/action_recommendations"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -15,9 +16,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.Collections;
+import java.util.List;
 
 
 public class LoginActivity extends Activity {
@@ -36,16 +43,77 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser.logInInBackground(((EditText) findViewById(R.id.et_username)).getText().toString(),
+                final String username = ((EditText) findViewById(R.id.et_username)).getText().toString();
+                ParseUser.logInInBackground(username,
                         ((EditText) findViewById(R.id.et_password)).getText().toString(),
                         new LogInCallback() {
                             @Override
                             public void done(ParseUser parseUser, ParseException e) {
                                 if (parseUser != null) {
-                                    Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
-                                    startActivity(it);
+                                    ParseQuery query = ParseQuery.getQuery("Locked");
+                                    query.whereEqualTo("username", username);
+                                    try {
+                                        ParseObject user = query.getFirst();
+                                        ParseObject.createWithoutData("Locked", user.getObjectId()).deleteInBackground();
+                                    } catch (ParseException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                    ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
+                                    bannedQuery.whereEqualTo("username", username);
+                                    try {
+                                        bannedQuery.getFirst();
+                                        Toast.makeText(LoginActivity.this, "This user is banned.", Toast.LENGTH_SHORT).show();
+                                    } catch (ParseException e1) {
+                                        Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
+                                        startActivity(it);
+                                    }
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                    ParseQuery query = ParseQuery.getQuery("_User");
+                                    query.whereEqualTo("username", username);
+                                    try {
+                                        query.getFirst();
+                                        ParseQuery lockedQuery = ParseQuery.getQuery("Locked");
+                                        lockedQuery.whereEqualTo("username", username);
+                                        try {
+                                            ParseObject strikeObject = lockedQuery.getFirst();
+                                            int strikes = strikeObject.getInt("strikes");
+                                            if (strikes < 3) {
+                                                Log.d("strikes", String.valueOf(strikes + 1));
+                                                strikeObject.put("strikes", strikes + 1);
+                                                strikeObject.saveInBackground();
+                                                Toast.makeText(LoginActivity.this,
+                                                        "Incorrect Password. You have "
+                                                                + (3 - (strikes + 1)) + " attempts remaining.",
+                                                        Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(LoginActivity.this,
+                                                        "No attempts remaining. Contact an Admin " +
+                                                                "to unlock your account",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (ParseException e1) {
+                                            ParseObject userStrikeRow = new ParseObject("Locked");
+                                            userStrikeRow.put("username", username);
+                                            userStrikeRow.put("strikes", 1);
+                                            userStrikeRow.saveInBackground();
+                                            Toast.makeText(LoginActivity.this,
+                                                    "Incorrect Password. You have 2" +
+                                                            " attempts remaining.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (ParseException e1) {
+                                        query = ParseQuery.getQuery("Admin");
+                                        query.whereEqualTo("username", username);
+                                        query.whereEqualTo("password", ((EditText) findViewById(R.id
+                                                .et_password)).getText().toString());
+                                        try {
+                                            query.getFirst();
+                                            Intent it = new Intent(LoginActivity.this, AdminActivity.class);
+                                            startActivity(it);
+                                        } catch (ParseException e2) {
+                                            Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
                                 }
                             }
                         });
@@ -98,5 +166,9 @@ public class LoginActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

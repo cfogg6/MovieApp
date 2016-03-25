@@ -1,8 +1,15 @@
 package com.mymovieapp;
 
+import android.os.Bundle;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.parse.ParseUser;
@@ -39,6 +46,17 @@ public class ShowProfileDrawerActivity extends ToolbarDrawerActivity {
         } else {
             interestsView.setText(interestsView.getText() + "No Interests");
         }
+
+        Button editProfButton = (Button) findViewById(R.id.btn_editprofile);
+
+        editProfButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(ShowProfileDrawerActivity.this,
+                        EditProfileToolbarActivity.class);
+                startActivity(it);
+            }
+        });
     }
 
     @Override

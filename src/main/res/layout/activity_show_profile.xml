@@ -77,4 +77,14 @@
         android:layout_alignStart="@+id/tV_name"
         android:layout_marginBottom="33dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_editprofile"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_alignBottom="@+id/imageView"
+        android:text="Edit Profile"
+        android:layout_margin="50dp"/>
+
 </RelativeLayout>

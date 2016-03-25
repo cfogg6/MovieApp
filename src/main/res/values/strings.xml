@@ -31,4 +31,25 @@
 
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
+    <string name="action_recommendations">Recommendations</string>
+    <string-array name="majors_array">
+        <item>Computer Science</item>
+        <item>Computer Media</item>
+        <item>Aerospace Engineering</item>
+        <item>Biology</item>
+        <item>Biomedical Engineering</item>
+        <item>Business</item>
+        <item>Chemical Engineering</item>
+        <item>Chemistry</item>
+        <item>Civil Engineering</item>
+        <item>Computer Engineering</item>
+        <item>Electrical Engineering</item>
+        <item>Environmental Engineering</item>
+        <item>Industrial Engineering</item>
+        <item>International Affairs</item>
+        <item>Math</item>
+        <item>Mechanical Engineering</item>
+        <item>Physics</item>
+        <item>Public Policy</item>
+    </string-array>
 </resources>

@@ -27,7 +27,7 @@ import java.util.List;
 public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHolder> {
 
     List<NewMovieDrawerActivity.Movie> movies;
-    static NewMovieDrawerActivity.Movie movieToPass = new NewMovieDrawerActivity().new Movie("", "", "");
+    static NewMovieDrawerActivity.Movie movieToPass = new NewMovieDrawerActivity().new Movie("", "", "", "", null);
 
     public RVMovAdapter(List<NewMovieDrawerActivity.Movie> movies) {
         this.movies = movies;
@@ -91,6 +91,7 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
                 movieToPass.name = mov.name;
                 movieToPass.date = mov.date;
                 movieToPass.photoId = mov.photoId;
+                movieToPass.synopsis = mov.synopsis;
             }
         });
     }

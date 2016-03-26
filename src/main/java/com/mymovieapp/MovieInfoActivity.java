@@ -2,8 +2,12 @@ package com.mymovieapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -11,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +24,8 @@ import android.widget.Toast;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.io.InputStream;
 
 /**
  * Created by Corey on 2/26/16.
@@ -49,6 +56,8 @@ public class MovieInfoActivity extends Activity {
 
         starBar.setRating(0);
         movieName = movieObject.name;
+        synopsis.setText(movieObject.synopsis);
+        new DownloadImageTask(movPic).execute(movieObject.photoId);
         movieTitle.setText(movieName);
         commentButton = (Button) findViewById(R.id.btn_comment);
         commentButton.setOnClickListener(new View.OnClickListener() {
@@ -136,5 +145,31 @@ public class MovieInfoActivity extends Activity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+
     }
 }

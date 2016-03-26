@@ -3,6 +3,9 @@ package com.mymovieapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
@@ -15,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -29,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,11 +48,15 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
         String name;
         String date;
         String photoId;
+        String synopsis;
+        ImageView picture;
 
-        Movie(String name, String date, String photoId) {
+        Movie(String name, String date, String photoId, String synopsis, ImageView picture) {
             this.name = name;
             this.date = date;
             this.photoId = photoId;
+            this.synopsis = synopsis;
+            this.picture = picture;
         }
     }
 
@@ -61,7 +70,8 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
             String nameOfMovie = listOfMovies.getJSONObject(i).getString("title");
             String dateOfMovie = listOfMovies.getJSONObject(i).getString("year");
             String imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
-            Movie toAdd = new Movie(nameOfMovie, dateOfMovie, imageOfMovie);
+            String synopsisOfMovie = listOfMovies.getJSONObject(i).getString("synopsis");
+            Movie toAdd = new Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, null);
             movies.add(i, toAdd);
         }
     }

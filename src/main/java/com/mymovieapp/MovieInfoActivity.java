@@ -3,6 +3,7 @@ package com.mymovieapp;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,16 +28,17 @@ import org.json.JSONObject;
  * Created by Corey on 2/26/16.
  */
 public class MovieInfoActivity extends Activity {
-    JSONObject movieInfoJSON = new JSONObject();
     final Activity activity = this;
     ParseObject movieInfo;
     float rating;
     RatingBar starBar;
     String movieName;
+    ImageView moviePic;
     EditText commentEditText;
     String comment;
     Button commentButton;
     MovieInfoActivity thisActivity = this;
+    NewMovieDrawerActivity.Movie movieObject = RVMovAdapter.movieToPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +49,8 @@ public class MovieInfoActivity extends Activity {
         commentEditText = (EditText) findViewById(R.id.et_comment);
 
         starBar.setRating(0);
-        try {
-            movieInfoJSON = new JSONObject(getIntent().getStringExtra("SALTY_POPCORN_CURRENT_MOVIE"));
-            movieName = movieInfoJSON.getString("title");
-            movieTitle.setText(movieName);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        movieName = movieObject.name;
+        movieTitle.setText(movieName);
         commentButton = (Button) findViewById(R.id.btn_comment);
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +69,7 @@ public class MovieInfoActivity extends Activity {
                     movieInfo.saveInBackground();
                     comment = commentEditText.getText().toString();
                     movieInfo.put("comment", comment);
+                    Toast.makeText(v.getContext(), "Rating Submitted!", Toast.LENGTH_SHORT).show();
                     movieInfo.saveInBackground();
                 }
             }
@@ -108,11 +107,10 @@ public class MovieInfoActivity extends Activity {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         try {
-            movieInfoJSON = new JSONObject(getIntent().getStringExtra("SALTY_POPCORN_CURRENT_MOVIE"));
-            movieName = movieInfoJSON.getString("title");
+            movieName = RVMovAdapter.movieToPass.name.toString();
             query.whereEqualTo("title", movieName);
             movieInfo = query.getFirst();
-        } catch (com.parse.ParseException | JSONException e) {
+        } catch (com.parse.ParseException e) {
             e.printStackTrace();
         }
         if (movieInfo != null) {

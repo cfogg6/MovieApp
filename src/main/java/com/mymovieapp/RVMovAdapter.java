@@ -3,6 +3,7 @@ package com.mymovieapp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.util.List;
 
@@ -24,14 +27,11 @@ import java.util.List;
 public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHolder> {
 
     List<NewMovieDrawerActivity.Movie> movies;
+    static NewMovieDrawerActivity.Movie movieToPass = new NewMovieDrawerActivity().new Movie("", "", "");
 
     public RVMovAdapter(List<NewMovieDrawerActivity.Movie> movies) {
         this.movies = movies;
     }
-
-    /*public interface RVMovAdapterClickListener {
-        void recyclerViewClick();
-    }*/
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
@@ -87,18 +87,10 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
             public void onClick(View v) {
                 Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
                 it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov.name);
-                /*try {
-                    it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov.name);
-                    /*try {
-                        Log.d("input title: ", );
-                    } catch (JSONException e) {
-                        Log.d("error", "no JSON");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }*/
                 v.getContext().startActivity(it);
-                Toast.makeText(v.getContext(), mov.name + " Clicked.", Toast.LENGTH_SHORT).show();
+                movieToPass.name = mov.name;
+                movieToPass.date = mov.date;
+                movieToPass.photoId = mov.photoId;
             }
         });
     }

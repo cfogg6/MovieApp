@@ -94,6 +94,11 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
                         //Check to see which item was being clicked and perform appropriate action
                         Intent it;
                         switch (menuItem.getItemId()) {
+                            case R.id.home:
+                                it = new Intent(ToolbarDrawerActivity.this, ShowProfileDrawerActivity.class);
+                                startActivity(it);
+                                return true;
+
                             case R.id.profile:
                                 it = new Intent(ToolbarDrawerActivity.this, ShowProfileDrawerActivity.class);
                                 startActivity(it);
@@ -101,6 +106,11 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
 
                             case R.id.browse_new:
                                 it = new Intent(ToolbarDrawerActivity.this, NewMovieDrawerActivity.class);
+                                startActivity(it);
+                                return true;
+
+                            case R.id.recommendations:
+                                it = new Intent(ToolbarDrawerActivity.this, RecommendationsActivity.class);
                                 startActivity(it);
                                 return true;
 

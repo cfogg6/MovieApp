@@ -16,15 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import java.util.Collections;
-import java.util.List;
 
 public class LoginActivity extends Activity {
 
@@ -62,7 +58,7 @@ public class LoginActivity extends Activity {
                                         bannedQuery.getFirst();
                                         Toast.makeText(LoginActivity.this, "This user is banned.", Toast.LENGTH_SHORT).show();
                                     } catch (ParseException e1) {
-                                        Intent it = new Intent(LoginActivity.this, ShowProfileActivity.class);
+                                        Intent it = new Intent(LoginActivity.this, ShowProfileDrawerActivity.class);
                                         startActivity(it);
                                     }
                                 } else {

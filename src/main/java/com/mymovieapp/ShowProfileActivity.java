@@ -140,10 +140,6 @@ public class ShowProfileActivity extends AppCompatActivity {
             drawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
-        if (id == R.id.action_recommendations) {
-            Intent it = new Intent(ShowProfileActivity.this, RecommendationsActivity.class);
-            startActivity(it);
-        }
 
         return super.onOptionsItemSelected(item);
     }

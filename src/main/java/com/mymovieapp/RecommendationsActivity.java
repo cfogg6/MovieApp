@@ -1,6 +1,5 @@
 package com.mymovieapp;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,7 +19,7 @@ import java.util.List;
 /**
  * Created by Corey on 3/6/16.
  */
-public class RecommendationsActivity extends Activity {
+public class RecommendationsActivity extends ToolbarDrawerActivity {
     Spinner spinner;
     ArrayList<Rating> ratings = new ArrayList<>();
     ListView listView;

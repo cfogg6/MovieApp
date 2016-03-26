@@ -1,23 +1,15 @@
 package com.mymovieapp;
 
-import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 
 /**
  * Created by Angelo on 3/20/2016.
  */
 public class BackToolbarActivity extends AppCompatActivity {
-
-    private DrawerLayout mDrawerLayout;
-    protected ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +19,6 @@ public class BackToolbarActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float slideOffset = (Float) valueAnimator.getAnimatedValue();
-                mDrawerToggle.onDrawerSlide(mDrawerLayout, slideOffset);
-            }
-        });
-        anim.setInterpolator(new DecelerateInterpolator());
-        // You can change this duration to more closely match that of the default animation.
-        anim.setDuration(500);
-        anim.start();
     }
 
     @Override
@@ -58,7 +37,7 @@ public class BackToolbarActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(final int layoutResID) {
-        DrawerLayout fullLayout = (DrawerLayout) getLayoutInflater()
+        RelativeLayout fullLayout = (RelativeLayout) getLayoutInflater()
                 .inflate(R.layout.activity_backtoolbar, null);
         RelativeLayout actContent = (RelativeLayout) fullLayout.findViewById(R.id.content);
         getLayoutInflater().inflate(layoutResID, actContent, true);
@@ -72,26 +51,6 @@ public class BackToolbarActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
-
-        mDrawerLayout = (DrawerLayout) fullLayout.findViewById(R.id.backtoolbar_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                mDrawerLayout,
-                myToolbar,
-                R.string.drawer_open,
-                R.string.drawer_close
-        ) {
-
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerOpened(View view) {
-                super.onDrawerOpened(view);
-                invalidateOptionsMenu();
-            }
-        };
 
         /*ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

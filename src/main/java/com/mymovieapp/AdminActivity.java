@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -96,17 +95,6 @@ public class AdminActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Toast.makeText(AdminActivity.this, "No Settings", Toast.LENGTH_SHORT).show();
-        }
-        if (id == R.id.action_logout) {
-            Toast.makeText(AdminActivity.this, "Logout Failed", Toast.LENGTH_SHORT).show();
-        }
-        if (id == R.id.action_editProfile) {
-            Toast.makeText(AdminActivity.this, "In Edit", Toast.LENGTH_SHORT).show();
-        }
 
         return super.onOptionsItemSelected(item);
     }

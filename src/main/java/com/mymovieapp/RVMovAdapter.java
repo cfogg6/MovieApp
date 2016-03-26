@@ -11,12 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.List;
@@ -25,12 +22,24 @@ import java.util.List;
  * Created by Angelo on 3/19/2016.
  */
 public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHolder> {
+
+    List<NewMovieDrawerActivity.Movie> movies;
+
+    public RVMovAdapter(List<NewMovieDrawerActivity.Movie> movies) {
+        this.movies = movies;
+    }
+
+    /*public interface RVMovAdapterClickListener {
+        void recyclerViewClick();
+    }*/
+
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView movieName;
         TextView releaseDate;
         TextView details;
         ImageView movPhoto;
+        RelativeLayout cvLayout;
 
         MovieViewHolder(View itemView) {
             super(itemView);
@@ -39,6 +48,7 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
             releaseDate = (TextView) itemView.findViewById(R.id.release_date);
             details = (TextView) itemView.findViewById(R.id.movie_details);
             movPhoto = (ImageView) itemView.findViewById(R.id.movie_photo);
+            cvLayout = (RelativeLayout) itemView.findViewById(R.id.cv_layout);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -49,12 +59,6 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
                 }
             });
         }
-    }
-
-    List<NewMovieDrawerActivity.Movie> movies;
-
-    RVMovAdapter(List<NewMovieDrawerActivity.Movie> movies) {
-        this.movies = movies;
     }
 
     @Override
@@ -70,13 +74,33 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder movieViewHolder, int i) {
-        NewMovieDrawerActivity.Movie mov = movies.get(i);
+        final NewMovieDrawerActivity.Movie mov = movies.get(i);
 
         movieViewHolder.movieName.setText(mov.name);
         movieViewHolder.releaseDate.setText(mov.date);
         movieViewHolder.details.setText("all details");
         //movieViewHolder.movPhoto.setImageResource(R.drawable.ic_launcher);
         new DownloadImageTask(movieViewHolder.movPhoto).execute(mov.photoId);
+        
+        movieViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
+                it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov.name);
+                /*try {
+                    it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov.name);
+                    /*try {
+                        Log.d("input title: ", );
+                    } catch (JSONException e) {
+                        Log.d("error", "no JSON");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }*/
+                v.getContext().startActivity(it);
+                Toast.makeText(v.getContext(), mov.name + " Clicked.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

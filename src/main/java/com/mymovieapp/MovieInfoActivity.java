@@ -3,6 +3,7 @@ package com.mymovieapp;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -33,6 +34,8 @@ public class MovieInfoActivity extends Activity {
     RatingBar starBar;
     String movieName;
     EditText commentEditText;
+    AppCompatImageView movPhoto;
+    TextView synopsis;
     String comment;
     Button commentButton;
     MovieInfoActivity thisActivity = this;
@@ -44,6 +47,8 @@ public class MovieInfoActivity extends Activity {
         final TextView movieTitle = (TextView) findViewById(R.id.tv_movie_title);
         starBar = (RatingBar) findViewById(R.id.rb_star_bar);
         commentEditText = (EditText) findViewById(R.id.et_comment);
+        movPhoto = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
+        synopsis = (TextView) findViewById(R.id.tV_synopsis);
 
         starBar.setRating(0);
         try {

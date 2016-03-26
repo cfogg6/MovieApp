@@ -3,12 +3,17 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:id="@+id/rl_movie_info">
 
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/iV_movPhoto"
+        android:layout_alignParentTop="true"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Movie not found"
         android:id="@+id/tv_movie_title"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/iV_movPhoto"
         android:layout_centerHorizontal="true" />
 
     <RatingBar
@@ -42,5 +47,12 @@
         android:id="@+id/btn_comment"
         android:layout_below="@+id/et_comment"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tV_synopsis"
+        android:layout_below="@+id/btn_comment"
+        android:padding="16dp"/>
 
 </RelativeLayout>

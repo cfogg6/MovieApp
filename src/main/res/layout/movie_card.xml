@@ -13,8 +13,9 @@
         android:padding="16dp"
         android:clickable="true">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:paddingRight="16dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:id="@+id/movie_photo"/>
@@ -24,7 +25,7 @@
             android:id="@+id/movie_name"
             android:layout_toRightOf="@+id/movie_photo"
             android:layout_alignParentTop="true"
-            android:textSize="30dp"/>
+            android:textSize="20dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

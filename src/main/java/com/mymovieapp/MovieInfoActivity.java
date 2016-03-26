@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -20,9 +19,6 @@ import android.widget.Toast;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by Corey on 2/26/16.
@@ -48,7 +44,7 @@ public class MovieInfoActivity extends Activity {
         final TextView movieTitle = (TextView) findViewById(R.id.tv_movie_title);
         starBar = (RatingBar) findViewById(R.id.rb_star_bar);
         commentEditText = (EditText) findViewById(R.id.et_comment);
-        movPhoto = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
+        movPic = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
         synopsis = (TextView) findViewById(R.id.tV_synopsis);
 
         starBar.setRating(0);

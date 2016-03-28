@@ -85,6 +85,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
             }
         }));
 
+        /*
         //Initialize RecycleView, Layout Manager, and Adapter
         RecyclerView rv = (RecyclerView) findViewById(R.id.mov_rv);
         rv.setHasFixedSize(true);
@@ -92,7 +93,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
         RVMovAdapter adapter = new RVMovAdapter(movies);
-        rv.setAdapter(adapter);
+        rv.setAdapter(adapter);*/
     }
 
     @Override

@@ -102,7 +102,7 @@ public class LoginActivity extends Activity {
                                                 .et_password)).getText().toString());
                                         try {
                                             query.getFirst();
-                                            Intent it = new Intent(LoginActivity.this, AdminActivity.class);
+                                            Intent it = new Intent(LoginActivity.this, FlaggedCommentsActivity.class);
                                             startActivity(it);
                                         } catch (ParseException e2) {
                                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();

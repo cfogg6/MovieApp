@@ -3,6 +3,8 @@ package com.mymovieapp;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,12 +25,37 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Corey on 2/20/16.
  */
-public class SearchActivity extends Activity {
+public class SearchActivity extends ToolbarDrawerActivity {
     String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
     final Activity activity = this;
+
+    class SearchMovie {
+        String name;
+        String picture;
+
+        SearchMovie(String name, String picture) {
+            this.name = name;
+            this.picture = picture;
+        }
+    }
+
+    private List<SearchMovie> searchMovies;
+
+    private void initializeData() {
+        searchMovies = new ArrayList<>();
+        searchMovies.add(new SearchMovie("Something", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+        searchMovies.add(new SearchMovie("Other Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+        searchMovies.add(new SearchMovie("Place Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+        searchMovies.add(new SearchMovie("Holder Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+        searchMovies.add(new SearchMovie("Moving Movies", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +94,17 @@ public class SearchActivity extends Activity {
                 queue.add(stringRequest);
             }
         });
+
+        RecyclerView rv = (RecyclerView) findViewById(R.id.search_rv);
+        rv.setHasFixedSize(true);
+        GridLayoutManager glm = new GridLayoutManager(this, 2);
+        rv.setLayoutManager(glm);
+        initializeData();
+        RVSearchAdapter adapter = new RVSearchAdapter(searchMovies);
+        rv.setAdapter(adapter);
+
+
+
 
         /**
          * Makes keyboard disappear when you click away from an EditText field

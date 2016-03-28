@@ -95,7 +95,7 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
                         Intent it;
                         switch (menuItem.getItemId()) {
                             case R.id.home:
-                                it = new Intent(ToolbarDrawerActivity.this, ShowProfileDrawerActivity.class);
+                                it = new Intent(ToolbarDrawerActivity.this, HomeActivity.class);
                                 startActivity(it);
                                 return true;
 
@@ -117,6 +117,11 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
                             case R.id.signout:
                                 ParseUser.logOut();
                                 it = new Intent(ToolbarDrawerActivity.this, LoginActivity.class);
+                                startActivity(it);
+                                return true;
+
+                            case R.id.search:
+                                it = new Intent(ToolbarDrawerActivity.this, SearchActivity.class);
                                 startActivity(it);
                                 return true;
                         }

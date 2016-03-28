@@ -1,8 +1,6 @@
 package com.mymovieapp;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -15,7 +13,7 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlaggedCommentsActivity extends Activity {
+public class FlaggedCommentsActivity extends AdminToolbarDrawerActivity {
     ArrayList<FlaggedComment> comments = new ArrayList<>();
     ListView listView;
 

@@ -55,14 +55,14 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
     @Override
     public void setContentView(final int layoutResID) {
         DrawerLayout fullLayout = (DrawerLayout) getLayoutInflater()
-                .inflate(R.layout.activity_drawer, null);
+                .inflate(R.layout.activity_admin_drawer, null);
         RelativeLayout actContent = (RelativeLayout) fullLayout.findViewById(R.id.content);
 
         getLayoutInflater().inflate(layoutResID, actContent, true);
         super.setContentView(fullLayout);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        mDrawerLayout = (DrawerLayout) fullLayout.findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) fullLayout.findViewById(R.id.admin_drawer_layout);
         NavigationView navView = (NavigationView) fullLayout.findViewById(R.id.navigation_view);
 
         View header = navView.getHeaderView(0);
@@ -91,15 +91,21 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
                         //Check to see which item was being clicked and perform appropriate action
                         Intent it;
                         switch (menuItem.getItemId()) {
-                            case R.id.home:
-                                it = new Intent(AdminToolbarDrawerActivity.this, AdminUser.class);
+                            case R.id.users:
+                                it = new Intent(AdminToolbarDrawerActivity.this, AdminActivity.class);
                                 startActivity(it);
                                 return true;
 
-//                            case R.id.flagged_comments:
-//                                it = new Intent(AdminToolbarDrawerActivity.this, FlaggedCommentsActivity.class);
-//                                startActivity(it);
-//                                return true;
+                            case R.id.flag_com:
+                                it = new Intent(AdminToolbarDrawerActivity.this, FlaggedCommentsActivity.class);
+                                startActivity(it);
+                                return true;
+
+                            case R.id.signout:
+                                ParseUser.logOut();
+                                it = new Intent(AdminToolbarDrawerActivity.this, LoginActivity.class);
+                                startActivity(it);
+                                return true;
                         }
                         return true;
                     }

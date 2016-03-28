@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Top Movies"
+        android:id="@+id/top_mov"
+        android:layout_alignParentLeft="true"
+        android:paddingTop="16dp"
+        android:textSize="20sp"/>
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/top_mov"
+        android:id="@+id/more_btn"
+        android:text="More"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/top_mov"
+        android:id="@+id/home_rv1">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New to Theaters"
+        android:id="@+id/new_theaters"
+        android:layout_below="@+id/home_rv1"
+        android:textSize="20sp"/>
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/new_theaters"
+        android:id="@+id/more_btn2"
+        android:text="More"/>/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_theaters">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

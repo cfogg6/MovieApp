@@ -1,7 +1,10 @@
 package com.mymovieapp;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +21,7 @@ import java.util.List;
 /**
  * Created by Corey on 3/13/16.
  */
-public class AdminActivity extends Activity {
+public class AdminActivity extends AdminToolbarDrawerActivity {
     ArrayList<AdminUser> users = new ArrayList<>();
     ListView listView;
 
@@ -26,6 +29,56 @@ public class AdminActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setElevation(0);
+        //Initialize Tab Layout
+
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.admin_tabs);
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.profile_person));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_check_24dp));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_lock_24dp));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_not_interested_24dp));
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tabLayout.getSelectedTabPosition()) {
+                    //All Users
+                    case 0:
+                        return;
+                    //Active Users
+                    case 1:
+                        return;
+                    //All Locked Users
+                    case 2:
+                        return;
+                    //All Banned Users
+                    case 3:
+                        return;
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        RecyclerView rv = (RecyclerView) findViewById(R.id.users_rv);
+        rv.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
+        RVUserAdapter adapter = new RVUserAdapter(users);
+        rv.setAdapter(adapter);
+
         listView = (ListView) findViewById(R.id.lv_user_list);
         listView.setAdapter(new UserListAdapter(this, 0));
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");

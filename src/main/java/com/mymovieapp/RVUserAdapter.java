@@ -187,7 +187,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                                     bannedUsers.add(currentList.get(i));
                                 }
                                 unlockedUsers.remove(currentList.get(i));
-                                if (mode.equals("ALL") || mode.equals("UNLOCKED")) {
+                                if (mode.equals("UNLOCKED")) {
                                     dialog.dismiss();
                                     notifyDataSetChanged();
                                 }
@@ -213,7 +213,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                                 }
                                 unlockedUsers.remove(currentList.get(i));
                                 userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);
-                                if (mode.equals("ALL") || mode.equals("UNLOCKED")) {
+                                if (mode.equals("UNLOCKED")) {
                                     dialog.dismiss();
                                     notifyDataSetChanged();
                                 }
@@ -247,7 +247,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                             }
                             unlockedUsers.remove(currentList.get(i));
                             userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
-                            if (mode.equals("ALL") || mode.equals("UNLOCKED")) {
+                            if (mode.equals("UNLOCKED")) {
                                 dialog.dismiss();
                                 notifyDataSetChanged();
                             }

@@ -1,32 +1,14 @@
 package com.mymovieapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +49,7 @@ public class SearchActivity extends ToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
+        /*
         // Instantiate the RequestQueue.
         final RequestQueue queue = Volley.newRequestQueue(this);
         Button searchButton = (Button) findViewById(R.id.btn_search);
@@ -118,7 +100,7 @@ public class SearchActivity extends ToolbarDrawerActivity {
 
         /**
          * Makes keyboard disappear when you click away from an EditText field
-         */
+         *//*
         searchLinearLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -128,7 +110,7 @@ public class SearchActivity extends ToolbarDrawerActivity {
                 }
                 return true;
             }
-        });
+        });*/
     }
 
     @Override

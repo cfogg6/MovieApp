@@ -23,10 +23,8 @@ public class HomeActivity extends ToolbarDrawerActivity {
         }
     }
 
-    private List<SearchMovie> searchMovies;
-
     private void initializeData() {
-        searchMovies = new ArrayList<>();
+        List<SearchMovie> searchMovies = new ArrayList<>();
         searchMovies.add(new SearchMovie("Something", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
         searchMovies.add(new SearchMovie("Other Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
         searchMovies.add(new SearchMovie("Place Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));

@@ -3,8 +3,6 @@ package com.mymovieapp;
 import com.parse.LogInCallback;
 import com.parse.ParseUser;
 
-import javax.security.auth.callback.Callback;
-
 public class User {
 
     private String username;
@@ -92,7 +90,6 @@ public class User {
 
     /**
      * Returns a user's interests
-     * @return user's interests
      */
     public void login(String username, String password, LogInCallback logInCallback) {
         parseUser.logInInBackground(username, password, logInCallback);

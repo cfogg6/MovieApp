@@ -38,7 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignBaseline="@+id/new_theaters"
         android:id="@+id/more_btn2"
-        android:text="More"/>/>
+        android:text="More"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

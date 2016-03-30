@@ -63,11 +63,8 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof com.mymovieapp.Movie)) {
-            return false;
-        } else {
-            return this.getName().equals(((com.mymovieapp.Movie) o).getName());
-        }
+        return (o instanceof com.mymovieapp.Movie)
+                && (this.getName().equals(((com.mymovieapp.Movie) o).getName()));
     }
 
     public String getName() {

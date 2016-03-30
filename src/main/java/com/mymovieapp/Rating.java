@@ -2,7 +2,6 @@ package com.mymovieapp;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -34,10 +33,7 @@ public class Rating implements Parcelable, Comparable {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Rating)) {
-            return false;
-        }
-        return name.equals(((Rating)other).name);
+        return (other instanceof Rating) && name.equals(((Rating)other).name);
     }
 
     public void addRating(Double rating) {

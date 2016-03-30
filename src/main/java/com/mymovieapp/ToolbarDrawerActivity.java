@@ -155,8 +155,10 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
         //Initialize Toolbar as ActionBar
         if (myToolbar != null) {
             setSupportActionBar(myToolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeButtonEnabled(true);
+            }
         }
     }
 }

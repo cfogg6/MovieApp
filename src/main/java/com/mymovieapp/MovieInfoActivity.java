@@ -25,14 +25,12 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.w3c.dom.Text;
-
 import java.io.InputStream;
 
 /**
  * Created by Corey on 2/26/16.
  */
-public class MovieInfoActivity extends Activity {
+public class MovieInfoActivity extends BackToolbarActivity {
     final Activity activity = this;
     ParseObject movieInfo;
     float rating;
@@ -123,7 +121,7 @@ public class MovieInfoActivity extends Activity {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         try {
-            movieName = RVMovAdapter.movieToPass.name.toString();
+            movieName = RVMovAdapter.movieToPass.name;
             query.whereEqualTo("title", movieName);
             movieInfo = query.getFirst();
         } catch (com.parse.ParseException e) {

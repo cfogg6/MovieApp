@@ -40,6 +40,16 @@
             android:id="@+id/movie_details"
             android:layout_toRightOf="@+id/movie_photo"
             android:layout_below="@+id/release_date"/>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            style="?android:attr/ratingBarStyleSmall"
+            android:id="@+id/mov_rating"
+            android:layout_below="@+id/movie_details"
+            android:layout_toRightOf="@+id/movie_photo"
+            android:isIndicator="true"
+            android:numStars="5"/>
 
     </RelativeLayout>
 

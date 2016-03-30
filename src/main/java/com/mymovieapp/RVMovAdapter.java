@@ -11,11 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +36,7 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
         TextView movieName;
         TextView releaseDate;
         TextView details;
+        RatingBar starBar;
         ImageView movPhoto;
         RelativeLayout cvLayout;
 
@@ -47,6 +48,7 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
             details = (TextView) itemView.findViewById(R.id.movie_details);
             movPhoto = (ImageView) itemView.findViewById(R.id.movie_photo);
             cvLayout = (RelativeLayout) itemView.findViewById(R.id.cv_layout);
+            starBar = (RatingBar) itemView.findViewById(R.id.mov_rating);
         }
     }
 
@@ -72,6 +74,7 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
         movieViewHolder.movieName.setText(mov.getName());
         movieViewHolder.releaseDate.setText(mov.getDate());
         movieViewHolder.details.setText(mov.getRatingRuntime());
+        movieViewHolder.starBar.setRating((float) mov.getRating().getAverageRating());
 
         new DownloadImageTask(movieViewHolder.movPhoto).execute(mov.photoId);
         

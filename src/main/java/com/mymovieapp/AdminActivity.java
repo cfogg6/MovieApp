@@ -44,15 +44,27 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                 switch (tabLayout.getSelectedTabPosition()) {
                     //All Users
                     case 0:
+                        ((RVUserAdapter)rv.getAdapter()).mode = "ALL";
+                        ((RVUserAdapter)rv.getAdapter()).updateLists();
+                        rv.getAdapter().notifyDataSetChanged();
                         return;
                     //Active Users
                     case 1:
+                        ((RVUserAdapter)rv.getAdapter()).mode = "UNLOCKED";
+                        ((RVUserAdapter)rv.getAdapter()).updateLists();
+                        rv.getAdapter().notifyDataSetChanged();
                         return;
                     //All Locked Users
                     case 2:
+                        ((RVUserAdapter)rv.getAdapter()).mode = "LOCKED";
+                        ((RVUserAdapter)rv.getAdapter()).updateLists();
+                        rv.getAdapter().notifyDataSetChanged();
                         return;
                     //All Banned Users
                     case 3:
+                        ((RVUserAdapter)rv.getAdapter()).mode = "BANNED";
+                        ((RVUserAdapter)rv.getAdapter()).updateLists();
+                        rv.getAdapter().notifyDataSetChanged();
                         return;
                 }
 
@@ -85,6 +97,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                 } else {
                     e.printStackTrace();
                 }
+                adapter.updateLists();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -102,6 +115,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                 } else {
                     e.printStackTrace();
                 }
+                adapter.updateLists();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -112,11 +126,14 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                 if (e == null) {
                     for (ParseObject element : list) {
                         int index = adapter.users.lastIndexOf(new AdminUser(element.getString("username")));
-                        adapter.users.get(index).setBanned(true);
+                        if (index >= 0) {
+                            adapter.users.get(index).setBanned(true);
+                        }
                     }
                 } else {
                     e.printStackTrace();
                 }
+                adapter.updateLists();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -138,6 +155,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                 } else {
                     e.printStackTrace();
                 }
+                adapter.updateLists();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -155,6 +173,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                 } else {
                     e.printStackTrace();
                 }
+                adapter.updateLists();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -165,11 +184,14 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                 if (e == null) {
                     for (ParseObject element : list) {
                         int index = adapter.users.lastIndexOf(new AdminUser(element.getString("username")));
-                        adapter.users.get(index).setBanned(true);
+                        if (index >= 0) {
+                            adapter.users.get(index).setBanned(true);
+                        }
                     }
                 } else {
                     e.printStackTrace();
                 }
+                adapter.updateLists();
                 adapter.notifyDataSetChanged();
             }
         });

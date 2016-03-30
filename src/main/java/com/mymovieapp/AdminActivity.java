@@ -5,7 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -68,11 +68,58 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
 
             }
         });
-
         rv = (RecyclerView) findViewById(R.id.users_rv);
         rv.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rv.setLayoutManager(llm);
+        final RVUserAdapter adapter = new RVUserAdapter(this, new ArrayList<AdminUser>());
+        rv.setAdapter(adapter);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    for (ParseObject element : list) {
+                        adapter.users.add(new AdminUser(element.getString("username")));
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+        ParseQuery<ParseObject> lockedQuery = ParseQuery.getQuery("Locked");
+        lockedQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    for (ParseObject element : list) {
+                        int index = adapter.users.lastIndexOf(new AdminUser(element.getString("username")));
+                        if (element.getInt("strikes") >= 3 && index >= 0) {
+                            adapter.users.get(index).setLocked(true);
+                        }
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+        ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
+        bannedQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    for (ParseObject element : list) {
+                        int index = adapter.users.lastIndexOf(new AdminUser(element.getString("username")));
+                        adapter.users.get(index).setBanned(true);
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

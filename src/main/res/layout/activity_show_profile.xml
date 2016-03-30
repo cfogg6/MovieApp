@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
@@ -19,6 +19,7 @@
         android:minWidth="140dp"
         android:maxHeight="180dp"
         android:maxWidth="140dp" />
+
 
     <TextView
         android:layout_width="wrap_content"

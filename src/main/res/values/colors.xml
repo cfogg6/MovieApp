@@ -10,4 +10,14 @@
     <color name="slateblue">#607d8b</color>
     <color name="darkerslate">#3b4f58</color>
     <color name="yellow">#ffd631</color>
+    <color name="ffc107">#ffc107</color>
+    <color name="ffa000">#ffa000</color>
+    <color name="ff6e40">#ff6e40</color>
+    <color name="FFD84315">#d84315</color>
+    <color name="FF448AFF">#448aff</color>
+    <color name="a303f9f">#303f9f</color>
+    <color name="a3f51b5">#3f51b5</color>
+    <color name="ffd740">#ffc400</color>
+    <color name="FF3D5AFE">#3d5afe</color>
+    <color name="FF536DFE">#536dfe</color>
 </resources>

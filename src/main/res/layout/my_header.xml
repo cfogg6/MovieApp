@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="190dp"
     android:theme="@style/AppTheme">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:id="@+id/profile_image"

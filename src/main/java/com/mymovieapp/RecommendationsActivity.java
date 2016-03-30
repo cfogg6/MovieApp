@@ -37,7 +37,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
 
     JSONArray listOfMovies;
 
-    private List<NewMovieDrawerActivity.Movie> movies;
+    private List<com.mymovieapp.Movie> movies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

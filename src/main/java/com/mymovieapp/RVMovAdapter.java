@@ -26,10 +26,10 @@ import java.util.List;
  */
 public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHolder> {
 
-    List<NewMovieDrawerActivity.Movie> movies;
-    static NewMovieDrawerActivity.Movie movieToPass = new NewMovieDrawerActivity().new Movie("", "", "", "", null);
+    List<com.mymovieapp.Movie> movies;
+    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", null);
 
-    public RVMovAdapter(List<NewMovieDrawerActivity.Movie> movies) {
+    public RVMovAdapter(List<com.mymovieapp.Movie> movies) {
         this.movies = movies;
     }
 
@@ -74,24 +74,24 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder movieViewHolder, int i) {
-        final NewMovieDrawerActivity.Movie mov = movies.get(i);
+        final com.mymovieapp.Movie mov = movies.get(i);
 
         movieViewHolder.movieName.setText(mov.name);
         movieViewHolder.releaseDate.setText(mov.date);
         movieViewHolder.details.setText("all details");
-        //movieViewHolder.movPhoto.setImageResource(R.drawable.ic_launcher);
+
         new DownloadImageTask(movieViewHolder.movPhoto).execute(mov.photoId);
         
         movieViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
-                it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov.name);
+                it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov.getName());
                 v.getContext().startActivity(it);
-                movieToPass.name = mov.name;
-                movieToPass.date = mov.date;
-                movieToPass.photoId = mov.photoId;
-                movieToPass.synopsis = mov.synopsis;
+                movieToPass.name = mov.getName();
+                movieToPass.date = mov.getDate();
+                movieToPass.photoId = mov.getPhotoID();
+                movieToPass.synopsis = mov.getSynopsis();
             }
         });
     }

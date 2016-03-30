@@ -2,9 +2,6 @@
 
 
     <style name="AppTheme" parent="AppTheme.base">
-        <item name="colorPrimary">@color/slate</item>
-        <item name="colorPrimaryDark">@color/darkerslate</item>
-        <item name="colorAccent">@color/yellow</item>
     </style>
 
     <!-- Base application theme. No Material Design Utilization-->
@@ -15,15 +12,16 @@
         <item name="windowActionBar">false</item>
         <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
         <!-- Default action bar background -->
-        <item name="colorPrimary">#61950d</item>
+        <item name="colorPrimary">@color/FF536DFE</item>
         <!-- Status bar Color -->
-        <item name="colorPrimaryDark">#2f154e</item>
+        <item name="colorPrimaryDark">@color/FF3D5AFE</item>
         <!-- colorAccent is used as the default value for colorControlActivated
              which is used to tint widgets -->
-        <item name="colorAccent">#48675f</item>
+        <item name="colorAccent">@color/ffd740</item>
         <!-- You can also set colorControlNormal, colorControlActivated
             colorControlHighlight and colorSwitchThumbNormal. -->
         <!-- Used to for the title of the Toolbar when parent is Theme.AppCompat.Light -->
+        <item name="colorButtonNormal">@color/ffd740</item>
 
     </style>
 
@@ -48,5 +46,7 @@
         <item name="android:dropDownSelector">?android:selectableItemBackground</item>
         <item name="android:divider">@null</item>
     </style>
+
+
 
 </resources>

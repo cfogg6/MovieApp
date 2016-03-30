@@ -55,7 +55,9 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
             String dateOfMovie = listOfMovies.getJSONObject(i).getString("year");
             String imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
             String synopsisOfMovie = listOfMovies.getJSONObject(i).getString("synopsis");
-            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, null);
+            float ratingOfMovie = listOfMovies.getJSONObject(i).getJSONObject("ratings").getInt("audience_score");
+            ratingOfMovie = ratingOfMovie / 20;
+            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingOfMovie, null);
             movies.add(i, toAdd);
         }
     }
@@ -64,7 +66,7 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_movie);
-        // Instantiate the RequestQueue.
+
         showNewDVDs();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);

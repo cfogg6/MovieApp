@@ -11,13 +11,15 @@ public class Movie {
     String date;
     String photoId;
     String synopsis;
+    float rating;
     ImageView picture;
 
-    public Movie(String name, String date, String photoId, String synopsis, ImageView picture) {
+    public Movie(String name, String date, String photoId, String synopsis, float rating, ImageView picture) {
         this.name = name;
         this.date = date;
         this.photoId = photoId;
         this.synopsis = synopsis;
+        this.rating = rating;
         this.picture = picture;
     }
 
@@ -35,5 +37,9 @@ public class Movie {
 
     public String getSynopsis() {
         return synopsis;
+    }
+
+    public float getRating() {
+        return rating;
     }
 }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
         RelativeLayout cvLayout;
         TextView movName;
         ImageView movPhoto;
+        RatingBar starbar;
 
         SearchViewHolder(View itemView) {
             super(itemView);
@@ -32,6 +34,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
             cvLayout = (RelativeLayout)itemView.findViewById(R.id.cv_layout);
             movName = (TextView)itemView.findViewById(R.id.movie_name);
             movPhoto = (ImageView) itemView.findViewById(R.id.movie_photo);
+            starbar = (RatingBar) itemView.findViewById(R.id.mov_rating);
         }
     }
 
@@ -57,6 +60,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     @Override
     public void onBindViewHolder(SearchViewHolder searchViewHolder, int i) {
         searchViewHolder.movName.setText(movies.get(i).getName());
+        searchViewHolder.starbar.setRating(movies.get(i).getRating());
         new DownloadImageTask(searchViewHolder.movPhoto).execute(movies.get(i).getPhotoID());
 
         searchViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {

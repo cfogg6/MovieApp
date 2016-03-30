@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,16 +36,23 @@ import java.util.List;
 public class SearchActivity extends ToolbarDrawerActivity {
     String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
     final Activity activity = this;
+    JSONArray listOfMovies;
 
     private List<com.mymovieapp.Movie> searchMovies;
 
-    private void initializeData() {
+    private void initializeData() throws JSONException {
         searchMovies = new ArrayList<>();
-//        searchMovies.add(new com.mymovieapp.Movie("Something", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
-//        searchMovies.add(new com.mymovieapp.Movie("Other Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
-//        searchMovies.add(new com.mymovieapp.Movie("Place Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
-//        searchMovies.add(new com.mymovieapp.Movie("Holder Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
-//        searchMovies.add(new com.mymovieapp.Movie("Moving Movies", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+        for (int i = 0; i < listOfMovies.length(); i++) {
+            //Assign name, date, details, and photo to the movies array
+            String nameOfMovie = listOfMovies.getJSONObject(i).getString("title");
+            String dateOfMovie = listOfMovies.getJSONObject(i).getString("year");
+            String imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
+            String synopsisOfMovie = listOfMovies.getJSONObject(i).getString("synopsis");
+            float ratingOfMovie = listOfMovies.getJSONObject(i).getJSONObject("ratings").getInt("audience_score");
+            ratingOfMovie = ratingOfMovie / 20;
+            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingOfMovie, null);
+            searchMovies.add(i, toAdd);
+        }
     }
 
     @Override
@@ -72,6 +81,20 @@ public class SearchActivity extends ToolbarDrawerActivity {
                                 try {
                                     searchListAdapter.updateJSON(new JSONObject(response));
                                     searchListAdapter.notifyDataSetChanged();
+                                    listOfMovies = new JSONObject(response).getJSONArray("movies");
+                                    Log.d("response", String.valueOf(response));
+                                    Log.d("list of movies", String.valueOf(listOfMovies.length()));
+                                    RecyclerView rv = (RecyclerView) findViewById(R.id.search_rv);
+                                    rv.setHasFixedSize(true);
+                                    GridLayoutManager glm = new GridLayoutManager(activity, 2);
+                                    rv.setLayoutManager(glm);
+                                    try {
+                                        initializeData();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    RVSearchAdapter adapter = new RVSearchAdapter(searchMovies);
+                                    rv.setAdapter(adapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -84,17 +107,6 @@ public class SearchActivity extends ToolbarDrawerActivity {
                 queue.add(stringRequest);
             }
         });
-
-        RecyclerView rv = (RecyclerView) findViewById(R.id.search_rv);
-        rv.setHasFixedSize(true);
-        GridLayoutManager glm = new GridLayoutManager(this, 2);
-        rv.setLayoutManager(glm);
-        initializeData();
-        RVSearchAdapter adapter = new RVSearchAdapter(searchMovies);
-        rv.setAdapter(adapter);
-
-
-
 
         /**
          * Makes keyboard disappear when you click away from an EditText field

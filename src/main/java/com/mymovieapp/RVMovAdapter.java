@@ -3,7 +3,6 @@ package com.mymovieapp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.List;
@@ -49,15 +45,6 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
             details = (TextView) itemView.findViewById(R.id.movie_details);
             movPhoto = (ImageView) itemView.findViewById(R.id.movie_photo);
             cvLayout = (RelativeLayout) itemView.findViewById(R.id.cv_layout);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent it = new Intent(v.getContext(), LoginActivity.class);
-                    v.getContext().startActivity(it);
-                    Toast.makeText(v.getContext(), "Card Clicked.", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
     }
 

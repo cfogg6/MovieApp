@@ -1,5 +1,6 @@
 package com.mymovieapp;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -26,7 +27,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
         RelativeLayout cvLayout;
         TextView movName;
         ImageView movPhoto;
-        RatingBar starbar;
+        RatingBar starBar;
 
         SearchViewHolder(View itemView) {
             super(itemView);
@@ -34,11 +35,12 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
             cvLayout = (RelativeLayout)itemView.findViewById(R.id.cv_layout);
             movName = (TextView)itemView.findViewById(R.id.movie_name);
             movPhoto = (ImageView) itemView.findViewById(R.id.movie_photo);
-            starbar = (RatingBar) itemView.findViewById(R.id.mov_rating);
+            starBar = (RatingBar) itemView.findViewById(R.id.mov_rating);
         }
     }
 
     List<com.mymovieapp.Movie> movies;
+    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", 0, null);
 
     RVSearchAdapter(List<com.mymovieapp.Movie> movies) {
         this.movies = movies;
@@ -59,14 +61,21 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
 
     @Override
     public void onBindViewHolder(SearchViewHolder searchViewHolder, int i) {
+        final Movie mov = movies.get(i);
         searchViewHolder.movName.setText(movies.get(i).getName());
-        searchViewHolder.starbar.setRating(movies.get(i).getRating());
+        searchViewHolder.starBar.setRating(movies.get(i).getRating());
         new DownloadImageTask(searchViewHolder.movPhoto).execute(movies.get(i).getPhotoID());
 
         searchViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
+                it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov.getName());
+                v.getContext().startActivity(it);
+                movieToPass.name = mov.getName();
+                movieToPass.date = mov.getDate();
+                movieToPass.photoId = mov.getPhotoID();
+                movieToPass.synopsis = mov.getSynopsis();
             }
         });
     }

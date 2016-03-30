@@ -80,7 +80,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     }
 
     @Override
-    public void onBindViewHolder(UserViewHolder userViewHolder, final int i) {
+    public void onBindViewHolder(final UserViewHolder userViewHolder, final int i) {
         userViewHolder.username.setText(users.get(i).getName());
         userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
         userViewHolder.profPhoto.setImageResource(R.mipmap.bucket);
@@ -110,14 +110,17 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                             if (isChecked) {
                                 bannedObj.put("username", user.getName());
                                 bannedObj.saveInBackground();
+                                userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);
                             } else {
                                 ParseObject.createWithoutData("Banned", bannedObj.getObjectId()).deleteInBackground();
+                                userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
                             }
                         } catch (ParseException e) {
                             if (isChecked) {
                                 ParseObject bannedObj = new ParseObject("Banned");
                                 bannedObj.put("username", user.getName());
                                 bannedObj.saveInBackground();
+                                userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);
                             }
                         }
                     }
@@ -133,6 +136,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                             ParseObject lockedObj = bannedQuery.getFirst();
                             ParseObject.createWithoutData("Locked", lockedObj.getObjectId()).deleteInBackground();
                             lockedObj.saveInBackground();
+                            userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }

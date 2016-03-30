@@ -1,5 +1,7 @@
 package com.mymovieapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.text.DecimalFormat;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by Corey on 3/8/16.
  */
-public class Rating implements Comparable {
+public class Rating implements Parcelable, Comparable {
 
     String name;
     String username;
@@ -48,5 +50,32 @@ public class Rating implements Comparable {
         for (Double item: list)
             sum += item;
         return Double.valueOf(format.format(sum / list.size()));
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(name);
+        out.writeString(username);
+        out.writeList(list);
+    }
+
+    public static final Parcelable.Creator<Rating> CREATOR
+            = new Parcelable.Creator<Rating>() {
+        public Rating createFromParcel(Parcel in) {
+            return new Rating(in);
+        }
+
+        public Rating[] newArray(int size) {
+            return new Rating[size];
+        }
+    };
+
+    private Rating(Parcel in) {
+        name = in.readString();
+        username = in.readString();
+        in.readList(list, Double.class.getClassLoader());
     }
 }

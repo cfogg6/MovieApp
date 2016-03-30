@@ -16,13 +16,8 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mov_rv">
+        android:id="@+id/mov_rv"
+        android:layout_below="@+id/spinner_toolbar">
 
     </android.support.v7.widget.RecyclerView>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/lv_ratings"
-        android:layout_below="@+id/spinner_toolbar" />
 </RelativeLayout>

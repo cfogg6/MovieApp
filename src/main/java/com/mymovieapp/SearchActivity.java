@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,9 +49,15 @@ public class SearchActivity extends ToolbarDrawerActivity {
             String dateOfMovie = listOfMovies.getJSONObject(i).getString("year");
             String imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
             String synopsisOfMovie = listOfMovies.getJSONObject(i).getString("synopsis");
-            float ratingOfMovie = listOfMovies.getJSONObject(i).getJSONObject("ratings").getInt("audience_score");
+            String ratingRuntimeOfMovie = listOfMovies.getJSONObject(i).getString("mpaa_rating") +
+                    " Rating " +
+                    listOfMovies.getJSONObject(i).getString("runtime") + " min";
+            double ratingOfMovie = listOfMovies.getJSONObject(i).getJSONObject("ratings").getInt("audience_score");
             ratingOfMovie = ratingOfMovie / 20;
-            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingOfMovie, null);
+
+            Rating ratingToAdd = new Rating(nameOfMovie, ParseUser.getCurrentUser().getUsername());
+            ratingToAdd.addRating(ratingOfMovie);
+            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, ratingToAdd);
             searchMovies.add(i, toAdd);
         }
     }

@@ -31,11 +31,11 @@ import java.util.List;
 public class RecommendationsActivity extends ToolbarDrawerActivity {
     Spinner spinner;
     ArrayList<Rating> ratings = new ArrayList<>();
-    ListView listView;
+    RecyclerView rv;
 
     JSONArray listOfMovies;
 
-    private List<com.mymovieapp.Movie> movies;
+    private ArrayList<com.mymovieapp.Movie> movies = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +47,11 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
 
         Toolbar spinBar = (Toolbar) findViewById(R.id.spinner_toolbar);
 
-        listView = (ListView) findViewById(R.id.lv_ratings);
-        listView.setAdapter(new RatingsListAdapter(this, 0));
-
         View spinnerContainer = LayoutInflater.from(this)
                 .inflate(R.layout.toolbar_spinner,spinBar, false);
         Toolbar.LayoutParams lp = new Toolbar.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         spinBar.addView(spinnerContainer, lp);
-
-
-        /*// Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.toolbar_spinner_item,
-                getResources().getStringArray(R.array.majors_array));
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(R.layout.toolbar_spinner_item_dropdown);*/
-
 
         MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter();
         spinnerAdapter.addItems(
@@ -84,7 +73,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
         }));
 
         //Initialize RecycleView, Layout Manager, and Adapter
-        RecyclerView rv = (RecyclerView) findViewById(R.id.mov_rv);
+        rv = (RecyclerView) findViewById(R.id.mov_rv);
         rv.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -100,7 +89,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
     }
 
     private void updateList() {
-        ratings = new ArrayList<>();
+        movies = new ArrayList<>();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
         query.whereEqualTo("major", spinner.getSelectedItem().toString());
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -117,13 +106,28 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                         } else {
                             ratings.add(newRating);
                         }
+
+                        com.mymovieapp.Movie tempMovie = (new com.mymovieapp.Movie(element.getString("title"),
+                                element.getString("date"),
+                                element.getString("photoId"),
+                                element.getString("synopsis"),
+                                element.getString("ratingRuntime"),
+                                newRating));
+
+                        if (!(movies.contains(tempMovie))) {
+                            movies.add(tempMovie);
+                        } else {
+                            movies.get(movies.lastIndexOf(tempMovie)).getRating().addRating(element.getDouble("rating"));
+                        }
                     }
                     Collections.sort(ratings);
+                    Collections.sort(movies);
+
                 } else {
                     e.printStackTrace();
                 }
-                ((RatingsListAdapter) listView.getAdapter()).updateRatings(ratings);
-                ((RatingsListAdapter) listView.getAdapter()).notifyDataSetChanged();
+                ((RVMovAdapter) rv.getAdapter()).updateMovies(movies);
+                ((RVMovAdapter) rv.getAdapter()).notifyDataSetChanged();
             }
         });
     }

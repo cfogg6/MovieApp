@@ -25,6 +25,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
 
 /**
@@ -39,10 +41,11 @@ public class MovieInfoActivity extends Activity {
     EditText commentEditText;
     AppCompatImageView movPic;
     TextView synopsis;
+    TextView ratingRuntime;
     String comment;
     Button commentButton;
     MovieInfoActivity thisActivity = this;
-    com.mymovieapp.Movie movieObject = RVMovAdapter.movieToPass;
+    com.mymovieapp.Movie movieObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +57,11 @@ public class MovieInfoActivity extends Activity {
         movPic = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
         synopsis = (TextView) findViewById(R.id.tV_synopsis);
 
+        movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
         starBar.setRating(0);
-        movieName = movieObject.name;
-        synopsis.setText(movieObject.synopsis);
-        new DownloadImageTask(movPic).execute(movieObject.photoId);
+        movieName = movieObject.getName();
+        synopsis.setText(movieObject.getSynopsis());
+        new DownloadImageTask(movPic).execute(movieObject.getPhotoID());
         movieTitle.setText(movieName);
         commentButton = (Button) findViewById(R.id.btn_comment);
         commentButton.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +78,10 @@ public class MovieInfoActivity extends Activity {
                         movieInfo.saveInBackground();
                     }
                     movieInfo.put("rating", rating);
+                    movieInfo.put("photoId", movieObject.getPhotoID());
+                    movieInfo.put("synopsis", movieObject.getSynopsis());
+                    movieInfo.put("ratingRuntime", movieObject.getRatingRuntime());
+                    movieInfo.put("date", movieObject.getDate());
                     movieInfo.saveInBackground();
                     comment = commentEditText.getText().toString();
                     movieInfo.put("comment", comment);

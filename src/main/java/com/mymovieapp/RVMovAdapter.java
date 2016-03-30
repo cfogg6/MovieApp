@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ import java.util.List;
 public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHolder> {
 
     List<com.mymovieapp.Movie> movies;
-    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", 0, null);
+    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", null);
 
     public RVMovAdapter(List<com.mymovieapp.Movie> movies) {
         this.movies = movies;
@@ -46,21 +48,16 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
             details = (TextView) itemView.findViewById(R.id.movie_details);
             movPhoto = (ImageView) itemView.findViewById(R.id.movie_photo);
             cvLayout = (RelativeLayout) itemView.findViewById(R.id.cv_layout);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent it = new Intent(v.getContext(), LoginActivity.class);
-                    v.getContext().startActivity(it);
-                    Toast.makeText(v.getContext(), "Card Clicked.", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
     }
 
     @Override
     public int getItemCount() {
         return  movies.size();
+    }
+
+    public void updateMovies(ArrayList<com.mymovieapp.Movie> list) {
+        movies = list;
     }
 
     @Override
@@ -70,12 +67,12 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder movieViewHolder, int i) {
+    public void onBindViewHolder(final MovieViewHolder movieViewHolder, int i) {
         final com.mymovieapp.Movie mov = movies.get(i);
 
-        movieViewHolder.movieName.setText(mov.name);
-        movieViewHolder.releaseDate.setText(mov.date);
-        movieViewHolder.details.setText("all details");
+        movieViewHolder.movieName.setText(mov.getName());
+        movieViewHolder.releaseDate.setText(mov.getDate());
+        movieViewHolder.details.setText(mov.getRatingRuntime());
 
         new DownloadImageTask(movieViewHolder.movPhoto).execute(mov.photoId);
         
@@ -83,12 +80,14 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
-                it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov.getName());
+                it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov);
                 v.getContext().startActivity(it);
                 movieToPass.name = mov.getName();
                 movieToPass.date = mov.getDate();
                 movieToPass.photoId = mov.getPhotoID();
                 movieToPass.synopsis = mov.getSynopsis();
+                movieToPass.ratingRuntime = mov.getRatingRuntime();
+                movieToPass.rating = mov.getRating();
             }
         });
     }
@@ -109,10 +108,11 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
             try {
+                Log.d("url", urldisplay);
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                Log.e("Error", e.getMessage());
+                //Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
             return mIcon11;

@@ -23,7 +23,7 @@ public class RatingsListAdapter extends ArrayAdapter {
     int count = 0;
     LayoutInflater inflater;
     Context context;
-    ArrayList<Rating> ratings = new ArrayList<>();
+    ArrayList<com.mymovieapp.Movie> movies = new ArrayList<>();
 
     public RatingsListAdapter(Activity parentActivity, int textViewResourceId) {
         super(parentActivity, textViewResourceId);
@@ -31,13 +31,12 @@ public class RatingsListAdapter extends ArrayAdapter {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void updateRatings(ArrayList<Rating> list) {
-        ratings = list;
-
+    public void updateRatings(ArrayList<com.mymovieapp.Movie> list) {
+        movies = list;
     }
 
     public int getCount() {
-        return ratings.size();
+        return movies.size();
     }
 
     public View getView(final int position,View convertView,ViewGroup parent) {
@@ -50,7 +49,7 @@ public class RatingsListAdapter extends ArrayAdapter {
         } else {
             viewHolder = (ViewHolder)convertView.getTag();
         }
-        viewHolder.ratingsTextView.setText(ratings.get(position).name + " " + ratings.get(position).getAverageRating());
+        viewHolder.ratingsTextView.setText(movies.get(position).getName() + " " + movies.get(position).getRating().getAverageRating());
         return convertView;
     }
 

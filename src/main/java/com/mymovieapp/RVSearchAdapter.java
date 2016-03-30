@@ -40,7 +40,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     }
 
     List<com.mymovieapp.Movie> movies;
-    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", 0, null);
+    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", null);
 
     RVSearchAdapter(List<com.mymovieapp.Movie> movies) {
         this.movies = movies;
@@ -63,19 +63,16 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     public void onBindViewHolder(SearchViewHolder searchViewHolder, int i) {
         final Movie mov = movies.get(i);
         searchViewHolder.movName.setText(movies.get(i).getName());
-        searchViewHolder.starBar.setRating(movies.get(i).getRating());
+        searchViewHolder.starBar.setRating((float) movies.get(i).getRating().getAverageRating());
         new DownloadImageTask(searchViewHolder.movPhoto).execute(movies.get(i).getPhotoID());
 
         searchViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
-                it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov.getName());
+                it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov);
                 v.getContext().startActivity(it);
-                movieToPass.name = mov.getName();
-                movieToPass.date = mov.getDate();
-                movieToPass.photoId = mov.getPhotoID();
-                movieToPass.synopsis = mov.getSynopsis();
+
             }
         });
     }

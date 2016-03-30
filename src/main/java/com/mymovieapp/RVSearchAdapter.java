@@ -35,9 +35,9 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
         }
     }
 
-    List<SearchActivity.SearchMovie> movies;
+    List<com.mymovieapp.Movie> movies;
 
-    RVSearchAdapter(List<SearchActivity.SearchMovie> movies) {
+    RVSearchAdapter(List<com.mymovieapp.Movie> movies) {
         this.movies = movies;
     }
 
@@ -56,8 +56,8 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
 
     @Override
     public void onBindViewHolder(SearchViewHolder searchViewHolder, int i) {
-        searchViewHolder.movName.setText(movies.get(i).name);
-        new DownloadImageTask(searchViewHolder.movPhoto).execute(movies.get(i).picture);
+        searchViewHolder.movName.setText(movies.get(i).getName());
+        new DownloadImageTask(searchViewHolder.movPhoto).execute(movies.get(i).getPhotoID());
 
         searchViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
             @Override

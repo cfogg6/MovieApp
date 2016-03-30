@@ -35,25 +35,15 @@ public class SearchActivity extends ToolbarDrawerActivity {
     String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
     final Activity activity = this;
 
-    class SearchMovie {
-        String name;
-        String picture;
-
-        SearchMovie(String name, String picture) {
-            this.name = name;
-            this.picture = picture;
-        }
-    }
-
-    private List<SearchMovie> searchMovies;
+    private List<com.mymovieapp.Movie> searchMovies;
 
     private void initializeData() {
         searchMovies = new ArrayList<>();
-        searchMovies.add(new SearchMovie("Something", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
-        searchMovies.add(new SearchMovie("Other Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
-        searchMovies.add(new SearchMovie("Place Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
-        searchMovies.add(new SearchMovie("Holder Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
-        searchMovies.add(new SearchMovie("Moving Movies", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+//        searchMovies.add(new com.mymovieapp.Movie("Something", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+//        searchMovies.add(new com.mymovieapp.Movie("Other Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+//        searchMovies.add(new com.mymovieapp.Movie("Place Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+//        searchMovies.add(new com.mymovieapp.Movie("Holder Movie", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
+//        searchMovies.add(new com.mymovieapp.Movie("Moving Movies", "http://content6.flixster.com/movie/11/13/43/11134356_tmb.jpg"));
     }
 
     @Override

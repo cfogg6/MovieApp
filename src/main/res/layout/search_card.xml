@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="5dp"
         android:clickable="true"
         android:id="@+id/cv_layout">
         <ImageView
@@ -19,27 +19,29 @@
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:id="@+id/movie_photo"
-            android:paddingBottom="16dp"
+            android:layout_marginBottom="5dp"
             android:scaleType="centerCrop"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:padding="3dp"
+            android:paddingTop="3dp"
             android:layout_below="@+id/movie_photo"
-            android:background="@color/slate"/>
+            android:background="@color/slate"
+            android:id="@+id/line"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/movie_name"
             android:paddingTop="5dp"
-            android:layout_below="@+id/movie_photo"
+            android:layout_below="@+id/line"
             android:textSize="20sp"/>
 
         <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
             style="?android:attr/ratingBarStyleSmall"
             android:id="@+id/mov_rating"
             android:layout_below="@+id/movie_name"

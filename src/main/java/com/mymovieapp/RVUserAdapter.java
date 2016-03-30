@@ -9,11 +9,9 @@ import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,15 +32,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHolder> {
     List<AdminUser> users  = new ArrayList<>();
+    List<AdminUser> unlockedUsers  = new ArrayList<>();
+    List<AdminUser> lockedUsers  = new ArrayList<>();
+    List<AdminUser> bannedUsers  = new ArrayList<>();
     Context context;
+    public String mode = "ALL";
 
-    public RVUserAdapter(Activity parentActivity, List<AdminUser> users) {
+    public RVUserAdapter(Activity parentActivity, List<AdminUser> users)  {
         context = parentActivity;
-        updateUsers(users);
-    }
-
-    public void updateUsers(List<AdminUser> users) {
         this.users = users;
+        updateLists();
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
@@ -62,9 +61,59 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
         }
     }
 
+    public void setTabMode(String mode) {
+        this.mode = mode;
+    }
+
+    public void updateLists() {
+        for (AdminUser user: users) {
+            if (user.isLocked()) {
+                if (!lockedUsers.contains(user)) {
+                    lockedUsers.add(user);
+                }
+                unlockedUsers.remove(user);
+                if (user.isBanned() && !bannedUsers.contains(user)) {
+                    bannedUsers.add(user);
+                }
+            } else if (user.isBanned()) {
+                unlockedUsers.remove(user);
+                if (!bannedUsers.contains(user)) {
+                    bannedUsers.add(user);
+                }
+            } else {
+                if (!unlockedUsers.contains(user)) {
+                    unlockedUsers.add(user);
+                }
+            }
+        }
+    }
+
     @Override
     public int getItemCount() {
-        return users.size();
+        final List<AdminUser> currentList;
+        switch (mode) {
+            case "ALL": {
+                currentList = users;
+                break;
+            }
+            case "UNLOCKED": {
+                currentList = unlockedUsers;
+                break;
+            }
+            case "LOCKED": {
+                currentList = lockedUsers;
+                break;
+            }
+            case "BANNED": {
+                currentList = bannedUsers;
+                break;
+            }
+            default: {
+                currentList = users;
+                break;
+            }
+        }
+        return currentList.size();
     }
 
     @Override
@@ -81,12 +130,35 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
 
     @Override
     public void onBindViewHolder(final UserViewHolder userViewHolder, final int i) {
-        userViewHolder.username.setText(users.get(i).getName());
+        final List<AdminUser> currentList;
+        switch (mode) {
+            case "ALL": {
+                currentList = users;
+                break;
+            }
+            case "UNLOCKED": {
+                currentList = unlockedUsers;
+                break;
+            }
+            case "LOCKED": {
+                currentList = lockedUsers;
+                break;
+            }
+            case "BANNED": {
+                currentList = bannedUsers;
+                break;
+            }
+            default: {
+                currentList = users;
+                break;
+            }
+        }
+        userViewHolder.username.setText(currentList.get(i).getName());
         userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
         userViewHolder.profPhoto.setImageResource(R.mipmap.bucket);
-        if (users.get(i).isBanned()) {
+        if (currentList.get(i).isBanned()) {
             userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);
-        } else if (users.get(i).isLocked()) {
+        } else if (currentList.get(i).isLocked()) {
             userViewHolder.userStatus.setImageResource(R.drawable.ic_lock_24dp);
         } else {
             userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
@@ -94,8 +166,8 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
         userViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AdminUser user = users.get(i);
-                Dialog dialog = new Dialog(context);
+                final AdminUser user = currentList.get(i);
+                final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.menu_admin_options);
                 SwitchCompat bannedSwitch = (SwitchCompat)dialog.findViewById(R.id.sw_banned);
                 bannedSwitch.setChecked(user.isBanned());
@@ -111,16 +183,50 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                                 bannedObj.put("username", user.getName());
                                 bannedObj.saveInBackground();
                                 userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);
+                                if (!bannedUsers.contains(currentList.get(i))) {
+                                    bannedUsers.add(currentList.get(i));
+                                }
+                                unlockedUsers.remove(currentList.get(i));
+                                if (mode.equals("UNLOCKED")) {
+                                    dialog.dismiss();
+                                    notifyDataSetChanged();
+                                }
                             } else {
-                                ParseObject.createWithoutData("Banned", bannedObj.getObjectId()).deleteInBackground();
+                                if (!currentList.get(i).isLocked() && !unlockedUsers.contains(currentList.get(i))) {
+                                    unlockedUsers.add(currentList.get(i));
+                                }
+                                bannedUsers.remove(currentList.get(i));
                                 userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
+                                ParseObject.createWithoutData("Banned", bannedObj.getObjectId()).deleteInBackground();
+                                if (mode.equals("BANNED")) {
+                                    dialog.dismiss();
+                                    notifyDataSetChanged();
+                                }
                             }
                         } catch (ParseException e) {
                             if (isChecked) {
                                 ParseObject bannedObj = new ParseObject("Banned");
                                 bannedObj.put("username", user.getName());
                                 bannedObj.saveInBackground();
+                                if (!bannedUsers.contains(currentList.get(i))) {
+                                    bannedUsers.add(currentList.get(i));
+                                }
+                                unlockedUsers.remove(currentList.get(i));
                                 userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);
+                                if (mode.equals("UNLOCKED")) {
+                                    dialog.dismiss();
+                                    notifyDataSetChanged();
+                                }
+                            } else {
+                                bannedUsers.remove(currentList.get(i));
+                                if (!currentList.get(i).isLocked() && !unlockedUsers.contains(currentList.get(i))) {
+                                    unlockedUsers.add(currentList.get(i));
+                                }
+                                userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
+                                if (mode.equals("BANNED")) {
+                                    dialog.dismiss();
+                                    notifyDataSetChanged();
+                                }
                             }
                         }
                     }
@@ -136,7 +242,15 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                             ParseObject lockedObj = bannedQuery.getFirst();
                             ParseObject.createWithoutData("Locked", lockedObj.getObjectId()).deleteInBackground();
                             lockedObj.saveInBackground();
+                            if (!lockedUsers.contains(currentList.get(i))) {
+                                lockedUsers.add(currentList.get(i));
+                            }
+                            unlockedUsers.remove(currentList.get(i));
                             userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
+                            if (mode.equals("UNLOCKED")) {
+                                dialog.dismiss();
+                                notifyDataSetChanged();
+                            }
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -172,7 +286,6 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
             return mIcon11;

@@ -125,7 +125,8 @@ public class LoginActivity extends Activity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (!(v instanceof EditText)) {
                     InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);                }
+                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
                 return true;
             }
         });

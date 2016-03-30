@@ -85,8 +85,11 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
                         Toast.makeText(AdminToolbarDrawerActivity.this, menuItem.getTitle() + " pressed", Toast.LENGTH_SHORT).show();
 
                         //Checking if the item is in checked state or not, if not make it in checked state
-                        if (menuItem.isChecked()) menuItem.setChecked(false);
-                        else menuItem.setChecked(true);
+                        if (menuItem.isChecked()) {
+                            menuItem.setChecked(false);
+                        } else {
+                            menuItem.setChecked(true);
+                        }
 
                         //Closing drawer on item click
                         mDrawerLayout.closeDrawers();
@@ -136,8 +139,10 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
         //Initialize Toolbar as ActionBar
         if (myToolbar != null) {
             setSupportActionBar(myToolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeButtonEnabled(true);
+            }
         }
     }
 }

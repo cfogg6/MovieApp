@@ -43,8 +43,9 @@ public class Rating implements Parcelable, Comparable {
     public double getAverageRating() {
         DecimalFormat format = new DecimalFormat("#.#");
         double sum = 0;
-        for (Double item: list)
+        for (Double item: list) {
             sum += item;
+        }
         return Double.valueOf(format.format(sum / list.size()));
     }
 

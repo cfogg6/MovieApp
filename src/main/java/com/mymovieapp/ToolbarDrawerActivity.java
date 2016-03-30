@@ -87,8 +87,11 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
                         Toast.makeText(ToolbarDrawerActivity.this, menuItem.getTitle() + " pressed", Toast.LENGTH_SHORT).show();
 
                         //Checking if the item is in checked state or not, if not make it in checked state
-                        if (menuItem.isChecked()) menuItem.setChecked(false);
-                        else menuItem.setChecked(true);
+                        if (menuItem.isChecked()) {
+                            menuItem.setChecked(false);
+                        } else {
+                            menuItem.setChecked(true);
+                        }
 
                         //Closing drawer on item click
                         mDrawerLayout.closeDrawers();

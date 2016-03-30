@@ -42,7 +42,7 @@ public class MovieInfoActivity extends Activity {
     String comment;
     Button commentButton;
     MovieInfoActivity thisActivity = this;
-    NewMovieDrawerActivity.Movie movieObject = RVMovAdapter.movieToPass;
+    com.mymovieapp.Movie movieObject = RVMovAdapter.movieToPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

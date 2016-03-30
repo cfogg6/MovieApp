@@ -44,23 +44,7 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
     final Activity activity = this;
     JSONArray listOfMovies;
 
-    class Movie {
-        String name;
-        String date;
-        String photoId;
-        String synopsis;
-        ImageView picture;
-
-        Movie(String name, String date, String photoId, String synopsis, ImageView picture) {
-            this.name = name;
-            this.date = date;
-            this.photoId = photoId;
-            this.synopsis = synopsis;
-            this.picture = picture;
-        }
-    }
-
-    private List<Movie> movies;
+    private List<com.mymovieapp.Movie> movies;
 
     private void initializeData() throws JSONException {
         movies = new ArrayList<>();
@@ -71,7 +55,7 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
             String dateOfMovie = listOfMovies.getJSONObject(i).getString("year");
             String imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
             String synopsisOfMovie = listOfMovies.getJSONObject(i).getString("synopsis");
-            Movie toAdd = new Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, null);
+            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, null);
             movies.add(i, toAdd);
         }
     }

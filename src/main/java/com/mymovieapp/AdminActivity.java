@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -22,9 +21,7 @@ import java.util.List;
  * Created by Corey on 3/13/16.
  */
 public class AdminActivity extends AdminToolbarDrawerActivity {
-    ArrayList<AdminUser> users = new ArrayList<>();
-    ListView listView;
-
+    private RecyclerView rv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,28 +69,29 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
             }
         });
 
-        RecyclerView rv = (RecyclerView) findViewById(R.id.users_rv);
+        rv = (RecyclerView) findViewById(R.id.users_rv);
         rv.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rv.setLayoutManager(llm);
-        RVUserAdapter adapter = new RVUserAdapter(users);
-        rv.setAdapter(adapter);
+    }
 
-        listView = (ListView) findViewById(R.id.lv_user_list);
-        listView.setAdapter(new UserListAdapter(this, 0));
+    @Override
+    public void onResume() {
+        super.onResume();
+        final RVUserAdapter adapter = new RVUserAdapter(this, new ArrayList<AdminUser>());
+        rv.setAdapter(adapter);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
-                        users.add(new AdminUser(element.getString("username")));
+                        adapter.users.add(new AdminUser(element.getString("username")));
                     }
                 } else {
                     e.printStackTrace();
                 }
-                ((UserListAdapter) listView.getAdapter()).updateUsers(users);
-                ((UserListAdapter) listView.getAdapter()).notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
         ParseQuery<ParseObject> lockedQuery = ParseQuery.getQuery("Locked");
@@ -102,19 +100,15 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
-                        for (AdminUser user: users) {
-                            Log.d("users", user.getName());
-                        }
-                        int index = users.lastIndexOf(new AdminUser(element.getString("username")));
-                        if (element.getInt("strikes") >= 3) {
-                            users.get(index).setLocked(true);
+                        int index = adapter.users.lastIndexOf(new AdminUser(element.getString("username")));
+                        if (element.getInt("strikes") >= 3 && index >= 0) {
+                            adapter.users.get(index).setLocked(true);
                         }
                     }
                 } else {
                     e.printStackTrace();
                 }
-                ((UserListAdapter) listView.getAdapter()).updateUsers(users);
-                ((UserListAdapter) listView.getAdapter()).notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
         ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
@@ -123,14 +117,13 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
-                        int index = users.lastIndexOf(new AdminUser(element.getString("username")));
-                        users.get(index).setBanned(true);
+                        int index = adapter.users.lastIndexOf(new AdminUser(element.getString("username")));
+                        adapter.users.get(index).setBanned(true);
                     }
                 } else {
                     e.printStackTrace();
                 }
-                ((UserListAdapter) listView.getAdapter()).updateUsers(users);
-                ((UserListAdapter) listView.getAdapter()).notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
     }

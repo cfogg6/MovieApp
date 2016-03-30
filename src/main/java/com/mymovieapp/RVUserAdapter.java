@@ -1,19 +1,30 @@
 package com.mymovieapp;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -22,9 +33,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Angelo on 3/28/2016.
  */
 public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHolder> {
-    List<AdminUser> users;
+    List<AdminUser> users  = new ArrayList<>();
+    Context context;
 
-    public RVUserAdapter(List<AdminUser> users) {
+    public RVUserAdapter(Activity parentActivity, List<AdminUser> users) {
+        context = parentActivity;
+        updateUsers(users);
+    }
+
+    public void updateUsers(List<AdminUser> users) {
         this.users = users;
     }
 
@@ -55,19 +72,79 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.user_card, viewGroup, false);
         UserViewHolder uvh = new UserViewHolder(v);
+        uvh.username.setText(users.get(i).getName());
+//        uvh.profPhoto.setImageDrawable(users.get(i).profilePic);
+//        uvh.userStatus.setImageDrawable(users.get(i).statusImage);
+        uvh.profPhoto.setImageResource(R.mipmap.bucket);
         return uvh;
     }
 
     @Override
-    public void onBindViewHolder(UserViewHolder userViewHolder, int i) {
+    public void onBindViewHolder(UserViewHolder userViewHolder, final int i) {
         userViewHolder.username.setText(users.get(i).getName());
         userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
         userViewHolder.profPhoto.setImageResource(R.mipmap.bucket);
-
+        if (users.get(i).isBanned()) {
+            userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);
+        } else if (users.get(i).isLocked()) {
+            userViewHolder.userStatus.setImageResource(R.drawable.ic_lock_24dp);
+        } else {
+            userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
+        }
         userViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                final AdminUser user = users.get(i);
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.menu_admin_options);
+                SwitchCompat bannedSwitch = (SwitchCompat)dialog.findViewById(R.id.sw_banned);
+                bannedSwitch.setChecked(user.isBanned());
+                bannedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        user.setBanned(isChecked);
+                        ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
+                        bannedQuery.whereEqualTo("username", user.getName());
+                        try {
+                            ParseObject bannedObj = bannedQuery.getFirst();
+                            if (isChecked) {
+                                bannedObj.put("username", user.getName());
+                                bannedObj.saveInBackground();
+                            } else {
+                                ParseObject.createWithoutData("Banned", bannedObj.getObjectId()).deleteInBackground();
+                            }
+                        } catch (ParseException e) {
+                            if (isChecked) {
+                                ParseObject bannedObj = new ParseObject("Banned");
+                                bannedObj.put("username", user.getName());
+                                bannedObj.saveInBackground();
+                            }
+                        }
+                    }
+                });
+                final SwitchCompat lockSwitch = (SwitchCompat) dialog.findViewById(R.id.sw_locked);
+                lockSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        user.setLocked(false);
+                        ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Locked");
+                        bannedQuery.whereEqualTo("username", user.getName());
+                        try {
+                            ParseObject lockedObj = bannedQuery.getFirst();
+                            ParseObject.createWithoutData("Locked", lockedObj.getObjectId()).deleteInBackground();
+                            lockedObj.saveInBackground();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        lockSwitch.setVisibility(View.GONE);
+                    }
+                });
+                if (!user.isLocked) {
+                    lockSwitch.setVisibility(View.GONE);
+                } else {
+                    lockSwitch.setVisibility(View.VISIBLE);
+                }
+                dialog.show();
             }
         });
     }

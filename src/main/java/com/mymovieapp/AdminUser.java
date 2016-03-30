@@ -1,6 +1,8 @@
 package com.mymovieapp;
 
-import java.util.Objects;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 
 /**
  * Created by Corey on 3/13/16.
@@ -9,6 +11,48 @@ public class AdminUser {
     String name;
     boolean isLocked = false;
     boolean isBanned = false;
+    Drawable statusImage = new Drawable() {
+        @Override
+        public void draw(Canvas canvas) {
+
+        }
+
+        @Override
+        public void setAlpha(int alpha) {
+
+        }
+
+        @Override
+        public void setColorFilter(ColorFilter colorFilter) {
+
+        }
+
+        @Override
+        public int getOpacity() {
+            return 0;
+        }
+    };
+    Drawable profilePic = new Drawable() {
+        @Override
+        public void draw(Canvas canvas) {
+
+        }
+
+        @Override
+        public void setAlpha(int alpha) {
+
+        }
+
+        @Override
+        public void setColorFilter(ColorFilter colorFilter) {
+
+        }
+
+        @Override
+        public int getOpacity() {
+            return 0;
+        }
+    };
 
     public AdminUser(String name) {
         this.name = name;

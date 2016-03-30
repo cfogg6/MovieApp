@@ -25,7 +25,6 @@ import java.util.ArrayList;
  * Created by Corey on 3/13/16.
  */
 public class UserListAdapter extends ArrayAdapter {
-    int count = 0;
     LayoutInflater inflater;
     Context context;
     ArrayList<AdminUser> users = new ArrayList<>();
@@ -81,10 +80,10 @@ public class UserListAdapter extends ArrayAdapter {
                             }
                         }
                     });
-                    final Button lockButton = (Button) dialog.findViewById(R.id.btn_banned);
-                    lockButton.setOnClickListener(new View.OnClickListener() {
+                    final SwitchCompat lockSwitch = (SwitchCompat) dialog.findViewById(R.id.sw_locked);
+                    lockSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
-                        public void onClick(View v) {
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             user.setLocked(false);
                             ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Locked");
                             bannedQuery.whereEqualTo("username", user.getName());
@@ -95,13 +94,13 @@ public class UserListAdapter extends ArrayAdapter {
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            lockButton.setVisibility(View.GONE);
+                            lockSwitch.setVisibility(View.GONE);
                         }
                     });
                     if (!user.isLocked) {
-                        lockButton.setVisibility(View.GONE);
+                        lockSwitch.setVisibility(View.GONE);
                     } else {
-                        lockButton.setVisibility(View.VISIBLE);
+                        lockSwitch.setVisibility(View.VISIBLE);
                     }
                     dialog.show();
                 }

@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
 /**
- * Created by Angelo on 3/20/2016.
+ * Parent class for activities on user side. Sets a toolbar with standard back button.
  */
 public class BackToolbarActivity extends AppCompatActivity {
 

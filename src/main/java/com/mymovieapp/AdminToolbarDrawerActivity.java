@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import com.parse.ParseUser;
 
+/**
+ * Toolbar and Navigation Drawer Parent class for admin related functions.
+ */
 public class AdminToolbarDrawerActivity extends AppCompatActivity{
     private DrawerLayout mDrawerLayout;
     protected ActionBarDrawerToggle mDrawerToggle;
@@ -68,8 +71,8 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
         View header = navView.getHeaderView(0);
         TextView usernameDraw = (TextView) header.findViewById(R.id.tV_username_header);
         TextView emailDraw = (TextView) header.findViewById(R.id.tV_email_header);
-        usernameDraw.setText(ParseUser.getCurrentUser().getUsername());
-        emailDraw.setText(ParseUser.getCurrentUser().getEmail());
+        usernameDraw.setText("Administrator");
+        emailDraw.setText("Administration Tools");
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navView.setNavigationItemSelectedListener(

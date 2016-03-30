@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Angelo on 3/28/2016.
+ * Home Screen activity with two RecycleViews giving user glimpses at movie lists that may interest
+ * them. Includes Toolbar and Navigation drawer to the rest of the user functions.
  */
 public class HomeActivity extends ToolbarDrawerActivity {
 

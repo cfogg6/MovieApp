@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.parse.ParseUser;
 
 /**
- * Created by Angelo on 3/20/2016.
+ * Edit profile activity that takes input and saves to database. Uses the back toolbar.
  */
 public class EditProfileToolbarActivity extends BackToolbarActivity{
     @Override

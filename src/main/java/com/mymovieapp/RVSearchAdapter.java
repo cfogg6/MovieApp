@@ -19,9 +19,14 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * Created by Angelo on 3/28/2016.
+ * Adapter for the RecyclerView regarding Square Cards or Search Cards
  */
 public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.SearchViewHolder> {
+
+    /**
+     * ViewHolder Class following the ViewHolder Android Pattern. Establishes views held inside
+     * the movie cards that this adapter sets.
+     */
     public static class SearchViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         RelativeLayout cvLayout;
@@ -42,6 +47,10 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     List<com.mymovieapp.Movie> movies;
     static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", null);
 
+    /**
+     * Constructor for the adapter that sets the movies list to argument.
+     * @param movies List of movies to set the cards to
+     */
     RVSearchAdapter(List<com.mymovieapp.Movie> movies) {
         this.movies = movies;
     }
@@ -55,8 +64,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     public SearchViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.search_card, viewGroup, false);
-        SearchViewHolder svh = new SearchViewHolder(v);
-        return svh;
+        return new SearchViewHolder(v);
     }
 
     @Override

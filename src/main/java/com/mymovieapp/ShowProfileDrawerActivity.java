@@ -1,9 +1,5 @@
 package com.mymovieapp;
 
-import android.os.Bundle;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.view.MenuItem;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,7 +11,7 @@ import android.widget.TextView;
 import com.parse.ParseUser;
 
 /**
- * Created by Angelo on 3/13/2016.
+ * Profile Activity for user using Toolbar and Navigation Drawer from Parent activity.
  */
 public class ShowProfileDrawerActivity extends ToolbarDrawerActivity {
     @Override

@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Angelo on 3/13/2016.
+ * New DVDs and New Releases screen with a Tab selector for the RecycleView Card Lists.
  */
 public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
     final Activity activity = this;

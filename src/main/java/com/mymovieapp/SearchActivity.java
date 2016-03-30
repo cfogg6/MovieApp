@@ -32,7 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Corey on 2/20/16.
+ * Activity that searches the movie database for a matching movie from the query.
+ * Currently extends the Toolbar and Navigation Drawer from the parent for accessibility.
  */
 public class SearchActivity extends ToolbarDrawerActivity {
     String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";

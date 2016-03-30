@@ -28,7 +28,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by Angelo on 3/28/2016.
+ * Adapter for the RecyclerView regarding horizontal user cards for admin purposes.
  */
 public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHolder> {
     List<AdminUser> users  = new ArrayList<>();
@@ -38,12 +38,21 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     Context context;
     public String mode = "ALL";
 
+    /**
+     * Constructor that sets the context of the adapter and the list of users to the argument list.
+     * @param parentActivity The parent activity of the callee
+     * @param users The list of users for the cards to populate from
+     */
     public RVUserAdapter(Activity parentActivity, List<AdminUser> users)  {
         context = parentActivity;
         this.users = users;
         updateLists();
     }
 
+    /**
+     * ViewHolder Class following the ViewHolder Android Pattern. Establishes views held inside
+     * the movie cards that this adapter sets.
+     */
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         RelativeLayout cvLayout;
@@ -61,10 +70,14 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
         }
     }
 
+    /*
     public void setTabMode(String mode) {
         this.mode = mode;
-    }
+    }*/
 
+    /**
+     * Method to update the lists regarding changes made in the tabs.
+     */
     public void updateLists() {
         for (AdminUser user: users) {
             if (user.isLocked()) {

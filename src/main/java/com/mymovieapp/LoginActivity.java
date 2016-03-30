@@ -22,6 +22,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+/**
+ * Login screen that authenticates with Parse database. Determines user or admin.
+ */
 public class LoginActivity extends Activity {
 
     @Override
@@ -136,9 +139,10 @@ public class LoginActivity extends Activity {
         });
     }
 
-    public String getUsername() {
+
+    /*public String getUsername() {
         return ((EditText) findViewById(R.id.et_username)).getText().toString();
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

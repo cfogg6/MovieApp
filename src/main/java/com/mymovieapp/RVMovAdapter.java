@@ -20,17 +20,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Angelo on 3/19/2016.
+ * Adapter for the RecyclerView regarding horizontal cards or movie cards.
  */
 public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHolder> {
 
     List<com.mymovieapp.Movie> movies;
     static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", null);
 
+    /**
+     * Constructor for the adapter that sets the movies list to argument.
+     * @param movies List of movies to set the cards to
+     */
     public RVMovAdapter(List<com.mymovieapp.Movie> movies) {
         this.movies = movies;
     }
 
+    /**
+     * ViewHolder Class following the ViewHolder Android Pattern. Establishes views held inside
+     * the movie cards that this adapter sets.
+     */
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView movieName;
@@ -57,6 +65,11 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
         return  movies.size();
     }
 
+    /**
+     * Method to update the movie list for the adapter with a new set of movies.
+     *
+     * @param list New list to update the movie list to
+     */
     public void updateMovies(ArrayList<com.mymovieapp.Movie> list) {
         movies = list;
     }

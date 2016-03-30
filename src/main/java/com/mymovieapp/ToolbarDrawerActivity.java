@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.parse.ParseUser;
 
 /**
- * Created by Angelo on 3/9/2016.
+ * Parent activity housing a toolbar with searchable and a navigation drawer for user.
  */
 public class ToolbarDrawerActivity extends AppCompatActivity{
     private DrawerLayout mDrawerLayout;

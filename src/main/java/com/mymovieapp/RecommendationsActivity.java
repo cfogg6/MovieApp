@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
+//import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -18,7 +18,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import org.json.JSONArray;
+//import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,14 +26,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Corey on 3/6/16.
+ * Recommendations screen that recommends movies by the ratings of other users with the same major.
+ * Includes a spinner to select the major filter and cards of the respective movies.
  */
 public class RecommendationsActivity extends ToolbarDrawerActivity {
     Spinner spinner;
     ArrayList<Rating> ratings = new ArrayList<>();
     RecyclerView rv;
 
-    JSONArray listOfMovies;
+    //JSONArray listOfMovies;
 
     private ArrayList<com.mymovieapp.Movie> movies = new ArrayList<>();
 
@@ -127,7 +128,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                     e.printStackTrace();
                 }
                 ((RVMovAdapter) rv.getAdapter()).updateMovies(movies);
-                ((RVMovAdapter) rv.getAdapter()).notifyDataSetChanged();
+                (rv.getAdapter()).notifyDataSetChanged();
             }
         });
     }
@@ -135,13 +136,13 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
     private class MajorSpinnerAdapter extends BaseAdapter {
         private List<String> majors = new ArrayList<>();
 
-        public void clear() {
+       /* public void clear() {
             majors.clear();
-        }
+        }*/
 
-        public void addItem(String yourObject) {
+        /*public void addItem(String yourObject) {
             majors.add(yourObject);
-        }
+        }*/
 
         public void addItems(List<String> yourObjectList) {
             majors.addAll(yourObjectList);

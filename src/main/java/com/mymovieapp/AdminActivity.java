@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Corey on 3/13/16.
+ * Admin User screen where users can be sorted by All, Active, Locked, or Banned.
  */
 public class AdminActivity extends AdminToolbarDrawerActivity {
     private RecyclerView rv;
@@ -65,7 +65,6 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                         ((RVUserAdapter)rv.getAdapter()).mode = "BANNED";
                         ((RVUserAdapter)rv.getAdapter()).updateLists();
                         rv.getAdapter().notifyDataSetChanged();
-                        return;
                 }
 
             }

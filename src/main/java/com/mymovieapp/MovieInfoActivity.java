@@ -28,7 +28,9 @@ import com.parse.ParseUser;
 import java.io.InputStream;
 
 /**
- * Created by Corey on 2/26/16.
+ * Activity that shows movie information on selected movie using json query from RottenTomatoes API
+ * Also allows users to comment and rate movies themselves to bbe saved internally for
+ * recommendations by major.
  */
 public class MovieInfoActivity extends BackToolbarActivity {
     final Activity activity = this;

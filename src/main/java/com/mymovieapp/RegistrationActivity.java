@@ -21,7 +21,7 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 /**
- * Created by Corey on 2/2/16. Modified by Angelo.
+ * Registration activity for new users without an entry in the application's database.
  *
  * @version 1.0
  */

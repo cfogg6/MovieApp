@@ -5,7 +5,7 @@ import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 
 /**
- * Created by Corey on 3/13/16.
+ * User class made for specific use in Admin-related functions of application.
  */
 public class AdminUser {
     String name;
@@ -83,11 +83,7 @@ public class AdminUser {
     }
 
     public boolean equals(Object other) {
-        if (other instanceof AdminUser) {
-            return ((AdminUser) other).name.equals(this.name);
-        } else {
-            return false;
-        }
+        return (other instanceof AdminUser) && ((AdminUser) other).name.equals(this.name);
     }
 
     public int compareTo(AdminUser adminUser) {

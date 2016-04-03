@@ -89,6 +89,9 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
         updateList();
     }
 
+    /**
+     * Update list of movies showing
+     */
     private void updateList() {
         movies = new ArrayList<>();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
@@ -144,6 +147,10 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
             majors.add(yourObject);
         }*/
 
+        /**
+         * Add items to the spinner
+         * @param yourObjectList Spinner components
+         */
         public void addItems(List<String> yourObjectList) {
             majors.addAll(yourObjectList);
         }

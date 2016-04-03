@@ -23,12 +23,21 @@ public class MovieListAdapter extends ArrayAdapter {
     Context context;
     JSONArray movies;
 
+    /**
+     * Create Movie List adapter to display movies
+     * @param parentActivity Activity using this adapter
+     * @param textViewResourceId resource id
+     */
     public MovieListAdapter(Activity parentActivity, int textViewResourceId) {
         super(parentActivity, textViewResourceId);
         context = parentActivity;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    /**
+     * Update data in the movie json
+     * @param json new json for movie list
+     */
     public void updateJSON(JSONObject json) {
         try {
             movies = json.getJSONArray("movies");
@@ -39,10 +48,12 @@ public class MovieListAdapter extends ArrayAdapter {
         }
     }
 
+    @Override
     public int getCount() {
         return count;
     }
 
+    @Override
     public View getView(final int position,View convertView,ViewGroup parent) {
         final ViewHolder viewHolder;
         if(convertView == null) {

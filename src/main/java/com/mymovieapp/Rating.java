@@ -15,6 +15,11 @@ public class Rating implements Parcelable, Comparable {
     String username;
     ArrayList<Double> list = new ArrayList<>();
 
+    /**
+     * Create Rating
+     * @param name Movie name
+     * @param username User who is looking at the rating
+     */
     public Rating(String name, String username) {
         this.name = name;
         this.username = username;
@@ -36,10 +41,18 @@ public class Rating implements Parcelable, Comparable {
         return (other instanceof Rating) && name.equals(((Rating)other).name);
     }
 
+    /**
+     * Add a rating to the list of ratings
+     * @param rating Rating to be added
+     */
     public void addRating(Double rating) {
         list.add(rating);
     }
 
+    /**
+     * Get the average rating for this movie
+     * @return the average rating
+     */
     public double getAverageRating() {
         DecimalFormat format = new DecimalFormat("#.#");
         double sum = 0;
@@ -49,10 +62,12 @@ public class Rating implements Parcelable, Comparable {
         return Double.valueOf(format.format(sum / list.size()));
     }
 
+    @Override
     public int describeContents() {
         return 0;
     }
 
+    @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(name);
         out.writeString(username);
@@ -70,6 +85,10 @@ public class Rating implements Parcelable, Comparable {
         }
     };
 
+    /**
+     * Create rating from a parcel
+     * @param in Parcel to read
+     */
     private Rating(Parcel in) {
         name = in.readString();
         username = in.readString();

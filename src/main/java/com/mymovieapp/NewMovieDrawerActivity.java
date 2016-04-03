@@ -47,6 +47,9 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
 
     private List<com.mymovieapp.Movie> movies;
 
+    /**
+     * Get data from Parse
+     */
     private void initializeData() throws JSONException {
         movies = new ArrayList<>();
         //iterate through the JSON array
@@ -109,6 +112,9 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
+    /**
+     * Update list to show new DVDs
+     */
     private void showNewDVDs() {
         String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=yedukp76ffytfuy24zsqk7f5";
         final RequestQueue queue = Volley.newRequestQueue(this);
@@ -144,6 +150,9 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
         queue.add(stringRequest);
     }
 
+    /**
+     * Update list to show new releases
+     */
     private void showNewReleases() {
         String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=yedukp76ffytfuy24zsqk7f5";
         final RequestQueue queue = Volley.newRequestQueue(this);

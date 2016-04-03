@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
 /**
  * User class made for specific use in Admin-related functions of application.
  */
-public class AdminUser {
+public class AdminUser implements Comparable<AdminUser> {
     String name;
     boolean isLocked = false;
     boolean isBanned = false;
@@ -86,7 +86,8 @@ public class AdminUser {
         return (other instanceof AdminUser) && ((AdminUser) other).name.equals(this.name);
     }
 
+    @Override
     public int compareTo(AdminUser adminUser) {
-        return adminUser.name.compareTo(this.name);
+        return this.name.compareTo(adminUser.name);
     }
 }

@@ -23,6 +23,7 @@ import com.parse.ParseQuery;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -99,6 +100,10 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                 }
             }
         }
+        Collections.sort(users);
+        Collections.sort(lockedUsers);
+        Collections.sort(unlockedUsers);
+        Collections.sort(bannedUsers);
     }
 
     @Override
@@ -288,10 +293,15 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
+        /**
+         * Create image downloader
+         * @param bmImage Image to download
+         */
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
+        @Override
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
@@ -304,6 +314,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
             return mIcon11;
         }
 
+        @Override
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }

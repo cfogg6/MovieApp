@@ -24,6 +24,9 @@ public class SearchActivity extends ToolbarDrawerActivity {
 
     private List<com.mymovieapp.Movie> searchMovies;
 
+    /**
+     * Initializes the data shown in the search
+     */
     private void initializeData() throws JSONException {
         searchMovies = new ArrayList<>();
         for (int i = 0; i < listOfMovies.length(); i++) {

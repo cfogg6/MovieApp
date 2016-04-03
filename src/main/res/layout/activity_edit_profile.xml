@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -28,6 +30,15 @@
         android:layout_alignBottom="@+id/imageView"
         android:text="Done Editing"
         android:layout_margin="50dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_container"
+        android:layout_alignBaseline="@+id/tV_major"
+        android:layout_toRightOf="@+id/tV_major"
+        android:layout_toEndOf="@+id/tV_major"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -86,7 +97,7 @@
         android:layout_alignLeft="@+id/tV_interests"
         android:layout_alignStart="@+id/tV_interests" />
 
-    <EditText
+    <!--<EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -96,7 +107,7 @@
         android:layout_toRightOf="@+id/tV_major"
         android:layout_toEndOf="@+id/tV_major"
         android:minWidth="270dp"
-        android:inputType="text|textCapWords"/>
+        android:inputType="text|textCapWords"/>-->
 
     <TextView
         android:layout_width="wrap_content"

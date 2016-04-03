@@ -1,5 +1,6 @@
 package com.mymovieapp;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -72,6 +73,14 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
         DrawerLayout fullLayout = (DrawerLayout) getLayoutInflater()
                 .inflate(R.layout.activity_drawer, null);
         RelativeLayout actContent = (RelativeLayout) fullLayout.findViewById(R.id.content);
+        actContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
 
         getLayoutInflater().inflate(layoutResID, actContent, true);
         super.setContentView(fullLayout);
@@ -173,5 +182,11 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
                 getSupportActionBar().setHomeButtonEnabled(true);
             }
         }
+    }
+
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

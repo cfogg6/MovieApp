@@ -1,13 +1,11 @@
 package com.mymovieapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -33,6 +31,15 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         Button loginButton = (Button) findViewById(R.id.btn_login);
         RelativeLayout loginRelativeLayout = (RelativeLayout) findViewById(R.id.rl_login);
+
+        loginRelativeLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
 
         TextView title = (TextView) findViewById(R.id.tv_login_title);
         title.setText("Salty Popcorn");
@@ -117,19 +124,6 @@ public class LoginActivity extends Activity {
             }
         });
 
-        /**
-         * Makes keyboard disappear when you click away from an EditText field
-         */
-        loginRelativeLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (!(v instanceof EditText)) {
-                    InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-                return true;
-            }
-        });
         Button registerButton = (Button) findViewById(R.id.btn_registration);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,4 +164,12 @@ public class LoginActivity extends Activity {
         it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(it);
     }
+
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+
 }

@@ -41,14 +41,14 @@ public class EditProfileActivity extends AppCompatActivity {
         //Display field titles
         final EditText editName = (EditText) findViewById(R.id.et_name);
         final EditText editEmail = (EditText) findViewById(R.id.et_email);
-        final EditText editMajor = (EditText) findViewById(R.id.et_major);
+        //final EditText editMajor = (EditText) findViewById(R.id.et_major);
         final EditText editInterests = (EditText) findViewById(R.id.et_interests);
         Button editDoneButton = (Button) findViewById(R.id.btn_editDone);
 
         //Populate field values
         editName.setText((String) user.get("name"));
         editEmail.setText(user.getEmail());
-        editMajor.setText((String) user.get("major"));
+        //editMajor.setText((String) user.get("major"));
         editInterests.setText((String) user.get("interests"));
 
         editDoneButton.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +56,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 user.put("name", editName.getText().toString());
-                user.put("major", editMajor.getText().toString());
+                //user.put("major", editMajor.getText().toString());
                 user.put("interests", editInterests.getText().toString());
                 user.setEmail(editEmail.getText().toString());
 

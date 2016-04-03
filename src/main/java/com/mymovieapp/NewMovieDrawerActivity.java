@@ -68,7 +68,7 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
             Rating ratingToAdd = new Rating(nameOfMovie, ParseUser.getCurrentUser().getUsername());
             ratingToAdd.addRating(ratingOfMovie);
             String idOfMovie = listOfMovies.getJSONObject(i).getString("id");
-            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, ratingToAdd, idOfMovie);
+            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, idOfMovie, ratingToAdd);
             movies.add(i, toAdd);
         }
     }

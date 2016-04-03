@@ -54,7 +54,7 @@ public class SearchManagerActivity extends BackToolbarActivity {
             Rating ratingToAdd = new Rating(nameOfMovie, ParseUser.getCurrentUser().getUsername());
             ratingToAdd.addRating(ratingOfMovie);
             String idOfMovie = listOfMovies.getJSONObject(i).getString("id");
-            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, ratingToAdd, idOfMovie);
+            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, idOfMovie, ratingToAdd);
             searchMovies.add(i, toAdd);
         }
     }

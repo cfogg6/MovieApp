@@ -45,7 +45,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     }
 
     List<com.mymovieapp.Movie> movies;
-    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", null, "");
+    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", "", null);
 
     /**
      * Constructor for the adapter that sets the movies list to argument.
@@ -69,7 +69,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
 
     @Override
     public void onBindViewHolder(SearchViewHolder searchViewHolder, int i) {
-        final Movie mov = movies.get(i);
+        final com.mymovieapp.Movie mov = movies.get(i);
         searchViewHolder.movName.setText(movies.get(i).getName());
         searchViewHolder.starBar.setRating((float) movies.get(i).getRating().getAverageRating());
         new DownloadImageTask(searchViewHolder.movPhoto).execute(movies.get(i).getPhotoID());

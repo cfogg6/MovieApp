@@ -13,17 +13,17 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     String photoId;
     String synopsis;
     String ratingRuntime;
-    Rating rating;
     String id;
+    Rating rating;
 
-    public Movie(String name, String date, String photoId, String synopsis, String ratingRuntime, Rating rating, String id) {
+    public Movie(String name, String date, String photoId, String synopsis, String ratingRuntime, String id, Rating rating) {
         this.name = name;
         this.date = date;
         this.photoId = photoId;
         this.synopsis = synopsis;
         this.ratingRuntime = ratingRuntime;
-        this.rating = rating;
         this.id = id;
+        this.rating = rating;
     }
 
     public int describeContents() {
@@ -36,8 +36,8 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
         out.writeString(photoId);
         out.writeString(synopsis);
         out.writeString(ratingRuntime);
-        out.writeParcelable(rating, flags);
         out.writeString(id);
+        out.writeParcelable(rating, flags);
     }
 
     public static final Parcelable.Creator<com.mymovieapp.Movie> CREATOR
@@ -57,8 +57,8 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
         photoId = in.readString();
         synopsis = in.readString();
         ratingRuntime = in.readString();
-        rating = in.readParcelable(Rating.class.getClassLoader());
         id = in.readString();
+        rating = in.readParcelable(Rating.class.getClassLoader());
     }
 
     //Override
@@ -68,7 +68,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
 
     public boolean equals(Object o) {
         return (o instanceof com.mymovieapp.Movie)
-                && (this.getId().equals((((com.mymovieapp.Movie) o).getId())));
+                && (this.getName().equals((((com.mymovieapp.Movie) o).getName())));
     }
 
     public String getName() {

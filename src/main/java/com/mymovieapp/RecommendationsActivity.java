@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,13 +112,14 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                             ratings.add(newRating);
                         }
 
+                        Log.d("this id not be null", String.valueOf(element.getString("movieId")));
                         com.mymovieapp.Movie tempMovie = (new com.mymovieapp.Movie(element.getString("title"),
                                 element.getString("date"),
                                 element.getString("photoId"),
                                 element.getString("synopsis"),
                                 element.getString("ratingRuntime"),
-                                newRating,
-                                element.getString("id")));
+                                element.getString("movieId"),
+                                newRating));
 
                         if (!(movies.contains(tempMovie))) {
                             movies.add(tempMovie);

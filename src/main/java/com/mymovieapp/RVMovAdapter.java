@@ -25,7 +25,7 @@ import java.util.List;
 public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHolder> {
 
     List<com.mymovieapp.Movie> movies;
-    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", null);
+    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", null, "");
 
     /**
      * Constructor for the adapter that sets the movies list to argument.

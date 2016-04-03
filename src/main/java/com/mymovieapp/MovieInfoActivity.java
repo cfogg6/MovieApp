@@ -46,6 +46,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
     Button commentButton;
     MovieInfoActivity thisActivity = this;
     com.mymovieapp.Movie movieObject;
+    String movieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
         starBar.setRating(0);
         movieName = movieObject.getName();
         synopsis.setText(movieObject.getSynopsis());
+        movieId = movieObject.getId();
         new DownloadImageTask(movPic).execute(movieObject.getPhotoID());
         movieTitle.setText(movieName);
         commentButton = (Button) findViewById(R.id.btn_comment);
@@ -74,7 +76,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
                         movieInfo = new ParseObject("Ratings");
                         movieInfo.put("username", ParseUser.getCurrentUser().getUsername());
                         movieInfo.put("major", ParseUser.getCurrentUser().get("major"));
-                        movieInfo.put("title", movieName);
+                        movieInfo.put("title", movieTitle.getText());
                         movieInfo.saveInBackground();
                     }
                     movieInfo.put("rating", rating);
@@ -82,6 +84,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
                     movieInfo.put("synopsis", movieObject.getSynopsis());
                     movieInfo.put("ratingRuntime", movieObject.getRatingRuntime());
                     movieInfo.put("date", movieObject.getDate());
+                    movieInfo.put("movieId", movieId);
                     movieInfo.saveInBackground();
                     comment = commentEditText.getText().toString();
                     movieInfo.put("comment", comment);
@@ -124,7 +127,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         try {
             movieName = RVMovAdapter.movieToPass.name;
-            query.whereEqualTo("title", movieName);
+            query.whereEqualTo("movieId", movieId);
             movieInfo = query.getFirst();
         } catch (com.parse.ParseException e) {
             e.printStackTrace();

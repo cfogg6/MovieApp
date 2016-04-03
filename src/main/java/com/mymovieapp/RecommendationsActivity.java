@@ -116,7 +116,8 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                                 element.getString("photoId"),
                                 element.getString("synopsis"),
                                 element.getString("ratingRuntime"),
-                                newRating));
+                                newRating,
+                                element.getString("id")));
 
                         if (!(movies.contains(tempMovie))) {
                             movies.add(tempMovie);

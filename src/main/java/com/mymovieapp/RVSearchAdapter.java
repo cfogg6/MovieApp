@@ -45,7 +45,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     }
 
     List<com.mymovieapp.Movie> movies;
-    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", null);
+    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", null, "");
 
     /**
      * Constructor for the adapter that sets the movies list to argument.

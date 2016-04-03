@@ -14,14 +14,16 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     String synopsis;
     String ratingRuntime;
     Rating rating;
+    String id;
 
-    public Movie(String name, String date, String photoId, String synopsis, String ratingRuntime, Rating rating) {
+    public Movie(String name, String date, String photoId, String synopsis, String ratingRuntime, Rating rating, String id) {
         this.name = name;
         this.date = date;
         this.photoId = photoId;
         this.synopsis = synopsis;
         this.ratingRuntime = ratingRuntime;
         this.rating = rating;
+        this.id = id;
     }
 
     public int describeContents() {
@@ -35,6 +37,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
         out.writeString(synopsis);
         out.writeString(ratingRuntime);
         out.writeParcelable(rating, flags);
+        out.writeString(id);
     }
 
     public static final Parcelable.Creator<com.mymovieapp.Movie> CREATOR
@@ -55,6 +58,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
         synopsis = in.readString();
         ratingRuntime = in.readString();
         rating = in.readParcelable(Rating.class.getClassLoader());
+        id = in.readString();
     }
 
     //Override
@@ -64,11 +68,15 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
 
     public boolean equals(Object o) {
         return (o instanceof com.mymovieapp.Movie)
-                && (this.getName().equals(((com.mymovieapp.Movie) o).getName()));
+                && (this.getId().equals((((com.mymovieapp.Movie) o).getId())));
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getDate() {
@@ -88,6 +96,4 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     public Rating getRating() {
         return rating;
     }
-
-
 }

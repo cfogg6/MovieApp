@@ -25,9 +25,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rb_star_bar"
-        android:layout_toRightOf="@+id/user_name"
+        android:layout_toRightOf="@+id/profile_image"
         style="?android:attr/ratingBarStyleSmall"
-        android:clickable="false" />
+        android:clickable="false"
+        android:layout_below="@+id/user_name" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,7 +37,7 @@
         android:layout_toRightOf="@+id/profile_image"
         android:layout_toEndOf="@+id/profile_image"
         android:textSize="20sp"
-        android:layout_below="@+id/user_name" />
+        android:layout_below="@+id/rb_star_bar" />
 
     <ImageView
         android:layout_width="wrap_content"

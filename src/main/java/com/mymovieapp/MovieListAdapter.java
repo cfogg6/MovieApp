@@ -41,7 +41,6 @@ public class MovieListAdapter extends ArrayAdapter {
     public void updateJSON(JSONObject json) {
         try {
             movies = json.getJSONArray("movies");
-            Log.d("movies", String.valueOf(movies));
             count = Math.min(movies.length(), 20);
         } catch (JSONException e) {
             e.printStackTrace();

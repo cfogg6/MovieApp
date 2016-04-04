@@ -113,8 +113,6 @@ public class SearchManagerActivity extends BackToolbarActivity {
                                 searchListAdapter.updateJSON(new JSONObject(response));
                                 searchListAdapter.notifyDataSetChanged();
                                 listOfMovies = new JSONObject(response).getJSONArray("movies");
-                                Log.d("response", String.valueOf(response));
-                                Log.d("list of movies", String.valueOf(listOfMovies.length()));
                                 RecyclerView rv = (RecyclerView) findViewById(R.id.search_rv);
                                 rv.setHasFixedSize(true);
                                 GridLayoutManager glm = new GridLayoutManager(activity, 2);

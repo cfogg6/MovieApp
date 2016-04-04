@@ -60,7 +60,12 @@ public class MovieInfoActivity extends BackToolbarActivity {
 
         starBar.setRating(0);
         movieName = movieObject.getName();
-        synopsis.setText(movieObject.getSynopsis());
+
+        if (movieObject.getSynopsis().equals("")) {
+            synopsis.setText("No synopsis.");
+        } else {
+            synopsis.setText(movieObject.getSynopsis());
+        }
         new DownloadImageTask(movPic).execute(movieObject.getPhotoID());
         movieTitle.setText(movieName);
         commentButton = (Button) findViewById(R.id.btn_comment);

@@ -65,14 +65,6 @@ public class User {
     }
 
     /**
-     * Returns a user's email
-     * @return user's email
-     */
-    /*public static String getEmail() {
-        return ParseUser.getCurrentUser().getEmail();
-    }*/
-
-    /**
      * Returns a user's major
      * @return user's major
      */

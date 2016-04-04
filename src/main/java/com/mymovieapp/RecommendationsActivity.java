@@ -35,8 +35,6 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
     ArrayList<Rating> ratings = new ArrayList<>();
     RecyclerView rv;
 
-    //JSONArray listOfMovies;
-
     private ArrayList<com.mymovieapp.Movie> movies = new ArrayList<>();
 
     @Override
@@ -112,7 +110,6 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                             ratings.add(newRating);
                         }
 
-                        Log.d("this id not be null", String.valueOf(element.getString("movieId")));
                         com.mymovieapp.Movie tempMovie = (new com.mymovieapp.Movie(element.getString("title"),
                                 element.getString("date"),
                                 element.getString("photoId"),
@@ -141,14 +138,6 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
 
     private class MajorSpinnerAdapter extends BaseAdapter {
         private List<String> majors = new ArrayList<>();
-
-       /* public void clear() {
-            majors.clear();
-        }*/
-
-        /*public void addItem(String yourObject) {
-            majors.add(yourObject);
-        }*/
 
         /**
          * Add items to the spinner

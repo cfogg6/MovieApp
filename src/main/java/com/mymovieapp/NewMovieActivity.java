@@ -46,8 +46,6 @@ public class NewMovieActivity extends AppCompatActivity{
         TextView emailDraw = (TextView) header.findViewById(R.id.tV_email_header);
         usernameDraw.setText("John Place");
         emailDraw.setText("Placeholder@gmail.com");
-        //usernameDraw.setText(user.getUsername());
-        //emailDraw.setText(user.getEmail());
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navView.setNavigationItemSelectedListener(

@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -30,9 +30,6 @@ public class RegistrationActivity extends BackToolbarActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Sign Up");
         }
-        Button registerButton = (Button) findViewById(R.id.btn_register);
-        Button cancelButton = (Button) findViewById(R.id.btn_cancel);
-        RelativeLayout regRelativeLayout = (RelativeLayout) findViewById(R.id.rl_register);
         final Button registerButton = (Button) findViewById(R.id.btn_register);
         final Button cancelButton = (Button) findViewById(R.id.btn_cancel);
         final RelativeLayout regRelativeLayout = (RelativeLayout) findViewById(R.id.rl_register);

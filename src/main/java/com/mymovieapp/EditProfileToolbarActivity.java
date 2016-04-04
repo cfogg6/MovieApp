@@ -44,7 +44,7 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         spinView.addView(spinnerContainer, lp);
-        MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter();
+        MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter(this);
         spinnerAdapter.addItems(
                 Arrays.asList(getResources().getStringArray(R.array.majors_array)));
         spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
@@ -94,73 +94,5 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
                 startActivity(it);
             }
         });
-    }
-
-    private class MajorSpinnerAdapter extends BaseAdapter {
-        private List<String> majors = new ArrayList<>();
-
-       /* public void clear() {
-            majors.clear();
-        }*/
-
-        /*public void addItem(String yourObject) {
-            majors.add(yourObject);
-        }*/
-
-        public int getPosition(String major) {
-            return majors.indexOf(major);
-        }
-
-        /**
-         * Add items to the spinner
-         * @param yourObjectList Spinner components
-         */
-        public void addItems(List<String> yourObjectList) {
-            majors.addAll(yourObjectList);
-        }
-
-        @Override
-        public int getCount() {
-            return majors.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return majors.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getDropDownView(int position, View view, ViewGroup parent) {
-            if (view == null || !view.getTag().toString().equals("DROPDOWN")) {
-                view = getLayoutInflater().inflate(R.layout.toolbar_spinner_item_dropdown, parent, false);
-                view.setTag("DROPDOWN");
-            }
-
-            TextView textView = (TextView) view.findViewById(android.R.id.text1);
-            textView.setText(getTitle(position));
-
-            return view;
-        }
-
-        @Override
-        public View getView(int position, View view, ViewGroup parent) {
-            if (view == null || !view.getTag().toString().equals("NON_DROPDOWN")) {
-                view = getLayoutInflater().inflate(R.layout.
-                        toolbar_spinner_item_dark, parent, false);
-                view.setTag("NON_DROPDOWN");
-            }
-            TextView textView = (TextView) view.findViewById(android.R.id.text1);
-            textView.setText(getTitle(position));
-            return view;
-        }
-
-        private String getTitle(int position) {
-            return position >= 0 && position < majors.size() ? majors.get(position) : "";
-        }
     }
 }

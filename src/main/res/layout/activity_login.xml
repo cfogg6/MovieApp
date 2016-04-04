@@ -17,7 +17,17 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dip"
-        android:id="@+id/tv_login_title" />
+        android:id="@+id/tv_login_title"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/tv_login_title"/>
 
     <EditText
         android:layout_width="match_parent"

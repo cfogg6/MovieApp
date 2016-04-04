@@ -30,6 +30,7 @@ import java.util.List;
  */
 public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
     final Activity activity = this;
+    int startTab = 0;
     JSONArray listOfMovies;
 
     private List<com.mymovieapp.Movie> movies;
@@ -64,6 +65,9 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_movie);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Browse New");
+        }
 
         showNewDVDs();
 
@@ -100,6 +104,12 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
         tabLayout.addTab(dvdTab);
         tabLayout.addTab(releasesTab);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        startTab = getIntent().getIntExtra("tab", 0);
+        if (startTab == 0) {
+            dvdTab.select();
+        } else {
+            releasesTab.select();
+        }
     }
 
     /**

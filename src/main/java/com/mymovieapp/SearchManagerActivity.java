@@ -69,6 +69,9 @@ public class SearchManagerActivity extends BackToolbarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Search Movies");
+        }
         handleIntent(getIntent());
     }
 

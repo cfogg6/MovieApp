@@ -11,11 +11,16 @@ import java.util.List;
 
 public class MajorSpinnerAdapter extends BaseAdapter{
 
-    private List<String> majors = new ArrayList();
+    private List<String> majors = new ArrayList<>();
+    private boolean isDark = false;
     Activity activity;
 
-    public MajorSpinnerAdapter(Activity activity) {
-        this.activity = activity;
+    public MajorSpinnerAdapter(Activity act) {
+        this.activity = act;
+    }
+    public MajorSpinnerAdapter(Activity act, Boolean isDk) {
+        this.activity = act;
+        this.isDark = isDk;
     }
 
     public int getPosition(String major) {
@@ -60,11 +65,20 @@ public class MajorSpinnerAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        if (view == null || !view.getTag().toString().equals("NON_DROPDOWN")) {
-            view = activity.getLayoutInflater().inflate(R.layout.
-                    toolbar_spinner_item_dark, parent, false);
-            view.setTag("NON_DROPDOWN");
+        if (isDark) {
+            if (view == null || !view.getTag().toString().equals("NON_DROPDOWN")) {
+                view = activity.getLayoutInflater().inflate(R.layout.
+                        toolbar_spinner_item_dark, parent, false);
+                view.setTag("NON_DROPDOWN");
+            }
+        } else {
+            if (view == null || !view.getTag().toString().equals("NON_DROPDOWN")) {
+                view = activity.getLayoutInflater().inflate(R.layout.
+                        toolbar_spinner_item, parent, false);
+                view.setTag("NON_DROPDOWN");
+            }
         }
+
         TextView textView = (TextView) view.findViewById(android.R.id.text1);
         textView.setText(getTitle(position));
         return view;

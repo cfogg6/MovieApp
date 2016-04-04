@@ -27,6 +27,9 @@ public class FlaggedCommentsActivity extends AdminToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flagged_comments);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Flagged Comments");
+        }
         listView = (ListView) findViewById(R.id.lv_flagged_comments);
         listView.setAdapter(new FlaggedCommentsAdapter(this, 0));
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("FlaggedComments");

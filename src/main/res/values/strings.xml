@@ -17,7 +17,7 @@
     <string name="prof_interest">"Interests: "</string>
     <string name="prof_placeholder">Profile Placeholder Image</string>
 
-    <string name="welcome">Welcome to Salty Popcorn!</string>
+    <string name="welcome">Welcome to Salty Popcorn</string>
     <string name="registration">Register Here!</string>
     <string name="login_activity">Login Here!</string>
 
@@ -36,7 +36,6 @@
     <string name="Top_Movies">Top Movies</string>
     <string name="More">More</string>
     <string name="New_to_Theaters">New to Theaters</string>
-    <string name="more">More</string>
     <string name="Registration">Registration</string>
     <string name="Movie_Not_Found">Movie not found</string>
     <string name="Comment">Comment</string>

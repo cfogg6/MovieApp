@@ -42,7 +42,7 @@ public class LoginActivity extends Activity {
         });
 
         TextView title = (TextView) findViewById(R.id.tv_login_title);
-        title.setText("Salty Popcorn");
+        title.setText(R.string.welcome);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

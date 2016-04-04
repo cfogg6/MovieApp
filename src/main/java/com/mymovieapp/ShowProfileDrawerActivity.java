@@ -19,6 +19,9 @@ public class ShowProfileDrawerActivity extends ToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_profile);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Profile");
+        }
 
         ParseUser user = ParseUser.getCurrentUser();
 
@@ -51,6 +54,7 @@ public class ShowProfileDrawerActivity extends ToolbarDrawerActivity {
             public void onClick(View v) {
                 Intent it = new Intent(ShowProfileDrawerActivity.this,
                         EditProfileToolbarActivity.class);
+                it.putExtra("title", "Edit Profile");
                 startActivity(it);
             }
         });

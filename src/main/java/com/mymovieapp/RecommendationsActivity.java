@@ -5,27 +5,24 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-//import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-//import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+//import android.widget.ListView;
+//import org.json.JSONArray;
 
 /**
  * Recommendations screen that recommends movies by the ratings of other users with the same major.
@@ -42,6 +39,9 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendations);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Recommendations");
+        }
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -56,7 +56,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         spinBar.addView(spinnerContainer, lp);
 
-        MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter(this);
+        MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter(this, false);
         spinnerAdapter.addItems(
                 Arrays.asList(getResources().getStringArray(R.array.majors_array)));
         spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);

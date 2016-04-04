@@ -31,9 +31,11 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("User Management");
+        }
 
         final Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             myToolbar.setElevation(0);
         }

@@ -29,8 +29,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -66,6 +64,9 @@ public class MovieInfoActivity extends BackToolbarActivity {
         movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
         starBar.setRating(0);
         movieName = movieObject.getName();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(movieName);
+        }
         if (movieObject.getSynopsis().equals("")) {
             synopsis.setText("No synopsis.");
         } else {

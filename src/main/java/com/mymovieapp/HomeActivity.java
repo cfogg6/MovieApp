@@ -62,6 +62,9 @@ public class HomeActivity extends ToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Home");
+        }
         showNewDVDs();
         showNewReleases();
 
@@ -70,6 +73,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(HomeActivity.this, NewMovieDrawerActivity.class);
+                it.putExtra("tab", 0);
                 startActivity(it);
             }
         });
@@ -78,6 +82,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(HomeActivity.this, NewMovieDrawerActivity.class);
+                it.putExtra("tab", 1);
                 startActivity(it);
             }
         });

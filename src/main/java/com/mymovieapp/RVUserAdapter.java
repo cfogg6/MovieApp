@@ -174,7 +174,6 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
             }
         }
         userViewHolder.username.setText(currentList.get(i).getName());
-        userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
         userViewHolder.profPhoto.setImageResource(R.mipmap.bucket);
         if (currentList.get(i).isBanned()) {
             userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);

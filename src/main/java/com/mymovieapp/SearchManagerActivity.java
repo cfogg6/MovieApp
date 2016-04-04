@@ -28,7 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Angelo on 3/30/2016.
+ * Default Searchable Screen
+ * Includes Toolbar and Navigation drawer to the rest of the user interface
  */
 public class SearchManagerActivity extends BackToolbarActivity {
     String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";

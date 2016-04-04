@@ -1,5 +1,6 @@
 package com.mymovieapp;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +29,10 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
         setContentView(R.layout.activity_admin);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setElevation(0);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            myToolbar.setElevation(0);
+        }
         //Initialize Tab Layout
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.admin_tabs);

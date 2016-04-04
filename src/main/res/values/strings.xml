@@ -32,6 +32,7 @@
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
     <string name="action_recommendations">Recommendations</string>
+    <string name="done_editing">Done Editing</string>
     <string-array name="majors_array">
         <item>Computer Science</item>
         <item>Computer Media</item>

@@ -32,6 +32,22 @@
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
     <string name="action_recommendations">Recommendations</string>
+    <string name="done_editing">Done Editing</string>
+    <string name="Top_Movies">Top Movies</string>
+    <string name="More">More</string>
+    <string name="New_to_Theaters">New to Theaters</string>
+    <string name="more">More</string>
+    <string name="Registration">Registration</string>
+    <string name="Movie_Not_Found">Movie not found</string>
+    <string name="Comment">Comment</string>
+    <string name="Submit">Submit</string>
+    <string name="Edit_Profile">Edit Profile</string>
+    <string name="No_results">No Results</string>
+    <string name="unlock">Unlock</string>
+    <string name="banned">Banned</string>
+    <string name="delete">Delete</string>
+    <string name="Username">Username</string>
+    <string name="Email">Email</string>
     <string-array name="majors_array">
         <item>Computer Science</item>
         <item>Computer Media</item>

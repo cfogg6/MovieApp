@@ -28,7 +28,7 @@
         android:layout_toEndOf="@+id/imageView"
         android:layout_toRightOf="@+id/imageView"
         android:layout_alignBottom="@+id/imageView"
-        android:text="Done Editing"
+        android:text="@string/done_editing"
         android:layout_margin="50dp" />
 
     <LinearLayout

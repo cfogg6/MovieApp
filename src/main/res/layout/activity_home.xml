@@ -5,7 +5,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Top Movies"
+        android:text="@string/Top_Movies"
         android:id="@+id/top_mov"
         android:layout_alignParentLeft="true"
         android:paddingTop="16dp"
@@ -17,7 +17,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignBaseline="@+id/top_mov"
         android:id="@+id/more_btn"
-        android:text="More"/>
+        android:text="@string/More"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -29,7 +29,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New to Theaters"
+        android:text="@string/New_to_Theaters"
         android:paddingLeft="5dp"
         android:id="@+id/new_theaters"
         android:layout_below="@+id/home_rv1"
@@ -40,7 +40,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignBaseline="@+id/new_theaters"
         android:id="@+id/more_btn2"
-        android:text="More"/>
+        android:text="@string/more"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

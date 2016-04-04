@@ -79,6 +79,7 @@ public class SearchManagerActivity extends BackToolbarActivity {
                 (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconified(false);
         return true;
     }
 

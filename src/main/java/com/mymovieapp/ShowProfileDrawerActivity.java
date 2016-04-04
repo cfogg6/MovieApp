@@ -3,6 +3,7 @@ package com.mymovieapp;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -63,6 +64,13 @@ public class ShowProfileDrawerActivity extends ToolbarDrawerActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        menu.findItem(R.id.menu_search).setVisible(false);
+        return true;
     }
 
     @Override

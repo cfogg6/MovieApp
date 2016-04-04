@@ -3,6 +3,7 @@ package com.mymovieapp;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
@@ -19,6 +20,13 @@ public class BackToolbarActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        menu.findItem(R.id.menu_search).setVisible(false);
+        return true;
     }
 
     @Override

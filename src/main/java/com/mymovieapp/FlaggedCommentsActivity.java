@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Activity in the admin functionality that allows admin to see and delete flagged comments.
+ * Activity in the admin functionality that allows admin to see and delete flagged comment_row.
  */
 public class FlaggedCommentsActivity extends AdminToolbarDrawerActivity {
     ArrayList<FlaggedComment> comments = new ArrayList<>();

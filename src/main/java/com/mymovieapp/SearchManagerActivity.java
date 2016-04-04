@@ -37,6 +37,10 @@ public class SearchManagerActivity extends BackToolbarActivity {
 
     private List<Movie> searchMovies;
 
+    /**
+     * Initializes the list of movie based on reult of search query
+     * @throws JSONException if a JSON field is missing
+     */
     private void initializeData() throws JSONException {
         searchMovies = new ArrayList<>();
         for (int i = 0; i < listOfMovies.length(); i++) {
@@ -94,6 +98,10 @@ public class SearchManagerActivity extends BackToolbarActivity {
         handleIntent(intent);
     }
 
+    /**
+     * Load the Activity based on incoming intent from another activity
+     * @param intent passed from another activity
+     */
     private void handleIntent(Intent intent) {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {

@@ -25,7 +25,6 @@ import java.util.List;
 public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHolder> {
 
     List<com.mymovieapp.Movie> movies;
-    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", "", null);
 
     /**
      * Constructor for the adapter that sets the movies list to argument.
@@ -97,13 +96,6 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
                 Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
                 it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov);
                 v.getContext().startActivity(it);
-                movieToPass.name = mov.getName();
-                movieToPass.date = mov.getDate();
-                movieToPass.photoId = mov.getPhotoID();
-                movieToPass.synopsis = mov.getSynopsis();
-                movieToPass.ratingRuntime = mov.getRatingRuntime();
-                movieToPass.id = mov.getId();
-                movieToPass.rating = mov.getRating();
             }
         });
     }
@@ -113,6 +105,9 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     * Class to download images
+     */
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 

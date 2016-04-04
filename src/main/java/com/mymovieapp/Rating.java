@@ -7,7 +7,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * Created by Corey on 3/8/16.
+ * Ratings for a movie, includes a list of double ratings for a movie and a method to get their
+ * average
  */
 public class Rating implements Parcelable, Comparable {
 

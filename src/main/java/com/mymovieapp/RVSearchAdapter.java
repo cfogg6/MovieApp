@@ -90,6 +90,9 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     * Class to download images
+     */
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 

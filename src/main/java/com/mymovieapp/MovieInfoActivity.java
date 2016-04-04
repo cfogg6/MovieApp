@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,11 +23,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Activity that shows movie information on selected movie using json query from RottenTomatoes API
@@ -45,9 +52,11 @@ public class MovieInfoActivity extends BackToolbarActivity {
     Button commentButton;
     MovieInfoActivity thisActivity = this;
     com.mymovieapp.Movie movieObject;
+    private RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("ggg", "oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_info);
         final TextView movieTitle = (TextView) findViewById(R.id.tv_movie_title);
@@ -55,12 +64,10 @@ public class MovieInfoActivity extends BackToolbarActivity {
         commentEditText = (EditText) findViewById(R.id.et_comment);
         movPic = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
         synopsis = (TextView) findViewById(R.id.tV_synopsis);
-
+        rv = (RecyclerView) findViewById(R.id.comments_rv);
         movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
-
         starBar.setRating(0);
         movieName = movieObject.getName();
-
         if (movieObject.getSynopsis().equals("")) {
             synopsis.setText("No synopsis.");
         } else {
@@ -121,6 +128,53 @@ public class MovieInfoActivity extends BackToolbarActivity {
                 return true;
             }
         });
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        Log.d("ggg", "didnt find users");
+        RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
+        final RVCommentsAdapter adapter = new RVCommentsAdapter(activity, movieObject.getName());
+        rv.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(activity);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(llm);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
+                    final RVCommentsAdapter adapter = new RVCommentsAdapter(activity, movieObject.getName());
+                    final LinearLayoutManager llm = new LinearLayoutManager(activity);
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    rv.setLayoutManager(llm);
+                    rv.setAdapter(adapter);
+                    for (ParseObject element : list) {
+                        adapter.users.add(new AdminUser(element.getString("username")));
+                    }
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
+                    query.whereEqualTo("title", movieObject.getName());
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> list, ParseException e) {
+                            if (e == null) {
+                                for (ParseObject element : list) {
+                                    adapter.addComment(element.getString("comment"), element.getString("username"),
+                                            element.getDouble("rating"));
+                                    Log.d("ggg", "add comment");
+                                }
+                            } else {
+                                e.printStackTrace();
+                            }
+                            RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
+                            rv.setAdapter(adapter);
+                            llm.setOrientation(LinearLayoutManager.VERTICAL);
+                            rv.setLayoutManager(llm);
+                            (rv.getAdapter()).notifyDataSetChanged();
+                        }
+                    });
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -129,7 +183,8 @@ public class MovieInfoActivity extends BackToolbarActivity {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         try {
-            movieName = RVMovAdapter.movieToPass.name;
+            movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
+            movieName = movieObject.name;
             query.whereEqualTo("movieId", movieObject.getId());
             movieInfo = query.getFirst();
         } catch (com.parse.ParseException e) {

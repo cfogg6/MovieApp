@@ -290,6 +290,9 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     * Class to download images
+     */
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 

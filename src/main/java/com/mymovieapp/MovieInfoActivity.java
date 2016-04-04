@@ -41,7 +41,6 @@ public class MovieInfoActivity extends BackToolbarActivity {
     EditText commentEditText;
     AppCompatImageView movPic;
     TextView synopsis;
-    TextView ratingRuntime;
     String comment;
     Button commentButton;
     MovieInfoActivity thisActivity = this;
@@ -58,11 +57,6 @@ public class MovieInfoActivity extends BackToolbarActivity {
         synopsis = (TextView) findViewById(R.id.tV_synopsis);
 
         movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
-
-        Log.d("name", String.valueOf(movieObject.getName()));
-        Log.d("date", String.valueOf(movieObject.getDate()));
-        Log.d("id", String.valueOf(movieObject.getId()));
-        Log.d("rating", String.valueOf(movieObject.getRating()));
 
         starBar.setRating(0);
         movieName = movieObject.getName();
@@ -88,7 +82,6 @@ public class MovieInfoActivity extends BackToolbarActivity {
                     movieInfo.put("synopsis", movieObject.getSynopsis());
                     movieInfo.put("ratingRuntime", movieObject.getRatingRuntime());
                     movieInfo.put("date", movieObject.getDate());
-                    Log.d("movie object id", String.valueOf(movieObject.getId()));
                     movieInfo.put("movieId", movieObject.getId());
                     movieInfo.saveInBackground();
                     comment = commentEditText.getText().toString();
@@ -177,7 +170,6 @@ public class MovieInfoActivity extends BackToolbarActivity {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
             return mIcon11;

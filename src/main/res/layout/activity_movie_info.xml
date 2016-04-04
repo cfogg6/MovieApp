@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tV_synopsis"
             android:layout_below="@+id/comments_rv"
-            android:padding="16dp"/>
+            android:padding="15dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

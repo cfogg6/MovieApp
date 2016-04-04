@@ -35,6 +35,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
         this.title = t;
     }
 
+       public List<AdminUser> getUsers() {
+           return users;
+       }
+
     @Override
     public int getItemCount() {
         return comments.size();

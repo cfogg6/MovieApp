@@ -186,7 +186,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
                     rv.setLayoutManager(llm);
                     rv.setAdapter(adapter);
                     for (ParseObject element : list) {
-                        adapter.users.add(new AdminUser(element.getString("username")));
+                        adapter.getUsers().add(new AdminUser(element.getString("username")));
                     }
                     final ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
                     query.whereEqualTo("title", movieObject.getName());

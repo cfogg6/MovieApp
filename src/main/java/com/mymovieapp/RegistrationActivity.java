@@ -23,7 +23,7 @@ import com.parse.SignUpCallback;
  *
  * @version 1.0
  */
-public class RegistrationActivity extends Activity {
+public class RegistrationActivity extends BackToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

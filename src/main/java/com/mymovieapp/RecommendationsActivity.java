@@ -1,5 +1,6 @@
 package com.mymovieapp;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +44,9 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
         setContentView(R.layout.activity_recommendations);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setElevation(0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            myToolbar.setElevation(0);
+        }
 
         Toolbar spinBar = (Toolbar) findViewById(R.id.spinner_toolbar);
 

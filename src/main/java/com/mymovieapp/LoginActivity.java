@@ -108,8 +108,7 @@ public class LoginActivity extends Activity {
                                     } catch (ParseException e1) {
                                         query = ParseQuery.getQuery("Admin");
                                         query.whereEqualTo("username", username);
-                                        query.whereEqualTo("password", ((EditText) findViewById(R.id
-                                                .et_password)).getText().toString());
+                                        query.whereEqualTo("password", ((EditText) findViewById(R.id.et_password)).getText().toString());
                                         try {
                                             query.getFirst();
                                             Intent it = new Intent(LoginActivity.this, AdminActivity.class);

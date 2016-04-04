@@ -101,7 +101,6 @@ public class SearchManagerActivity extends BackToolbarActivity {
             Log.e("SEARCH MANAGER ACTIVITY", "Searching for " + query);
             // Instantiate the RequestQueue.
             final RequestQueue queue = Volley.newRequestQueue(this);
-            final MovieListAdapter searchListAdapter = new MovieListAdapter(this, 0);
             // Add the request to the RequestQueue.
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "&q="
                     + query.replace(" ", "+") + "&page_limit=20",
@@ -110,8 +109,6 @@ public class SearchManagerActivity extends BackToolbarActivity {
                         public void onResponse(String response) {
                             // Display the first 500 characters of the response string.
                             try {
-                                searchListAdapter.updateJSON(new JSONObject(response));
-                                searchListAdapter.notifyDataSetChanged();
                                 listOfMovies = new JSONObject(response).getJSONArray("movies");
                                 RecyclerView rv = (RecyclerView) findViewById(R.id.search_rv);
                                 rv.setHasFixedSize(true);

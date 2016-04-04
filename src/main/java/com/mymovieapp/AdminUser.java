@@ -88,6 +88,6 @@ public class AdminUser implements Comparable<AdminUser> {
 
     @Override
     public int compareTo(AdminUser adminUser) {
-        return this.name.compareTo(adminUser.name);
+        return this.name.compareToIgnoreCase(adminUser.name);
     }
 }

@@ -96,7 +96,7 @@ public class RegistrationActivity extends Activity {
                                         Toast.makeText(getApplicationContext(),
                                                 "Successfully Registered",
                                                 Toast.LENGTH_SHORT).show();
-                                        Intent it = new Intent(RegistrationActivity.this, ShowProfileActivity.class);
+                                        Intent it = new Intent(RegistrationActivity.this, ShowProfileDrawerActivity.class);
                                         startActivity(it);
                                     } else {
                                         Toast.makeText(getApplicationContext(),

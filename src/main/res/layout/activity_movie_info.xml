@@ -20,7 +20,9 @@
             android:text="Movie not found"
             android:id="@+id/tv_movie_title"
             android:layout_below="@+id/iV_movPhoto"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:textSize="20sp"/>
 
         <RatingBar
             android:layout_width="wrap_content"

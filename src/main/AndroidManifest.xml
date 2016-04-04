@@ -44,10 +44,6 @@
             android:name=".EditProfileToolbarActivity"
             android:label="@string/app_name" >
         </activity>
-        <!--<activity
-            android:name=".SearchActivity"
-            android:label="@string/app_name" >
-        </activity>-->
         <activity
             android:name=".NewMovieDrawerActivity"
             android:label="@string/app_name" >

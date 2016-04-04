@@ -12,6 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -49,7 +53,6 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
         //Display field titles
         final EditText editName = (EditText) findViewById(R.id.et_name);
         final EditText editEmail = (EditText) findViewById(R.id.et_email);
-        //final EditText editMajor = (EditText) findViewById(R.id.et_major);
         final EditText editInterests = (EditText) findViewById(R.id.et_interests);
         Button editDoneButton = (Button) findViewById(R.id.btn_editDone);
 
@@ -57,7 +60,6 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
         editName.setText((String) user.get("name"));
         editEmail.setText(user.getEmail());
         spinner.setSelection(spinnerAdapter.getPosition((String) user.get("major")));
-        //editMajor.setText((String) user.get("major"));
         editInterests.setText((String) user.get("interests"));
 
         editDoneButton.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +72,23 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
                 user.setEmail(editEmail.getText().toString());
 
                 user.saveInBackground();
+
+                //We also have to update the Ratings table
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
+                query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> list, ParseException e) {
+                        if (e == null) {
+                            for (ParseObject o: list) {
+                                o.put("major", spinner.getSelectedItem().toString());
+                                o.saveInBackground();
+                            }
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 Intent it = new Intent(EditProfileToolbarActivity.this,
                         ShowProfileDrawerActivity.class);
                 startActivity(it);

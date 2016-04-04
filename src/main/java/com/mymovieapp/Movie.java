@@ -40,8 +40,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
         out.writeParcelable(rating, flags);
     }
 
-    public static final Parcelable.Creator<com.mymovieapp.Movie> CREATOR
-            = new Parcelable.Creator<com.mymovieapp.Movie>() {
+    public static final Parcelable.Creator<com.mymovieapp.Movie> CREATOR = new Parcelable.Creator<com.mymovieapp.Movie>() {
         public com.mymovieapp.Movie createFromParcel(Parcel in) {
             return new com.mymovieapp.Movie(in);
         }

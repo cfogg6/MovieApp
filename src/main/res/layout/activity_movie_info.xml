@@ -14,27 +14,34 @@
             android:id="@+id/iV_movPhoto"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Movie_Not_Found"
+            android:text="Movie not found"
             android:id="@+id/tv_movie_title"
             android:layout_below="@+id/iV_movPhoto"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:textSize="20sp"/>
+            android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tV_synopsis"
+            android:layout_below="@+id/tv_movie_title"
+            android:padding="16dp"/>
 
         <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rb_star_bar"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/tv_movie_title" />
+            android:layout_below="@+id/tV_synopsis" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Comment"
+            android:text="Comment"
             android:id="@+id/tv_comment"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/rb_star_bar" />
@@ -52,22 +59,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Submit"
+            android:text="Submit"
             android:id="@+id/btn_comment"
             android:layout_below="@+id/et_comment"
             android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tV_synopsis"
-            android:layout_below="@+id/comments_rv"
-            android:padding="16dp"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/comments_rv"
-            android:layout_below="@+id/btn_comment" />
+
     </RelativeLayout>
 </ScrollView>

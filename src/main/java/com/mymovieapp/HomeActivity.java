@@ -152,7 +152,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
                                 Log.d("e", String.valueOf(e));
                             }
                             //Initialize RecycleView, Layout Manager, and Adapter
-                            final RecyclerView rv = (RecyclerView) findViewById(R.id.home_rv2);
+                            final RecyclerView rv = (RecyclerView) findViewById(R.i.home_r);
                             rv.setHasFixedSize(true);
                             final LinearLayoutManager llm = new LinearLayoutManager(activity);
                             llm.setOrientation(LinearLayoutManager.HORIZONTAL);

@@ -5,8 +5,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +14,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +72,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
         }
 
         public void updateFlag() {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("FlaggedComments");
+            final ParseQuery<ParseObject> query = ParseQuery.getQuery("FlaggedComments");
             query.whereEqualTo("username", usernameString);
             query.whereEqualTo("title", title);
             query.whereEqualTo("comment", commentString);
@@ -95,9 +92,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext())
+        final View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.comment_row, viewGroup, false);
-        UserViewHolder uvh = new UserViewHolder(v, title, comments.get(i).comment, users.get(i).getName());
+        final UserViewHolder uvh = new UserViewHolder(v, title, comments.get(i).comment, users.get(i).getName());
         uvh.username.setText(users.get(i).getName());
 //        uvh.profPhoto.setImageDrawable(users.get(i).profilePic);
         uvh.profPhoto.setImageResource(R.mipmap.bucket);
@@ -113,45 +110,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
         userViewHolder.comment.setText(comments.get(i).comment);
         userViewHolder.starBar.setRating((float) comments.get(i).rating);
         userViewHolder.updateFlag();
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
-    /**
-     * Class to download images
-     */
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        /**
-         * Create image downloader
-         * @param bmImage Image to download
-         */
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-
     }
 
     public void addComment(String comment, String username, double rating) {

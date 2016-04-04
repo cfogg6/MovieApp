@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.parse.ParseUser;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,10 +29,21 @@ import java.util.List;
  * Includes Toolbar and Navigation drawer to the rest of the user interface
  */
 public class SearchManagerActivity extends BackToolbarActivity {
-    String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
-    final Activity activity = this;
-    JSONArray listOfMovies;
-
+    /**
+     * Url for the API call for search
+     */
+    private String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
+    /**
+     * Current activity
+     */
+    private final Activity activity = this;
+    /**
+     * List of movies returned by the API
+     */
+    private JSONArray listOfMovies;
+    /**
+     * List of movies we will display
+     */
     private List<Movie> searchMovies;
 
     /**
@@ -81,19 +89,14 @@ public class SearchManagerActivity extends BackToolbarActivity {
         getMenuInflater().inflate(R.menu.menu_login, menu);
 
         // Associate Searchable with the SearchView
-        SearchManager searchManager =
+        final SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
+        final SearchView searchView =
                 (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconified(false);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -109,36 +112,38 @@ public class SearchManagerActivity extends BackToolbarActivity {
     private void handleIntent(Intent intent) {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
+            final String query = intent.getStringExtra(SearchManager.QUERY);
             Log.e("SEARCH MANAGER ACTIVITY", "Searching for " + query);
             // Instantiate the RequestQueue.
             final RequestQueue queue = Volley.newRequestQueue(this);
             // Add the request to the RequestQueue.
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "&q="
+            final StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "&q="
                     + query.replace(" ", "+") + "&page_limit=20",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             try {
                                 listOfMovies = new JSONObject(response).getJSONArray("movies");
-                                RecyclerView rv = (RecyclerView) findViewById(R.id.search_rv);
+                                final RecyclerView rv = (RecyclerView) findViewById(R.id.search_rv);
                                 rv.setHasFixedSize(true);
-                                GridLayoutManager glm = new GridLayoutManager(activity, 2);
+                                final GridLayoutManager glm = new GridLayoutManager(activity, 2);
                                 rv.setLayoutManager(glm);
                                 try {
                                     initializeData();
                                 } catch (JSONException e) {
+                                    Log.d("e", String.valueOf(e));
                                 }
-                                RVSearchAdapter adapter = new RVSearchAdapter(searchMovies);
+                                final RVSearchAdapter adapter = new RVSearchAdapter(searchMovies);
                                 rv.setAdapter(adapter);
                             } catch (JSONException e) {
+                                Log.d("e", String.valueOf(e));
                             }
                         }
                     }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
             queue.add(stringRequest);
         }
     }

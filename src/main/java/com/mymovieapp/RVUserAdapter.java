@@ -3,12 +3,9 @@ package com.mymovieapp;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +13,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,49 +26,49 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Adapter for the RecyclerView regarding horizontal user cards for admin purposes.
  */
 public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHolder> {
-    List<AdminUser> users  = new ArrayList<>();
-    List<AdminUser> unlockedUsers  = new ArrayList<>();
-    List<AdminUser> lockedUsers  = new ArrayList<>();
-    List<AdminUser> bannedUsers  = new ArrayList<>();
-    Context context;
+    /**
+     * List of users
+     */
+    private List<AdminUser> users  = new ArrayList<>();
+    /**
+     * List of unlocked users
+     */
+    private List<AdminUser> unlockedUsers  = new ArrayList<>();
+    /**
+     * List of locked users
+     */
+    private List<AdminUser> lockedUsers  = new ArrayList<>();
+    /**
+     * List of banned users
+     */
+    private List<AdminUser> bannedUsers  = new ArrayList<>();
+    /**
+     * current context
+     */
+    private Context context;
+    /**
+     * what mode the admin is viewing
+     */
     public String mode = "ALL";
 
     /**
      * Constructor that sets the context of the adapter and the list of users to the argument list.
      * @param parentActivity The parent activity of the callee
-     * @param users The list of users for the cards to populate from
+     * @param u The list of users for the cards to populate from
      */
-    public RVUserAdapter(Activity parentActivity, List<AdminUser> users)  {
+    public RVUserAdapter(Activity parentActivity, List<AdminUser> u)  {
         context = parentActivity;
-        this.users = users;
+        this.users = u;
         updateLists();
     }
 
     /**
-     * ViewHolder Class following the ViewHolder Android Pattern. Establishes views held inside
-     * the movie cards that this adapter sets.
+     * Return the list of users
+     * @return list of users
      */
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        RelativeLayout cvLayout;
-        TextView username;
-        ImageView userStatus;
-        CircleImageView profPhoto;
-
-        UserViewHolder(View itemView) {
-            super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.userCardView);
-            cvLayout = (RelativeLayout) itemView.findViewById(R.id.cv_layout);
-            username = (TextView) itemView.findViewById(R.id.user_name);
-            userStatus = (ImageView) itemView.findViewById(R.id.status_image);
-            profPhoto = (CircleImageView) itemView.findViewById(R.id.profile_image);
-        }
+    public List<AdminUser> getUsers() {
+        return users;
     }
-
-    /*
-    public void setTabMode(String mode) {
-        this.mode = mode;
-    }*/
 
     /**
      * Method to update the lists regarding changes made in the tabs.
@@ -138,9 +130,9 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
 
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext())
+        final View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.user_card, viewGroup, false);
-        UserViewHolder uvh = new UserViewHolder(v);
+        final UserViewHolder uvh = new UserViewHolder(v);
         uvh.username.setText(users.get(i).getName());
 //        uvh.profPhoto.setImageDrawable(users.get(i).profilePic);
 //        uvh.userStatus.setImageDrawable(users.get(i).statusImage);
@@ -188,16 +180,16 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                 final AdminUser user = currentList.get(i);
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.menu_admin_options);
-                SwitchCompat bannedSwitch = (SwitchCompat)dialog.findViewById(R.id.sw_banned);
+                final SwitchCompat bannedSwitch = (SwitchCompat) dialog.findViewById(R.id.sw_banned);
                 bannedSwitch.setChecked(user.isBanned());
                 bannedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         user.setBanned(isChecked);
-                        ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
+                        final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
                         bannedQuery.whereEqualTo("username", user.getName());
                         try {
-                            ParseObject bannedObj = bannedQuery.getFirst();
+                            final ParseObject bannedObj = bannedQuery.getFirst();
                             if (isChecked) {
                                 bannedObj.put("username", user.getName());
                                 bannedObj.saveInBackground();
@@ -206,7 +198,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                                     bannedUsers.add(currentList.get(i));
                                 }
                                 unlockedUsers.remove(currentList.get(i));
-                                if (mode.equals("UNLOCKED")) {
+                                if ("UNLOCKED".equals(mode)) {
                                     dialog.dismiss();
                                     notifyDataSetChanged();
                                 }
@@ -217,14 +209,14 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                                 bannedUsers.remove(currentList.get(i));
                                 userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
                                 ParseObject.createWithoutData("Banned", bannedObj.getObjectId()).deleteInBackground();
-                                if (mode.equals("BANNED")) {
+                                if ("BANNED".equals(mode)) {
                                     dialog.dismiss();
                                     notifyDataSetChanged();
                                 }
                             }
                         } catch (ParseException e) {
                             if (isChecked) {
-                                ParseObject bannedObj = new ParseObject("Banned");
+                                final ParseObject bannedObj = new ParseObject("Banned");
                                 bannedObj.put("username", user.getName());
                                 bannedObj.saveInBackground();
                                 if (!bannedUsers.contains(currentList.get(i))) {
@@ -232,7 +224,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                                 }
                                 unlockedUsers.remove(currentList.get(i));
                                 userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);
-                                if (mode.equals("UNLOCKED")) {
+                                if ("UNLOCKED".equals(mode)) {
                                     dialog.dismiss();
                                     notifyDataSetChanged();
                                 }
@@ -242,7 +234,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                                     unlockedUsers.add(currentList.get(i));
                                 }
                                 userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
-                                if (mode.equals("BANNED")) {
+                                if ("BANNED".equals(mode)) {
                                     dialog.dismiss();
                                     notifyDataSetChanged();
                                 }
@@ -255,10 +247,10 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         user.setUserIsLocked(false);
-                        ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Locked");
+                        final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Locked");
                         bannedQuery.whereEqualTo("username", user.getName());
                         try {
-                            ParseObject lockedObj = bannedQuery.getFirst();
+                            final ParseObject lockedObj = bannedQuery.getFirst();
                             ParseObject.createWithoutData("Locked", lockedObj.getObjectId()).deleteInBackground();
                             lockedObj.saveInBackground();
                             if (!lockedUsers.contains(currentList.get(i))) {
@@ -266,12 +258,12 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                             }
                             unlockedUsers.remove(currentList.get(i));
                             userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
-                            if (mode.equals("UNLOCKED")) {
+                            if ("UNLOCKED".equals(mode)) {
                                 dialog.dismiss();
                                 notifyDataSetChanged();
                             }
                         } catch (ParseException e) {
-                            e.printStackTrace();
+                            Log.d("e", String.valueOf(e));
                         }
                         lockSwitch.setVisibility(View.GONE);
                     }
@@ -286,42 +278,40 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
         });
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
     /**
-     * Class to download images
+     * ViewHolder Class following the ViewHolder Android Pattern. Establishes views held inside
+     * the movie cards that this adapter sets.
      */
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
+        //        private CardView cv;
+        /**
+         * Rel Layout
+         */
+        private RelativeLayout cvLayout;
+        /**
+         * Username field
+         */
+        private TextView username;
+        /**
+         * User status field
+         */
+        private ImageView userStatus;
+        /**
+         * User's photo
+         */
+        private CircleImageView profPhoto;
 
         /**
-         * Create image downloader
-         * @param bmImage Image to download
+         * view
+         * @param itemView view
          */
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
+        UserViewHolder(View itemView) {
+            super(itemView);
+            //cv = (CardView) itemView.findViewById(R.id.userCardView);
+            cvLayout = (RelativeLayout) itemView.findViewById(R.id.cv_layout);
+            username = (TextView) itemView.findViewById(R.id.user_name);
+            userStatus = (ImageView) itemView.findViewById(R.id.status_image);
+            profPhoto = (CircleImageView) itemView.findViewById(R.id.profile_image);
         }
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (MalformedURLException e) {
-            } catch (IOException e) {
-            }
-            return mIcon11;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-
     }
 }

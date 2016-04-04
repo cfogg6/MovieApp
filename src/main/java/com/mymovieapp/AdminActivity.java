@@ -102,7 +102,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
-                        adapter.users.add(new AdminUser(element.getString(username)));
+                        adapter.getUsers().add(new AdminUser(element.getString(username)));
                     }
                 }
                 adapter.updateLists();
@@ -115,9 +115,9 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
-                        final int index = adapter.users.lastIndexOf(new AdminUser(element.getString(username)));
+                        final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
                         if (element.getInt("strikes") >= 3 && index >= 0) {
-                            adapter.users.get(index).setUserIsLocked(true);
+                            adapter.getUsers().get(index).setUserIsLocked(true);
                         }
                     }
                 }
@@ -131,9 +131,9 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
-                        final int index = adapter.users.lastIndexOf(new AdminUser(element.getString(username)));
+                        final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
                         if (index >= 0) {
-                            adapter.users.get(index).setBanned(true);
+                            adapter.getUsers().get(index).setBanned(true);
                         }
                     }
                 }
@@ -154,7 +154,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
-                        adapter.users.add(new AdminUser(element.getString(username)));
+                        adapter.getUsers().add(new AdminUser(element.getString(username)));
                     }
                 }
                 adapter.updateLists();
@@ -167,9 +167,9 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
-                        final int index = adapter.users.lastIndexOf(new AdminUser(element.getString(username)));
+                        final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
                         if (element.getInt("strikes") >= 3 && index >= 0) {
-                            adapter.users.get(index).setUserIsLocked(true);
+                            adapter.getUsers().get(index).setUserIsLocked(true);
                         }
                     }
                 }
@@ -183,9 +183,9 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (ParseObject element : list) {
-                        final int index = adapter.users.lastIndexOf(new AdminUser(element.getString(username)));
+                        final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
                         if (index >= 0) {
-                            adapter.users.get(index).setBanned(true);
+                            adapter.getUsers().get(index).setBanned(true);
                         }
                     }
                 }

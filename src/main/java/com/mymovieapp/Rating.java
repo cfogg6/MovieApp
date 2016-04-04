@@ -67,6 +67,11 @@ public class Rating implements Parcelable, Comparable {
         return 0;
     }
 
+    /**
+     * makes rating a parcel
+     * @param out parcel being moved out
+     * @param flags flags
+     */
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(name);

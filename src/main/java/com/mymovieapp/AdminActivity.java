@@ -36,10 +36,10 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
         //Initialize Tab Layout
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.admin_tabs);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.profile_person));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_check_24dp));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_lock_24dp));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_not_interested_24dp));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_person_white_24dp));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_check_white_24dp));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_lock_white_24dp));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_not_interested_white_24dp));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

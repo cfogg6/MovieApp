@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -13,7 +12,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -29,8 +27,8 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button loginButton = (Button) findViewById(R.id.btn_login);
-        RelativeLayout loginRelativeLayout = (RelativeLayout) findViewById(R.id.rl_login);
+        final Button loginButton = (Button) findViewById(R.id.btn_login);
+        final RelativeLayout loginRelativeLayout = (RelativeLayout) findViewById(R.id.rl_login);
 
         loginRelativeLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -41,7 +39,7 @@ public class LoginActivity extends Activity {
             }
         });
 
-        TextView title = (TextView) findViewById(R.id.tv_login_title);
+        final TextView title = (TextView) findViewById(R.id.tv_login_title);
         title.setText("Salty Popcorn");
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -54,21 +52,21 @@ public class LoginActivity extends Activity {
                             @Override
                             public void done(ParseUser parseUser, ParseException e) {
                                 if (parseUser != null) {
-                                    ParseQuery query = ParseQuery.getQuery("Locked");
+                                    final ParseQuery query = ParseQuery.getQuery("Locked");
                                     query.whereEqualTo("username", username);
                                     try {
-                                        ParseObject user = query.getFirst();
+                                        final ParseObject user = query.getFirst();
                                         ParseObject.createWithoutData("Locked", user.getObjectId()).deleteInBackground();
                                     } catch (ParseException e1) {
-                                        e1.printStackTrace();
+                                        Log.d("e1", String.valueOf(e1));
                                     }
-                                    ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
+                                    final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
                                     bannedQuery.whereEqualTo("username", username);
                                     try {
                                         bannedQuery.getFirst();
                                         Toast.makeText(LoginActivity.this, "This user is banned.", Toast.LENGTH_SHORT).show();
                                     } catch (ParseException e1) {
-                                        Intent it = new Intent(LoginActivity.this, HomeActivity.class);
+                                        final Intent it = new Intent(LoginActivity.this, HomeActivity.class);
                                         startActivity(it);
                                     }
                                 } else {
@@ -76,11 +74,11 @@ public class LoginActivity extends Activity {
                                     query.whereEqualTo("username", username);
                                     try {
                                         query.getFirst();
-                                        ParseQuery lockedQuery = ParseQuery.getQuery("Locked");
+                                        final ParseQuery lockedQuery = ParseQuery.getQuery("Locked");
                                         lockedQuery.whereEqualTo("username", username);
                                         try {
-                                            ParseObject strikeObject = lockedQuery.getFirst();
-                                            int strikes = strikeObject.getInt("strikes");
+                                            final ParseObject strikeObject = lockedQuery.getFirst();
+                                            final int strikes = strikeObject.getInt("strikes");
                                             if (strikes < 3) {
                                                 Log.d("strikes", String.valueOf(strikes + 1));
                                                 strikeObject.put("strikes", strikes + 1);
@@ -96,7 +94,7 @@ public class LoginActivity extends Activity {
                                                         Toast.LENGTH_SHORT).show();
                                             }
                                         } catch (ParseException e1) {
-                                            ParseObject userStrikeRow = new ParseObject("Locked");
+                                            final ParseObject userStrikeRow = new ParseObject("Locked");
                                             userStrikeRow.put("username", username);
                                             userStrikeRow.put("strikes", 1);
                                             userStrikeRow.saveInBackground();
@@ -111,7 +109,7 @@ public class LoginActivity extends Activity {
                                         query.whereEqualTo("password", ((EditText) findViewById(R.id.et_password)).getText().toString());
                                         try {
                                             query.getFirst();
-                                            Intent it = new Intent(LoginActivity.this, AdminActivity.class);
+                                            final Intent it = new Intent(LoginActivity.this, AdminActivity.class);
                                             startActivity(it);
                                         } catch (ParseException e2) {
                                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
@@ -123,11 +121,11 @@ public class LoginActivity extends Activity {
             }
         });
 
-        Button registerButton = (Button) findViewById(R.id.btn_registration);
+        final Button registerButton = (Button) findViewById(R.id.btn_registration);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(LoginActivity.this, RegistrationActivity.class);
+                final Intent it = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(it);
             }
         });
@@ -141,26 +139,19 @@ public class LoginActivity extends Activity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onBackPressed() {
-        Intent it = new Intent(Intent.ACTION_MAIN);
+        final Intent it = new Intent(Intent.ACTION_MAIN);
         it.addCategory(Intent.CATEGORY_HOME);
         it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(it);
     }
 
+    /**
+     * Hide the keyboard from view
+     * @param view view
+     */
     private void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =
+        final InputMethodManager inputMethodManager =
                 (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

@@ -96,8 +96,6 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                        Toast.makeText(AdminToolbarDrawerActivity.this, menuItem.getTitle() + " pressed", Toast.LENGTH_SHORT).show();
-
                         //Checking if the item is in checked state or not, if not make it in checked state
                         if (menuItem.isChecked()) {
                             menuItem.setChecked(false);

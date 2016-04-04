@@ -124,6 +124,10 @@ public class RegistrationActivity extends BackToolbarActivity {
         });
     }
 
+    /**
+     * View
+     * @param view view
+     */
     private void hideKeyboard(View view) {
         final InputMethodManager inputMethodManager =
                 (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);

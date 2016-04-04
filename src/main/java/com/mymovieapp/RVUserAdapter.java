@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,18 +155,22 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
         switch (mode) {
             case "ALL": {
                 currentList = users;
+                Log.d("all count", String.valueOf(unlockedUsers.size()));
                 break;
             }
             case "UNLOCKED": {
                 currentList = unlockedUsers;
+                Log.d("unlocked count", String.valueOf(unlockedUsers.size()));
                 break;
             }
             case "LOCKED": {
                 currentList = lockedUsers;
+                Log.d("locked count", String.valueOf(lockedUsers.size()));
                 break;
             }
             case "BANNED": {
                 currentList = bannedUsers;
+                Log.d("banned count", String.valueOf(bannedUsers.size()));
                 break;
             }
             default: {
@@ -262,9 +267,9 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                             ParseObject.createWithoutData("Locked", lockedObj.getObjectId()).deleteInBackground();
                             lockedObj.saveInBackground();
                             if (!lockedUsers.contains(currentList.get(i))) {
-                                lockedUsers.add(currentList.get(i));
+                                unlockedUsers.add(currentList.get(i));
                             }
-                            unlockedUsers.remove(currentList.get(i));
+                            lockedUsers.remove(currentList.get(i));
                             userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
                             if (mode.equals("UNLOCKED")) {
                                 dialog.dismiss();

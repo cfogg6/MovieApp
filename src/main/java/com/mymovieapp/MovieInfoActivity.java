@@ -58,6 +58,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
         final TextView movieTitle = (TextView) findViewById(R.id.tv_movie_title);
         starBar = (RatingBar) findViewById(R.id.rb_star_bar);
         commentEditText = (EditText) findViewById(R.id.et_comment);
+
         movPic = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
         synopsis = (TextView) findViewById(R.id.tV_synopsis);
         rv = (RecyclerView) findViewById(R.id.comments_rv);

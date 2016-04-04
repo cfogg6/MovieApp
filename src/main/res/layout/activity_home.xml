@@ -9,6 +9,7 @@
         android:id="@+id/top_mov"
         android:layout_alignParentLeft="true"
         android:paddingTop="16dp"
+        android:paddingLeft="5dp"
         android:textSize="20sp"/>
     <android.support.v7.widget.AppCompatButton
         android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New to Theaters"
+        android:paddingLeft="5dp"
         android:id="@+id/new_theaters"
         android:layout_below="@+id/home_rv1"
         android:textSize="20sp"/>

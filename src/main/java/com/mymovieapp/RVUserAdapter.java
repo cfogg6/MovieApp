@@ -21,7 +21,9 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -172,7 +174,6 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
             }
         }
         userViewHolder.username.setText(currentList.get(i).getName());
-        userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
         userViewHolder.profPhoto.setImageResource(R.mipmap.bucket);
         if (currentList.get(i).isBanned()) {
             userViewHolder.userStatus.setImageResource(R.drawable.ic_not_interested_24dp);
@@ -253,7 +254,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                 lockSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        user.setLocked(false);
+                        user.setUserIsLocked(false);
                         ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Locked");
                         bannedQuery.whereEqualTo("username", user.getName());
                         try {
@@ -275,7 +276,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                         lockSwitch.setVisibility(View.GONE);
                     }
                 });
-                if (!user.isLocked) {
+                if (!user.isLocked()) {
                     lockSwitch.setVisibility(View.GONE);
                 } else {
                     lockSwitch.setVisibility(View.VISIBLE);
@@ -311,8 +312,8 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (MalformedURLException e) {
+            } catch (IOException e) {
             }
             return mIcon11;
         }

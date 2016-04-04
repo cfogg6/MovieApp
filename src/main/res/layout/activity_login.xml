@@ -52,7 +52,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registration"
+        android:text="@string/Registration"
         android:id="@+id/btn_registration"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"

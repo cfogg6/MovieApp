@@ -21,19 +21,27 @@ import com.parse.ParseUser;
  * Toolbar and Navigation Drawer Parent class for admin related functions.
  */
 public class AdminToolbarDrawerActivity extends AppCompatActivity{
+    /**
+     * Drawer Layout var
+     */
     private DrawerLayout mDrawerLayout;
-    protected ActionBarDrawerToggle mDrawerToggle;
+    /**
+     * Action Bar Drawer Toggle var
+     */
+    private ActionBarDrawerToggle mDrawerToggle;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    /**
+     * Getter for Action Bar Drawer Toggle
+     * @return Action Bar Drawer Toggle
+     */
+    public ActionBarDrawerToggle getActionBarDrawerToggle() {
+        return mDrawerToggle;
     }
 
     @Override
-    protected  void onPostCreate(Bundle savedInstanceState) {
+    protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+        getActionBarDrawerToggle().syncState();
     }
 
     @Override
@@ -50,6 +58,12 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_search).setVisible(false);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return mDrawerToggle.onOptionsItemSelected(item)||
                 super.onOptionsItemSelected(item);
@@ -57,20 +71,20 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
 
     @Override
     public void setContentView(final int layoutResID) {
-        DrawerLayout fullLayout = (DrawerLayout) getLayoutInflater()
+        final DrawerLayout fullLayout = (DrawerLayout) getLayoutInflater()
                 .inflate(R.layout.activity_admin_drawer, null);
-        RelativeLayout actContent = (RelativeLayout) fullLayout.findViewById(R.id.content);
+        final RelativeLayout actContent = (RelativeLayout) fullLayout.findViewById(R.id.content);
 
         getLayoutInflater().inflate(layoutResID, actContent, true);
         super.setContentView(fullLayout);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        final Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         mDrawerLayout = (DrawerLayout) fullLayout.findViewById(R.id.admin_drawer_layout);
-        NavigationView navView = (NavigationView) fullLayout.findViewById(R.id.navigation_view);
+        final NavigationView navView = (NavigationView) fullLayout.findViewById(R.id.navigation_view);
 
-        View header = navView.getHeaderView(0);
-        TextView usernameDraw = (TextView) header.findViewById(R.id.tV_username_header);
-        TextView emailDraw = (TextView) header.findViewById(R.id.tV_email_header);
+        final View header = navView.getHeaderView(0);
+        final TextView usernameDraw = (TextView) header.findViewById(R.id.tV_username_header);
+        final TextView emailDraw = (TextView) header.findViewById(R.id.tV_email_header);
         usernameDraw.setText("Administrator");
         emailDraw.setText("Administration Tools");
 
@@ -123,16 +137,7 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
                 myToolbar,
                 R.string.drawer_open,
                 R.string.drawer_close
-        ) {
-
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
+        ) {};
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 

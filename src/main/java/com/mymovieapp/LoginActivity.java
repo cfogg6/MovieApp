@@ -68,7 +68,7 @@ public class LoginActivity extends Activity {
                                         bannedQuery.getFirst();
                                         Toast.makeText(LoginActivity.this, "This user is banned.", Toast.LENGTH_SHORT).show();
                                     } catch (ParseException e1) {
-                                        Intent it = new Intent(LoginActivity.this, ShowProfileDrawerActivity.class);
+                                        Intent it = new Intent(LoginActivity.this, HomeActivity.class);
                                         startActivity(it);
                                     }
                                 } else {
@@ -108,8 +108,7 @@ public class LoginActivity extends Activity {
                                     } catch (ParseException e1) {
                                         query = ParseQuery.getQuery("Admin");
                                         query.whereEqualTo("username", username);
-                                        query.whereEqualTo("password", ((EditText) findViewById(R.id
-                                                .et_password)).getText().toString());
+                                        query.whereEqualTo("password", ((EditText) findViewById(R.id.et_password)).getText().toString());
                                         try {
                                             query.getFirst();
                                             Intent it = new Intent(LoginActivity.this, AdminActivity.class);
@@ -133,11 +132,6 @@ public class LoginActivity extends Activity {
             }
         });
     }
-
-
-    /*public String getUsername() {
-        return ((EditText) findViewById(R.id.et_username)).getText().toString();
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

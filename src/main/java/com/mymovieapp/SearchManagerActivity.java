@@ -28,7 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Angelo on 3/30/2016.
+ * Default Searchable Screen
+ * Includes Toolbar and Navigation drawer to the rest of the user interface
  */
 public class SearchManagerActivity extends BackToolbarActivity {
     String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
@@ -115,7 +116,6 @@ public class SearchManagerActivity extends BackToolbarActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            // Display the first 500 characters of the response string.
                             try {
                                 listOfMovies = new JSONObject(response).getJSONArray("movies");
                                 RecyclerView rv = (RecyclerView) findViewById(R.id.search_rv);
@@ -125,12 +125,10 @@ public class SearchManagerActivity extends BackToolbarActivity {
                                 try {
                                     initializeData();
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
                                 RVSearchAdapter adapter = new RVSearchAdapter(searchMovies);
                                 rv.setAdapter(adapter);
                             } catch (JSONException e) {
-                                e.printStackTrace();
                             }
                         }
                     }, new Response.ErrorListener() {

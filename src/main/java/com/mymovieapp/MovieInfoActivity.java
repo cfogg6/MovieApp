@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,7 +28,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -37,18 +39,57 @@ import java.util.List;
  * recommendations by major.
  */
 public class MovieInfoActivity extends BackToolbarActivity {
-    final Activity activity = this;
-    ParseObject movieInfo;
-    float rating;
-    RatingBar starBar;
-    String movieName;
-    EditText commentEditText;
-    AppCompatImageView movPic;
-    TextView synopsis;
-    String comment;
-    Button commentButton;
-    MovieInfoActivity thisActivity = this;
-    com.mymovieapp.Movie movieObject;
+    /**
+     * Current activity
+     */
+    private final Activity activity = this;
+    /**
+     * Current movie to display
+     */
+    private ParseObject movieInfo;
+    /**
+     * Rating of movie
+     */
+    private float rating;
+    /**
+     * Star bar to display rating of movie
+     */
+    private RatingBar starBar;
+    /**
+     * Title of movie
+     */
+    private String movieName;
+    /**
+     * Edit text field for user's comments
+     */
+    private EditText commentEditText;
+    /**
+     * Photo for movie
+     */
+    private AppCompatImageView movPic;
+    /**
+     * Summary of movie
+     */
+    private TextView synopsis;
+    /**
+     * Comment on the movie
+     */
+    private String comment;
+    /**
+     * Button to submit rating
+     */
+    private Button commentButton;
+    /**
+     * MovieInfo Activity
+     */
+    private MovieInfoActivity thisActivity = this;
+    /**
+     * Current movie object
+     */
+    private com.mymovieapp.Movie movieObject;
+    /**
+     * RecyclerView
+     */
     private RecyclerView rv;
 
     @Override
@@ -104,16 +145,16 @@ public class MovieInfoActivity extends BackToolbarActivity {
         });
         starBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            public void onRatingChanged(RatingBar ratingBar, float r, boolean fromUser) {
 
-                if (rating < .5f) {
+                if (r < .5f) {
                     ratingBar.setRating(.5f);
-                    rating = .5f;
+                    r = .5f;
                 }
-                thisActivity.rating = rating;
+                thisActivity.rating = r;
             }
         });
-        RelativeLayout newDVDLinearLayout = (RelativeLayout) findViewById(R.id.rl_movie_info);
+        final RelativeLayout newDVDLinearLayout = (RelativeLayout) findViewById(R.id.rl_movie_info);
         /**
          * Makes keyboard disappear when you click away from an EditText field
          */
@@ -121,24 +162,24 @@ public class MovieInfoActivity extends BackToolbarActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (!(v instanceof EditText)) {
-                    InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    final InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
                 return true;
             }
         });
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
         final RVCommentsAdapter adapter = new RVCommentsAdapter(activity, movieObject.getName());
         rv.setAdapter(adapter);
-        LinearLayoutManager llm = new LinearLayoutManager(activity);
+        final LinearLayoutManager llm = new LinearLayoutManager(activity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
-                    RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
+                    final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
                     final RVCommentsAdapter adapter = new RVCommentsAdapter(activity, movieObject.getName());
                     final LinearLayoutManager llm = new LinearLayoutManager(activity);
                     llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -147,7 +188,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
                     for (ParseObject element : list) {
                         adapter.users.add(new AdminUser(element.getString("username")));
                     }
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
+                    final ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
                     query.whereEqualTo("title", movieObject.getName());
                     query.findInBackground(new FindCallback<ParseObject>() {
                         @Override
@@ -157,18 +198,14 @@ public class MovieInfoActivity extends BackToolbarActivity {
                                     adapter.addComment(element.getString("comment"), element.getString("username"),
                                             element.getDouble("rating"));
                                 }
-                            } else {
-                                e.printStackTrace();
                             }
-                            RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
+                            final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
                             rv.setAdapter(adapter);
                             llm.setOrientation(LinearLayoutManager.VERTICAL);
                             rv.setLayoutManager(llm);
                             (rv.getAdapter()).notifyDataSetChanged();
                         }
                     });
-                } else {
-                    e.printStackTrace();
                 }
             }
         });
@@ -177,15 +214,15 @@ public class MovieInfoActivity extends BackToolbarActivity {
     @Override
     public void onResume() {
         super.onResume();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         try {
             movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
-            movieName = movieObject.name;
+            movieName = movieObject.getName();
             query.whereEqualTo("movieId", movieObject.getId());
             movieInfo = query.getFirst();
         } catch (com.parse.ParseException e) {
-            e.printStackTrace();
+            Log.d("e", String.valueOf(e));
         }
         if (movieInfo != null) {
             rating = (float) movieInfo.getDouble("rating");
@@ -200,36 +237,43 @@ public class MovieInfoActivity extends BackToolbarActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+        /**
+         * Image view
+         */
+        private ImageView bmImage;
 
+        /**
+         * To display image
+         * @param bmImage image to display
+         */
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
+        /**
+         * Display image
+         * @param urls url of picture
+         * @return image as a bitmap
+         */
         protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
+            final String urldisplay = urls[0];
             Bitmap mIcon11 = null;
             try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
+                final InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                Log.d("e", String.valueOf(e));
+            } catch (IOException e) {
+                Log.d("e", String.valueOf(e));
             }
             return mIcon11;
         }
 
+        /**
+         * Display the image
+         * @param result Bitmap input
+         */
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }

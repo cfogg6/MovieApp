@@ -90,7 +90,7 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
         movieViewHolder.details.setText(mov.getRatingRuntime());
         movieViewHolder.starBar.setRating((float) mov.getRating().getAverageRating());
 
-        new DownloadImageTask(movieViewHolder.movPhoto).execute(mov.photoId);
+        new DownloadImageTask(movieViewHolder.movPhoto).execute(mov.getPhotoID());
         
         movieViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,18 +12,27 @@ import java.util.ArrayList;
  */
 public class Rating implements Parcelable, Comparable {
 
-    String name;
-    String username;
-    ArrayList<Double> list = new ArrayList<>();
+    /**
+     * Name of movie
+     */
+    private String name;
+    /**
+     * User who rated it
+     */
+    private String username;
+    /**
+     * List of ratings associated with movie
+     */
+    private ArrayList<Double> list = new ArrayList<>();
 
     /**
      * Create Rating
-     * @param name Movie name
-     * @param username User who is looking at the rating
+     * @param n Movie name
+     * @param u User who is looking at the rating
      */
-    public Rating(String name, String username) {
-        this.name = name;
-        this.username = username;
+    public Rating(String n, String u) {
+        this.name = n;
+        this.username = u;
     }
 
     @Override
@@ -55,7 +64,7 @@ public class Rating implements Parcelable, Comparable {
      * @return the average rating
      */
     public double getAverageRating() {
-        DecimalFormat format = new DecimalFormat("#.#");
+        final DecimalFormat format = new DecimalFormat("#.#");
         double sum = 0;
         for (Double item: list) {
             sum += item;
@@ -80,8 +89,10 @@ public class Rating implements Parcelable, Comparable {
         out.writeList(list);
     }
 
-    public static final Parcelable.Creator<Rating> CREATOR
-            = new Parcelable.Creator<Rating>() {
+    /**
+     * Make a Rating Parcelable
+     */
+    public static final Parcelable.Creator<Rating> CREATOR = new Parcelable.Creator<Rating>() {
         public Rating createFromParcel(Parcel in) {
             return new Rating(in);
         }

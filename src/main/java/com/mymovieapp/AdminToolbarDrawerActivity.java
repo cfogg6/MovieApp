@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -95,8 +94,6 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
                     // This method will trigger on item Click of navigation menu
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                        Toast.makeText(AdminToolbarDrawerActivity.this, menuItem.getTitle() + " pressed", Toast.LENGTH_SHORT).show();
 
                         //Checking if the item is in checked state or not, if not make it in checked state
                         if (menuItem.isChecked()) {

@@ -6,21 +6,33 @@ package com.mymovieapp;
  */
 public class FlaggedComment {
 
-    String title;
-    String comment;
-    String username;
-    boolean isDeleted = false;
+    /**
+     * Title of the movie
+     */
+    private String title;
+    /**
+     * Comment
+     */
+    private String comment;
+    /**
+     * Username of the user who gave the comment
+     */
+    private String username;
+    /**
+     * Whether or not the comment is deleted or not
+     */
+    private boolean commentIsDeleted = false;
 
     /**
      * Details for flagged comments
-     * @param title title of movie
-     * @param comment comment that was flagged
-     * @param username username of user that made comment
+     * @param t title of movie
+     * @param c comment that was flagged
+     * @param u username of user that made comment
      */
-    public FlaggedComment(String title, String comment, String username) {
-        this.title = title;
-        this.comment = comment;
-        this.username = username;
+    public FlaggedComment(String t, String c, String u) {
+        this.title = t;
+        this.comment = c;
+        this.username = u;
     }
 
     /**
@@ -52,14 +64,14 @@ public class FlaggedComment {
      * @return true if deleted, false if not
      */
     public boolean isDeleted() {
-        return isDeleted;
+        return commentIsDeleted;
     }
 
     /**
      * set deleted to isDeleted
-     * @param isDeleted true if comment is deleted, false if not
+     * @param b true if comment is deleted, false if not
      */
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setDeleted(boolean b) {
+        this.commentIsDeleted = b;
     }
 }

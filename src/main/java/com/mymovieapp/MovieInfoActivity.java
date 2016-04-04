@@ -25,7 +25,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 
 /**
  * Activity that shows movie information on selected movie using json query from RottenTomatoes API
@@ -172,8 +174,8 @@ public class MovieInfoActivity extends BackToolbarActivity {
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (MalformedURLException  e) {
+            } catch (IOException e) {
             }
             return mIcon11;
         }

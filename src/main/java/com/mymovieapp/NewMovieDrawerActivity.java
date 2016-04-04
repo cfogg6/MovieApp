@@ -126,7 +126,6 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
                         try {
                             listOfMovies = new JSONObject(response).getJSONArray("movies");
                             try {
@@ -134,7 +133,6 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            //Initialize RecycleView, Layout Manager, and Adapter
                             RecyclerView rv = (RecyclerView) findViewById(R.id.mov_rv);
                             rv.setHasFixedSize(true);
                             LinearLayoutManager llm = new LinearLayoutManager(activity);

@@ -15,7 +15,9 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -108,8 +110,8 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (MalformedURLException e) {
+            } catch (IOException e) {
             }
             return mIcon11;
         }

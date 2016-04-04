@@ -1,65 +1,64 @@
 package com.mymovieapp;
 
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
-
 /**
  * User class made for specific use in Admin-related functions of application.
  */
 public class AdminUser implements Comparable<AdminUser> {
-    String name;
-    boolean isLocked = false;
-    boolean isBanned = false;
-    Drawable statusImage = new Drawable() {
-        @Override
-        public void draw(Canvas canvas) {
-
-        }
-
-        @Override
-        public void setAlpha(int alpha) {
-
-        }
-
-        @Override
-        public void setColorFilter(ColorFilter colorFilter) {
-
-        }
-
-        @Override
-        public int getOpacity() {
-            return 0;
-        }
-    };
-    Drawable profilePic = new Drawable() {
-        @Override
-        public void draw(Canvas canvas) {
-
-        }
-
-        @Override
-        public void setAlpha(int alpha) {
-
-        }
-
-        @Override
-        public void setColorFilter(ColorFilter colorFilter) {
-
-        }
-
-        @Override
-        public int getOpacity() {
-            return 0;
-        }
-    };
+    /**
+     * Name of user
+     */
+    private String name;
+    /**
+     * Is the user account locked
+     */
+    private boolean userIsLocked = false;
+    /**
+     * Is the user account banned
+     */
+    private boolean userIsBanned = false;
+//    private Drawable statusImage = new Drawable() {
+//        @Override
+//        public void draw(Canvas canvas) {
+//        }
+//
+//        @Override
+//        public void setAlpha(int alpha) {
+//        }
+//
+//        @Override
+//        public void setColorFilter(ColorFilter colorFilter) {
+//        }
+//
+//        @Override
+//        public int getOpacity() {
+//            return 0;
+//        }
+//    };
+//    Drawable profilePic = new Drawable() {
+//        @Override
+//        public void draw(Canvas canvas) {
+//        }
+//
+//        @Override
+//        public void setAlpha(int alpha) {
+//        }
+//
+//        @Override
+//        public void setColorFilter(ColorFilter colorFilter) {
+//        }
+//
+//        @Override
+//        public int getOpacity() {
+//            return 0;
+//        }
+//    };
 
     /**
      * sets adminUser name to name passed in
-     * @param name name passed in
+     * @param n name passed in
      */
-    public AdminUser(String name) {
-        this.name = name;
+    public AdminUser(String n) {
+        this.name = n;
     }
 
     /**
@@ -75,7 +74,7 @@ public class AdminUser implements Comparable<AdminUser> {
      * @return true if AdminUser is locked, or False if not
      */
     public boolean isLocked() {
-        return isLocked;
+        return userIsLocked;
     }
 
     /**
@@ -83,23 +82,23 @@ public class AdminUser implements Comparable<AdminUser> {
      * @return true if AdminUser is banned, or False if not
      */
     public boolean isBanned() {
-        return isBanned;
+        return userIsBanned;
     }
 
     /**
      * Sets name of AdminUser to parameter passed in
-     * @param name new name that AdminUser will have
+     * @param n new name that AdminUser will have
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String n) {
+        this.name = n;
     }
 
     /**
      * sets status of lock AdminUser
-     * @param isLocked sets Admin's lock to isLocked
+     * @param isLocked sets Admin's lock to userIsLocked
      */
-    public void setLocked(boolean isLocked) {
-        this.isLocked = isLocked;
+    public void setUserIsLocked(boolean isLocked) {
+        this.userIsLocked = isLocked;
     }
 
     /**
@@ -107,7 +106,7 @@ public class AdminUser implements Comparable<AdminUser> {
      * @param isBanned sets Admin's ban to isBanned
      */
     public void setBanned(boolean isBanned) {
-        this.isBanned = isBanned;
+        this.userIsBanned = isBanned;
     }
 
     /**

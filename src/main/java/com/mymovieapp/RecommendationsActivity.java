@@ -5,23 +5,15 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-//import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-//import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,10 +24,21 @@ import java.util.List;
  * Includes a spinner to select the major filter and cards of the respective movies.
  */
 public class RecommendationsActivity extends ToolbarDrawerActivity {
-    Spinner spinner;
-    ArrayList<Rating> ratings = new ArrayList<>();
-    RecyclerView rv;
-
+    /**
+     * Spinner
+     */
+    private Spinner spinner;
+    /**
+     * ArrayList of ratings
+     */
+    private ArrayList<Rating> ratings = new ArrayList<>();
+    /**
+     * Recycler View
+     */
+    private RecyclerView rv;
+    /**
+     * List of movies
+     */
     private ArrayList<com.mymovieapp.Movie> movies = new ArrayList<>();
 
     @Override
@@ -43,20 +46,20 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendations);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        final Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             myToolbar.setElevation(0);
         }
 
-        Toolbar spinBar = (Toolbar) findViewById(R.id.spinner_toolbar);
+        final Toolbar spinBar = (Toolbar) findViewById(R.id.spinner_toolbar);
 
-        View spinnerContainer = LayoutInflater.from(this)
+        final View spinnerContainer = LayoutInflater.from(this)
                 .inflate(R.layout.toolbar_spinner,spinBar, false);
-        Toolbar.LayoutParams lp = new Toolbar.LayoutParams(
+        final Toolbar.LayoutParams lp = new Toolbar.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         spinBar.addView(spinnerContainer, lp);
 
-        MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter(this);
+        final MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter(this);
         spinnerAdapter.addItems(
                 Arrays.asList(getResources().getStringArray(R.array.majors_array)));
         spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
@@ -78,10 +81,10 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
         //Initialize RecycleView, Layout Manager, and Adapter
         rv = (RecyclerView) findViewById(R.id.mov_rv);
         rv.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        final LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
-        RVMovAdapter adapter = new RVMovAdapter(movies);
+        final RVMovAdapter adapter = new RVMovAdapter(movies);
         rv.setAdapter(adapter);
     }
 
@@ -96,7 +99,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
      */
     private void updateList() {
         movies = new ArrayList<>();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
         query.whereEqualTo("major", spinner.getSelectedItem().toString());
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -130,8 +133,6 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                     Collections.sort(ratings);
                     Collections.sort(movies);
 
-                } else {
-                    e.printStackTrace();
                 }
                 ((RVMovAdapter) rv.getAdapter()).updateMovies(movies);
                 (rv.getAdapter()).notifyDataSetChanged();

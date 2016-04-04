@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -56,7 +55,6 @@ public class MovieInfoActivity extends BackToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("ggg", "oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_info);
         final TextView movieTitle = (TextView) findViewById(R.id.tv_movie_title);
@@ -129,7 +127,6 @@ public class MovieInfoActivity extends BackToolbarActivity {
             }
         });
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        Log.d("ggg", "didnt find users");
         RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
         final RVCommentsAdapter adapter = new RVCommentsAdapter(activity, movieObject.getName());
         rv.setAdapter(adapter);
@@ -158,7 +155,6 @@ public class MovieInfoActivity extends BackToolbarActivity {
                                 for (ParseObject element : list) {
                                     adapter.addComment(element.getString("comment"), element.getString("username"),
                                             element.getDouble("rating"));
-                                    Log.d("ggg", "add comment");
                                 }
                             } else {
                                 e.printStackTrace();

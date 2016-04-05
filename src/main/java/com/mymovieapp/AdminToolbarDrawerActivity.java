@@ -113,10 +113,10 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
                                 startActivity(it);
                                 return true;
 
-                            case R.id.flag_com:
-                                it = new Intent(AdminToolbarDrawerActivity.this, FlaggedCommentsActivity.class);
-                                startActivity(it);
-                                return true;
+//                            case R.id.flag_com:
+//                                it = new Intent(AdminToolbarDrawerActivity.this, FlaggedCommentsActivity.class);
+//                                startActivity(it);
+//                                return true;
 
                             case R.id.signout:
                                 ParseUser.logOut();

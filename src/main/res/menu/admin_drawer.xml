@@ -6,10 +6,10 @@
             android:icon="@drawable/profile_person"
             android:title="Users"/>
 
-        <item android:id="@+id/flag_com"
-            android:checked="false"
-            android:icon="@drawable/ic_flag_24dp"
-            android:title="Flagged Comments"/>
+        <!--<item android:id="@+id/flag_com"-->
+            <!--android:checked="false"-->
+            <!--android:icon="@drawable/ic_flag_24dp"-->
+            <!--android:title="Flagged Comments"/>-->
 
         <item android:id="@+id/signout"
             android:checked="false"

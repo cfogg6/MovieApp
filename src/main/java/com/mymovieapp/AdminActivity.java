@@ -7,10 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -200,5 +202,12 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!(getIntent().hasExtra("Login"))) {
+            super.onBackPressed();
+        }
     }
 }

@@ -175,5 +175,12 @@ public class HomeActivity extends ToolbarDrawerActivity {
                     });
         queue.add(stringRequest);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (!(getIntent().hasExtra("Login"))) {
+            super.onBackPressed();
+        }
+    }
 }
 

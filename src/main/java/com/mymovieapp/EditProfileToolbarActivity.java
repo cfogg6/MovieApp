@@ -30,11 +30,6 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
      */
     private Spinner spinner;
 
-    /**
-     * Activity of the title
-     */
-    private String title;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,5 +99,16 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
                 startActivity(it);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!(getIntent().hasExtra("Register"))) {
+            ParseUser.getCurrentUser()
+                    .put("major", spinner.getSelectedItem().toString());
+        }
+        final Intent it = new Intent(EditProfileToolbarActivity.this,
+                ShowProfileDrawerActivity.class);
+        startActivity(it);
     }
 }

@@ -97,8 +97,9 @@ public class RegistrationActivity extends BackToolbarActivity {
                                         Toast.makeText(getApplicationContext(),
                                                 "Successfully Registered",
                                                 Toast.LENGTH_SHORT).show();
-                                        final Intent it = new Intent(RegistrationActivity.this, ShowProfileDrawerActivity.class);
+                                        final Intent it = new Intent(RegistrationActivity.this, EditProfileToolbarActivity.class);
                                         it.putExtra("title", "Set up Profile");
+                                        it.putExtra("Register", true);
                                         startActivity(it);
                                     } else {
                                         Toast.makeText(getApplicationContext(),

@@ -103,7 +103,7 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
 
     @Override
     public void onBackPressed() {
-        if (!(getIntent().hasExtra("Register"))) {
+        if (getIntent().hasExtra("Register")) {
             ParseUser.getCurrentUser()
                     .put("major", spinner.getSelectedItem().toString());
         }

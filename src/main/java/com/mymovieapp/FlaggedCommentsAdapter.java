@@ -60,7 +60,7 @@ public class FlaggedCommentsAdapter extends ArrayAdapter {
      * @param position position
      * @param convertView convert view
      * @param parent parent
-     * @return View that has beenn populated
+     * @return View that has been populated
      */
     public View getView(final int position, View convertView, final ViewGroup parent) {
         final ViewHolder viewHolder;
@@ -128,29 +128,5 @@ public class FlaggedCommentsAdapter extends ArrayAdapter {
          * Comment Text View
          */
         private TextView commentTextView;
-
-        /**
-         * Getter for username text view
-         * @return username text view
-         */
-        public TextView getUsernameTextView() {
-            return usernameTextView;
-        }
-
-        /**
-         * Getter for title text view
-         * @return title text view
-         */
-        public TextView getTitleTextView() {
-            return titleTextView;
-        }
-
-        /**
-         * Getter for comment text view
-         * @return comment text view
-         */
-        public TextView getCommentTextView() {
-            return commentTextView;
-        }
     }
 }

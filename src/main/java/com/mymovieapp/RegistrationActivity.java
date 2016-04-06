@@ -3,14 +3,12 @@ package com.mymovieapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -29,9 +27,12 @@ public class RegistrationActivity extends BackToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        Button registerButton = (Button) findViewById(R.id.btn_register);
-        Button cancelButton = (Button) findViewById(R.id.btn_cancel);
-        RelativeLayout regRelativeLayout = (RelativeLayout) findViewById(R.id.rl_register);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Sign Up");
+        }
+        final Button registerButton = (Button) findViewById(R.id.btn_register);
+        final Button cancelButton = (Button) findViewById(R.id.btn_cancel);
+        final RelativeLayout regRelativeLayout = (RelativeLayout) findViewById(R.id.rl_register);
 
         regRelativeLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -42,8 +43,8 @@ public class RegistrationActivity extends BackToolbarActivity {
             }
         });
 
-        TextView title = (TextView) findViewById(R.id.tv_register_title);
-        title.setText("Welcome to Registration");
+        //TextView title = (TextView) findViewById(R.id.tv_register_title);
+        //title.setText("Welcome to Registration");
         final EditText username = (EditText) findViewById(R.id.et_username);
         final EditText password = (EditText) findViewById(R.id.et_password);
         final EditText confirm_pass = (EditText) findViewById(R.id.et_confirm_pass);
@@ -53,14 +54,14 @@ public class RegistrationActivity extends BackToolbarActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String usernametxt = username.getText().toString();
-                String passwordtxt = password.getText().toString();
-                String confirm_passtxt = confirm_pass.getText().toString();
-                String nametxt = name.getText().toString();
-                String emailtxt = email.getText().toString();
+                final String usernametxt = username.getText().toString();
+                final String passwordtxt = password.getText().toString();
+                final String confirm_passtxt = confirm_pass.getText().toString();
+                final String nametxt = name.getText().toString();
+                final String emailtxt = email.getText().toString();
 
-                if (usernametxt.equals("")||passwordtxt.equals("")||emailtxt.equals("")||
-                        confirm_passtxt.equals("")||nametxt.equals("")) {
+                if ("".equals(usernametxt)||"".equals(passwordtxt)||"".equals(emailtxt)||
+                        "".equals(confirm_passtxt)||"".equals(nametxt)) {
                     Toast.makeText(RegistrationActivity.this,
                             "Please Complete the Registration Form",
                             Toast.LENGTH_LONG).show();
@@ -69,15 +70,15 @@ public class RegistrationActivity extends BackToolbarActivity {
                             "Passwords do not Match",
                             Toast.LENGTH_LONG).show();
                 } else {
-                    ParseUser user = new ParseUser();
+                    final ParseUser user = new ParseUser();
                     user.setUsername(usernametxt);
                     user.setPassword(passwordtxt);
                     user.setEmail(emailtxt);
                     user.put("name", nametxt);
 
-                    ParseQuery<ParseUser> userquery = ParseUser.getQuery();
+                    final ParseQuery<ParseUser> userquery = ParseUser.getQuery();
                     userquery.whereEqualTo("username", usernametxt);
-                    ParseQuery<ParseUser> mailquery = ParseUser.getQuery();
+                    final ParseQuery<ParseUser> mailquery = ParseUser.getQuery();
                     mailquery.whereEqualTo("email", emailtxt);
                     try {
                         if (userquery.count() > 0) {
@@ -96,7 +97,9 @@ public class RegistrationActivity extends BackToolbarActivity {
                                         Toast.makeText(getApplicationContext(),
                                                 "Successfully Registered",
                                                 Toast.LENGTH_SHORT).show();
-                                        Intent it = new Intent(RegistrationActivity.this, ShowProfileDrawerActivity.class);
+                                        final Intent it = new Intent(RegistrationActivity.this, EditProfileToolbarActivity.class);
+                                        it.putExtra("title", "Set up Profile");
+                                        it.putExtra("Register", true);
                                         startActivity(it);
                                     } else {
                                         Toast.makeText(getApplicationContext(),
@@ -107,7 +110,7 @@ public class RegistrationActivity extends BackToolbarActivity {
                             });
                         }
                     } catch (ParseException e) {
-                        e.printStackTrace();
+                        Log.d("e", String.valueOf(e));
                     }
                 }
             }
@@ -116,38 +119,18 @@ public class RegistrationActivity extends BackToolbarActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(RegistrationActivity.this, LoginActivity.class);
+                final Intent it = new Intent(RegistrationActivity.this, LoginActivity.class);
                 startActivity(it);
             }
         });
     }
 
     /**
-     * adds items to action bar
-     * @param menu menu being added
-     * @return true
+     * View
+     * @param view view
      */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =
+        final InputMethodManager inputMethodManager =
                 (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

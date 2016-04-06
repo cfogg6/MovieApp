@@ -17,7 +17,7 @@
     <string name="prof_interest">"Interests: "</string>
     <string name="prof_placeholder">Profile Placeholder Image</string>
 
-    <string name="welcome">Welcome to Salty Popcorn!</string>
+    <string name="welcome">Welcome to Salty Popcorn</string>
     <string name="registration">Register Here!</string>
     <string name="login_activity">Login Here!</string>
 
@@ -36,7 +36,6 @@
     <string name="Top_Movies">Top Movies</string>
     <string name="More">More</string>
     <string name="New_to_Theaters">New to Theaters</string>
-    <string name="more">More</string>
     <string name="Registration">Registration</string>
     <string name="Movie_Not_Found">Movie not found</string>
     <string name="Comment">Comment</string>
@@ -48,24 +47,27 @@
     <string name="delete">Delete</string>
     <string name="Username">Username</string>
     <string name="Email">Email</string>
+    <string name="Administrator">Administrator</string>
+    <string name="AdministrationTools">Administration Tools</string>
+    <string name="NoSynopsis">No synopsis.</string>
     <string-array name="majors_array">
         <item>Computer Science</item>
-        <item>Computer Media</item>
+        <item>Computational Media</item>
         <item>Aerospace Engineering</item>
         <item>Biology</item>
         <item>Biomedical Engineering</item>
-        <item>Business</item>
-        <item>Chemical Engineering</item>
-        <item>Chemistry</item>
-        <item>Civil Engineering</item>
-        <item>Computer Engineering</item>
-        <item>Electrical Engineering</item>
-        <item>Environmental Engineering</item>
-        <item>Industrial Engineering</item>
-        <item>International Affairs</item>
-        <item>Math</item>
-        <item>Mechanical Engineering</item>
-        <item>Physics</item>
-        <item>Public Policy</item>
+<item>Business</item>
+<item>Chemical Engineering</item>
+<item>Chemistry</item>
+<item>Civil Engineering</item>
+<item>Computer Engineering</item>
+<item>Electrical Engineering</item>
+<item>Environmental Engineering</item>
+<item>Industrial Engineering</item>
+<item>International Affairs</item>
+<item>Math</item>
+<item>Mechanical Engineering</item>
+<item>Physics</item>
+<item>Public Policy</item>
     </string-array>
-</resources>
+    </resources>

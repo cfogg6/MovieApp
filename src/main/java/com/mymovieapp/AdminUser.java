@@ -86,14 +86,6 @@ public class AdminUser implements Comparable<AdminUser> {
     }
 
     /**
-     * Sets name of AdminUser to parameter passed in
-     * @param n new name that AdminUser will have
-     */
-    public void setName(String n) {
-        this.name = n;
-    }
-
-    /**
      * sets status of lock AdminUser
      * @param isLocked sets Admin's lock to userIsLocked
      */

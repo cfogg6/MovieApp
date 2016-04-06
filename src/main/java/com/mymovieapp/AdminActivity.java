@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +29,16 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
     /**
      * Username String literal
      */
-    private String username = "username";
+    private final String username = "username";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("User Management");
+        }
 
         final Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             myToolbar.setElevation(0);
         }
@@ -107,18 +111,19 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                         }
                     }
                 }
-                final ParseQuery<ParseObject> lockedQuery = ParseQuery.getQuery("Locked");
-                lockedQuery.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> list, ParseException e) {
-                        RVUserAdapter adapter = (RVUserAdapter) rv.getAdapter();
-                        if (e == null) {
-                            for (ParseObject element : list) {
-                                final int index = adapter.users.lastIndexOf(new AdminUser(element.getString(username)));
-                                if (element.getInt("strikes") >= 3 && index >= 0) {
-                                    adapter.users.get(index).setUserIsLocked(true);
-                                }
-                            }
+                adapter.updateLists();
+                adapter.notifyDataSetChanged();
+            }
+        });
+        final ParseQuery<ParseObject> lockedQuery = ParseQuery.getQuery("Locked");
+        lockedQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    for (ParseObject element : list) {
+                        final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
+                        if (element.getInt("strikes") >= 3 && index >= 0) {
+                            adapter.getUsers().get(index).setUserIsLocked(true);
                         }
                         adapter.updateLists();
                         adapter.notifyDataSetChanged();
@@ -179,19 +184,20 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                         adapter.updateLists();
                         adapter.notifyDataSetChanged();
                     }
-                });
-                final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
-                bannedQuery.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> list, ParseException e) {
-                        RVUserAdapter adapter = (RVUserAdapter) rv.getAdapter();
-                        if (e == null) {
-                            for (ParseObject element : list) {
-                                final int index = adapter.users.lastIndexOf(new AdminUser(element.getString(username)));
-                                if (index >= 0) {
-                                    adapter.users.get(index).setBanned(true);
-                                }
-                            }
+                }
+                adapter.updateLists();
+                adapter.notifyDataSetChanged();
+            }
+        });
+        final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
+        bannedQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    for (ParseObject element : list) {
+                        final int index = adapter.users.lastIndexOf(new AdminUser(element.getString(username)));
+                        if (index >= 0) {
+                            adapter.users.get(index).setBanned(true);
                         }
                         adapter.updateLists();
                         adapter.notifyDataSetChanged();
@@ -206,5 +212,12 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!(getIntent().hasExtra("Login"))) {
+            super.onBackPressed();
+        }
     }
 }

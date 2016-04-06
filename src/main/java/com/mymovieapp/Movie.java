@@ -3,37 +3,55 @@ package com.mymovieapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Honey on 3/29/2016.
- */
 public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
 
-    String name;
-    String date;
-    String photoId;
-    String synopsis;
-    String ratingRuntime;
-    String id;
-    Rating rating;
+    /**
+     * Title of movie
+     */
+    private String name;
+    /**
+     * Date of movie
+     */
+    private String date;
+    /**
+     * Photo URL of movie
+     */
+    private String photoId;
+    /**
+     * Synopsis of movie
+     */
+    private String synopsis;
+    /**
+     * MPAA rating and runtime of movie
+     */
+    private String ratingRuntime;
+    /**
+     * ID of movie
+     */
+    private String id;
+    /**
+     * Rating of movie
+     */
+    private Rating rating;
 
     /**
      * instance of movie
-     * @param name name of movie
-     * @param date date of when movie was released
-     * @param photoId picture of movie
-     * @param synopsis summary of movie
-     * @param ratingRuntime Rating (G, PG, etc) and runtime of movie
-     * @param id id that rotten tomatoes distinguishes movies by
-     * @param rating average rating considering users' inputs
+     * @param n name of movie
+     * @param d date of when movie was released
+     * @param p picture of movie
+     * @param s summary of movie
+     * @param r Rating (G, PG, etc) and runtime of movie
+     * @param i id that rotten tomatoes distinguishes movies by
+     * @param ra average rating considering users' inputs
      */
-    public Movie(String name, String date, String photoId, String synopsis, String ratingRuntime, String id, Rating rating) {
-        this.name = name;
-        this.date = date;
-        this.photoId = photoId;
-        this.synopsis = synopsis;
-        this.ratingRuntime = ratingRuntime;
-        this.id = id;
-        this.rating = rating;
+    public Movie(String n, String d, String p, String s, String r, String i, Rating ra) {
+        this.name = n;
+        this.date = d;
+        this.photoId = p;
+        this.synopsis = s;
+        this.ratingRuntime = r;
+        this.id = i;
+        this.rating = ra;
     }
 
     /**
@@ -59,6 +77,9 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
         out.writeParcelable(rating, flags);
     }
 
+    /**
+     * Create Parcelable
+     */
     public static final Parcelable.Creator<com.mymovieapp.Movie> CREATOR = new Parcelable.Creator<com.mymovieapp.Movie>() {
         public com.mymovieapp.Movie createFromParcel(Parcel in) {
             return new com.mymovieapp.Movie(in);
@@ -150,7 +171,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     public String getRatingRuntime() { return ratingRuntime; }
 
     /**
-     * gets avergage rating
+     * gets average rating
      * @return Rating
      */
     public Rating getRating() {

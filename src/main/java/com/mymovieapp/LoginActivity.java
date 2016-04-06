@@ -40,7 +40,7 @@ public class LoginActivity extends Activity {
         });
 
         final TextView title = (TextView) findViewById(R.id.tv_login_title);
-        title.setText("Salty Popcorn");
+        title.setText(R.string.welcome);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +67,7 @@ public class LoginActivity extends Activity {
                                         Toast.makeText(LoginActivity.this, "This user is banned.", Toast.LENGTH_SHORT).show();
                                     } catch (ParseException e1) {
                                         final Intent it = new Intent(LoginActivity.this, HomeActivity.class);
+                                        it.putExtra("Login", true);
                                         startActivity(it);
                                     }
                                 } else {
@@ -110,6 +111,7 @@ public class LoginActivity extends Activity {
                                         try {
                                             query.getFirst();
                                             final Intent it = new Intent(LoginActivity.this, AdminActivity.class);
+                                            it.putExtra("Login", true);
                                             startActivity(it);
                                         } catch (ParseException e2) {
                                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();

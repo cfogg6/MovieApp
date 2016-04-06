@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,6 +35,12 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        String title = getIntent().getStringExtra("title");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+
+
         final ParseUser user = ParseUser.getCurrentUser();
         final TextView usernameView = (TextView) findViewById(R.id.tV_username);
         usernameView.setText(user.getUsername());
@@ -43,7 +51,7 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         spinView.addView(spinnerContainer, lp);
-        final MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter(this);
+        final MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter(this, true);
         spinnerAdapter.addItems(
                 Arrays.asList(getResources().getStringArray(R.array.majors_array)));
         spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
@@ -91,5 +99,16 @@ public class EditProfileToolbarActivity extends BackToolbarActivity{
                 startActivity(it);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getIntent().hasExtra("Register")) {
+            ParseUser.getCurrentUser()
+                    .put("major", spinner.getSelectedItem().toString());
+        }
+        final Intent it = new Intent(EditProfileToolbarActivity.this,
+                ShowProfileDrawerActivity.class);
+        startActivity(it);
     }
 }

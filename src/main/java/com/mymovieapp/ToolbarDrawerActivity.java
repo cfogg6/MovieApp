@@ -24,15 +24,15 @@ import com.parse.ParseUser;
 /**
  * Parent activity housing a toolbar with searchable and a navigation drawer for user.
  */
-public class ToolbarDrawerActivity extends AppCompatActivity{
+public class ToolbarDrawerActivity extends AppCompatActivity {
+    /**
+     * Drawer Layout
+     */
     private DrawerLayout mDrawerLayout;
-    protected ActionBarDrawerToggle mDrawerToggle;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    /**
+     * Action Bar Drawer Toggle
+     */
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected  void onPostCreate(Bundle savedInstanceState) {
@@ -52,9 +52,9 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.menu_login, menu);
 
         // Associate Searchable with the SearchView
-        SearchManager searchManager =
+        final SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
+        final SearchView searchView =
                 (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
@@ -69,9 +69,9 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
 
     @Override
     public void setContentView(final int layoutResID) {
-        DrawerLayout fullLayout = (DrawerLayout) getLayoutInflater()
+        final DrawerLayout fullLayout = (DrawerLayout) getLayoutInflater()
                 .inflate(R.layout.activity_drawer, null);
-        RelativeLayout actContent = (RelativeLayout) fullLayout.findViewById(R.id.content);
+        final RelativeLayout actContent = (RelativeLayout) fullLayout.findViewById(R.id.content);
         actContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -84,13 +84,13 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
         getLayoutInflater().inflate(layoutResID, actContent, true);
         super.setContentView(fullLayout);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        final Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         mDrawerLayout = (DrawerLayout) fullLayout.findViewById(R.id.drawer_layout);
-        NavigationView navView = (NavigationView) fullLayout.findViewById(R.id.navigation_view);
+        final NavigationView navView = (NavigationView) fullLayout.findViewById(R.id.navigation_view);
 
-        View header = navView.getHeaderView(0);
-        TextView usernameDraw = (TextView) header.findViewById(R.id.tV_username_header);
-        TextView emailDraw = (TextView) header.findViewById(R.id.tV_email_header);
+        final View header = navView.getHeaderView(0);
+        final TextView usernameDraw = (TextView) header.findViewById(R.id.tV_username_header);
+        final TextView emailDraw = (TextView) header.findViewById(R.id.tV_email_header);
         usernameDraw.setText(ParseUser.getCurrentUser().getUsername());
         emailDraw.setText(ParseUser.getCurrentUser().getEmail());
 
@@ -158,12 +158,8 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
                 R.string.drawer_close
         ) {
 
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-            }
-
             public void onDrawerOpened(View drawerView) {
-                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 super.onDrawerOpened(drawerView);
             }
@@ -181,9 +177,12 @@ public class ToolbarDrawerActivity extends AppCompatActivity{
         }
     }
 
+    /**
+     * Hide the keyboard
+     * @param view view
+     */
     private void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        final InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

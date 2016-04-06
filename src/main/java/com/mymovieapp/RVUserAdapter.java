@@ -326,4 +326,8 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
             profPhoto = (CircleImageView) itemView.findViewById(R.id.profile_image);
         }
     }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 }

@@ -54,11 +54,7 @@ public class Rating implements Parcelable, Comparable {
             return false;
         }
 
-        if (name.equals(((Rating) other).name)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (name.equals(((Rating) other).name));
         //return (other instanceof Rating) && name.equals(((Rating)other).name);
     }
 

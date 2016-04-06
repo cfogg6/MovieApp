@@ -20,7 +20,7 @@ public class MajorSpinnerAdapter extends BaseAdapter{
      */
     private Activity activity;
     /**
-     * Determines dark spinnet theme
+     * Determines dark spinner theme
      */
     private boolean isDark = false;
 

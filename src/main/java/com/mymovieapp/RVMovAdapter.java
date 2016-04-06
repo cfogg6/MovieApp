@@ -13,10 +13,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +104,7 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
          */
         private ImageView movPhoto;
         /**
-         * relative layour
+         * relative layout
          */
         private RelativeLayout cvLayout;
 
@@ -150,8 +148,6 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
             try {
                 final InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (MalformedURLException e) {
-                Log.d("e", String.valueOf(e));
             } catch (IOException e) {
                 Log.d("e", String.valueOf(e));
             }

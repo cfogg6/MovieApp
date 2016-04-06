@@ -60,8 +60,8 @@ public class RegistrationActivity extends BackToolbarActivity {
                 final String nametxt = name.getText().toString();
                 final String emailtxt = email.getText().toString();
 
-                if (usernametxt.equals("")||passwordtxt.equals("")||emailtxt.equals("")||
-                        confirm_passtxt.equals("")||nametxt.equals("")) {
+                if ("".equals(usernametxt)||"".equals(passwordtxt)||"".equals(emailtxt)||
+                        "".equals(confirm_passtxt)||"".equals(nametxt)) {
                     Toast.makeText(RegistrationActivity.this,
                             "Please Complete the Registration Form",
                             Toast.LENGTH_LONG).show();

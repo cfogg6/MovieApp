@@ -47,6 +47,9 @@
     <string name="delete">Delete</string>
     <string name="Username">Username</string>
     <string name="Email">Email</string>
+    <string name="Administrator">Administrator</string>
+    <string name="AdministrationTools">Administration Tools</string>
+    <string name="NoSynopsis">No synopsis.</string>
     <string-array name="majors_array">
         <item>Computer Science</item>
         <item>Computer Media</item>

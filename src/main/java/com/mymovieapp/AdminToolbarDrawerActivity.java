@@ -84,8 +84,8 @@ public class AdminToolbarDrawerActivity extends AppCompatActivity{
         final View header = navView.getHeaderView(0);
         final TextView usernameDraw = (TextView) header.findViewById(R.id.tV_username_header);
         final TextView emailDraw = (TextView) header.findViewById(R.id.tV_email_header);
-        usernameDraw.setText("Administrator");
-        emailDraw.setText("Administration Tools");
+        usernameDraw.setText(R.string.Administrator);
+        emailDraw.setText(R.string.AdministrationTools);
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navView.setNavigationItemSelectedListener(

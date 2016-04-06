@@ -28,7 +28,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
     /**
      * Username String literal
      */
-    private String username = "username";
+    private final String username = "username";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,25 +56,25 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                 switch (tabLayout.getSelectedTabPosition()) {
                     //All Users
                     case 0:
-                        ((RVUserAdapter)rv.getAdapter()).mode = "ALL";
+                        ((RVUserAdapter)rv.getAdapter()).getMode().equals("ALL");
                         ((RVUserAdapter)rv.getAdapter()).updateLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                     //Active Users
                     case 1:
-                        ((RVUserAdapter)rv.getAdapter()).mode = "UNLOCKED";
+                        ((RVUserAdapter)rv.getAdapter()).getMode().equals("UNLOCKED");
                         ((RVUserAdapter)rv.getAdapter()).updateLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                     //All Locked Users
                     case 2:
-                        ((RVUserAdapter)rv.getAdapter()).mode = "LOCKED";
+                        ((RVUserAdapter)rv.getAdapter()).getMode().equals("LOCKED");
                         ((RVUserAdapter)rv.getAdapter()).updateLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                     //All Banned Users
                     case 3:
-                        ((RVUserAdapter)rv.getAdapter()).mode = "BANNED";
+                        ((RVUserAdapter)rv.getAdapter()).getMode().equals("BANNED");
                         ((RVUserAdapter)rv.getAdapter()).updateLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;

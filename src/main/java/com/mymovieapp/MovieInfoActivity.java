@@ -27,10 +27,8 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -108,8 +106,8 @@ public class MovieInfoActivity extends BackToolbarActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(movieName);
         }
-        if (movieObject.getSynopsis().equals("")) {
-            synopsis.setText("No synopsis.");
+        if ("".equals(movieObject.getSynopsis())) {
+            synopsis.setText(R.string.NoSynopsis);
         } else {
             synopsis.setText(movieObject.getSynopsis());
         }
@@ -245,10 +243,10 @@ public class MovieInfoActivity extends BackToolbarActivity {
 
         /**
          * To display image
-         * @param bmImage image to display
+         * @param i image to display
          */
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
+        public DownloadImageTask(ImageView i) {
+            this.bmImage = i;
         }
 
         /**
@@ -262,8 +260,6 @@ public class MovieInfoActivity extends BackToolbarActivity {
             try {
                 final InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (MalformedURLException e) {
-                Log.d("e", String.valueOf(e));
             } catch (IOException e) {
                 Log.d("e", String.valueOf(e));
             }

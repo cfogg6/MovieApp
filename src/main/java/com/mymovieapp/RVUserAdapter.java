@@ -49,7 +49,15 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     /**
      * what mode the admin is viewing
      */
-    public String mode = "ALL";
+    private String mode = "ALL";
+
+    /**
+     * Getter for mode
+     * @return String mode
+     */
+    public String getMode() {
+        return mode;
+    }
 
     /**
      * Constructor that sets the context of the adapter and the list of users to the argument list.

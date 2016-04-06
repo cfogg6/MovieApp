@@ -94,7 +94,7 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getTag() != null && tab.getTag().equals("DVD Tab")) {
+                if (tab.getTag() != null && "DVD Tab".equals((tab.getTag()))) {
                     showNewDVDs();
                 } else {
                     showNewReleases();

@@ -1,7 +1,7 @@
 package com.mymovieapp;
 
 /**
- * Creats flagged comment
+ * Create flagged comment
  * Created by Honey on 3/28/2016.
  */
 public class FlaggedComment {

@@ -3,9 +3,6 @@ package com.mymovieapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Honey on 3/29/2016.
- */
 public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
 
     /**
@@ -174,7 +171,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     public String getRatingRuntime() { return ratingRuntime; }
 
     /**
-     * gets avergage rating
+     * gets average rating
      * @return Rating
      */
     public Rating getRating() {

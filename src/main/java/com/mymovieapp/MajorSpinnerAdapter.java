@@ -14,24 +14,15 @@ public class MajorSpinnerAdapter extends BaseAdapter{
     /**
      * list of majors for the Major Spinner
      */
-    private List<String> majors = new ArrayList<>();
+    private final List<String> majors = new ArrayList<>();
     /**
      * The activity housing the spinner
      */
-    private Activity activity;
+    private final Activity activity;
     /**
-     * Determines dark spinnet theme
+     * Determines dark spinner theme
      */
     private boolean isDark = false;
-
-    /**
-     * Constructor for Major Spinner adapter
-     *
-     * @param act activity that the spinner is in
-     */
-    public MajorSpinnerAdapter(Activity act) {
-        this.activity = act;
-    }
 
     /**
      * Constructor for setting spinner theme
@@ -92,13 +83,13 @@ public class MajorSpinnerAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         if (isDark) {
-            if (view == null || !!("NON_DROPDOWN").equals(view.getTag().toString())) {
+            if (view == null || !("NON_DROPDOWN").equals(view.getTag().toString())) {
                 view = activity.getLayoutInflater().inflate(R.layout.
                         toolbar_spinner_item_dark, parent, false);
                 view.setTag("NON_DROPDOWN");
             }
         } else {
-            if (view == null || !!("NON_DROPDOWN").equals(view.getTag().toString())) {
+            if (view == null || !("NON_DROPDOWN").equals(view.getTag().toString())) {
                 view = activity.getLayoutInflater().inflate(R.layout.
                         toolbar_spinner_item, parent, false);
                 view.setTag("NON_DROPDOWN");

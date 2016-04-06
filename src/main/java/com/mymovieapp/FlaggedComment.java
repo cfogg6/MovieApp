@@ -1,7 +1,7 @@
 package com.mymovieapp;
 
 /**
- * Creats flagged comment
+ * Create flagged comment
  * Created by Honey on 3/28/2016.
  */
 public class FlaggedComment {
@@ -9,15 +9,15 @@ public class FlaggedComment {
     /**
      * Title of the movie
      */
-    private String title;
+    private final String title;
     /**
      * Comment
      */
-    private String comment;
+    private final String comment;
     /**
      * Username of the user who gave the comment
      */
-    private String username;
+    private final String username;
     /**
      * Whether or not the comment is deleted or not
      */

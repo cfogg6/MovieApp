@@ -49,7 +49,15 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     /**
      * what mode the admin is viewing
      */
-    public String mode = "ALL";
+    private String mode = "ALL";
+
+    /**
+     * Getter for mode
+     * @return String mode
+     */
+    public String getMode() {
+        return mode;
+    }
 
     /**
      * Constructor that sets the context of the adapter and the list of users to the argument list.
@@ -59,7 +67,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     public RVUserAdapter(Activity parentActivity, List<AdminUser> u)  {
         context = parentActivity;
         this.users = u;
-        updateLists();
+        updateChangeLists();
     }
 
     /**
@@ -73,7 +81,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     /**
      * Method to update the lists regarding changes made in the tabs.
      */
-    public void updateLists() {
+    public void updateChangeLists() {
         for (AdminUser user: users) {
             if (user.isLocked()) {
                 if (!lockedUsers.contains(user)) {
@@ -146,18 +154,22 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
         switch (mode) {
             case "ALL": {
                 currentList = users;
+                Log.d("all count", String.valueOf(unlockedUsers.size()));
                 break;
             }
             case "UNLOCKED": {
                 currentList = unlockedUsers;
+                Log.d("unlocked count", String.valueOf(unlockedUsers.size()));
                 break;
             }
             case "LOCKED": {
                 currentList = lockedUsers;
+                Log.d("locked count", String.valueOf(lockedUsers.size()));
                 break;
             }
             case "BANNED": {
                 currentList = bannedUsers;
+                Log.d("banned count", String.valueOf(bannedUsers.size()));
                 break;
             }
             default: {
@@ -254,9 +266,9 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                             ParseObject.createWithoutData("Locked", lockedObj.getObjectId()).deleteInBackground();
                             lockedObj.saveInBackground();
                             if (!lockedUsers.contains(currentList.get(i))) {
-                                lockedUsers.add(currentList.get(i));
+                                unlockedUsers.add(currentList.get(i));
                             }
-                            unlockedUsers.remove(currentList.get(i));
+                            lockedUsers.remove(currentList.get(i));
                             userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
                             if ("UNLOCKED".equals(mode)) {
                                 dialog.dismiss();
@@ -276,6 +288,14 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                 dialog.show();
             }
         });
+    }
+
+    /**
+     * Set mode of the adapter
+     * @param mod the mode
+     */
+    public void setMode(String mod) {
+        this.mode = mod;
     }
 
     /**
@@ -314,4 +334,6 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
             profPhoto = (CircleImageView) itemView.findViewById(R.id.profile_image);
         }
     }
+
+
 }

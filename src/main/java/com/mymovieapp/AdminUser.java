@@ -7,7 +7,7 @@ public class AdminUser implements Comparable<AdminUser> {
     /**
      * Name of user
      */
-    private String name;
+    private final String name;
     /**
      * Is the user account locked
      */
@@ -83,14 +83,6 @@ public class AdminUser implements Comparable<AdminUser> {
      */
     public boolean isBanned() {
         return userIsBanned;
-    }
-
-    /**
-     * Sets name of AdminUser to parameter passed in
-     * @param n new name that AdminUser will have
-     */
-    public void setName(String n) {
-        this.name = n;
     }
 
     /**

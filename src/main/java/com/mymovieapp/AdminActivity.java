@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 
 import com.parse.FindCallback;
@@ -28,7 +29,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
     /**
      * Username String literal
      */
-    private String username = "username";
+    private static final String username = "username";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,26 +57,26 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                 switch (tabLayout.getSelectedTabPosition()) {
                     //All Users
                     case 0:
-                        ((RVUserAdapter)rv.getAdapter()).mode = "ALL";
-                        ((RVUserAdapter)rv.getAdapter()).updateLists();
+                        ((RVUserAdapter) rv.getAdapter()).setMode("ALL");
+                        ((RVUserAdapter) rv.getAdapter()).updateChangeLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                     //Active Users
                     case 1:
-                        ((RVUserAdapter)rv.getAdapter()).mode = "UNLOCKED";
-                        ((RVUserAdapter)rv.getAdapter()).updateLists();
+                        ((RVUserAdapter) rv.getAdapter()).setMode("UNLOCKED");
+                        ((RVUserAdapter) rv.getAdapter()).updateChangeLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                     //All Locked Users
                     case 2:
-                        ((RVUserAdapter)rv.getAdapter()).mode = "LOCKED";
-                        ((RVUserAdapter)rv.getAdapter()).updateLists();
+                        ((RVUserAdapter) rv.getAdapter()).setMode("LOCKED");
+                        ((RVUserAdapter) rv.getAdapter()).updateChangeLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                     //All Banned Users
                     case 3:
-                        ((RVUserAdapter)rv.getAdapter()).mode = "BANNED";
-                        ((RVUserAdapter)rv.getAdapter()).updateLists();
+                        ((RVUserAdapter) rv.getAdapter()).setMode("BANNED");
+                        ((RVUserAdapter) rv.getAdapter()).updateChangeLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                 }
@@ -102,12 +103,15 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
+                RVUserAdapter adapter = (RVUserAdapter)rv.getAdapter();
                 if (e == null) {
                     for (ParseObject element : list) {
-                        adapter.getUsers().add(new AdminUser(element.getString(username)));
+                        if (!adapter.getUsers().contains(new AdminUser(element.getString(username)))) {
+                            adapter.getUsers().add(new AdminUser(element.getString(username)));
+                        }
                     }
                 }
-                adapter.updateLists();
+                adapter.updateChangeLists();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -121,26 +125,27 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                         if (element.getInt("strikes") >= 3 && index >= 0) {
                             adapter.getUsers().get(index).setUserIsLocked(true);
                         }
+                        adapter.updateChangeLists();
+                        adapter.notifyDataSetChanged();
                     }
-                }
-                adapter.updateLists();
-                adapter.notifyDataSetChanged();
-            }
-        });
-        final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
-        bannedQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if (e == null) {
-                    for (ParseObject element : list) {
-                        final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
-                        if (index >= 0) {
-                            adapter.getUsers().get(index).setBanned(true);
+                    final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
+                    bannedQuery.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> list, ParseException e) {
+                            RVUserAdapter adapter = (RVUserAdapter) rv.getAdapter();
+                            if (e == null) {
+                                for (ParseObject element : list) {
+                                    final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
+                                    if (index >= 0) {
+                                        adapter.getUsers().get(index).setBanned(true);
+                                    }
+                                }
+                            }
+                            adapter.updateChangeLists();
+                            adapter.notifyDataSetChanged();
                         }
-                    }
+                    });
                 }
-                adapter.updateLists();
-                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -154,28 +159,33 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
+                RVUserAdapter adapter = (RVUserAdapter)rv.getAdapter();
                 if (e == null) {
                     for (ParseObject element : list) {
-                        adapter.getUsers().add(new AdminUser(element.getString(username)));
-                    }
-                }
-                adapter.updateLists();
-                adapter.notifyDataSetChanged();
-            }
-        });
-        final ParseQuery<ParseObject> lockedQuery = ParseQuery.getQuery("Locked");
-        lockedQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if (e == null) {
-                    for (ParseObject element : list) {
-                        final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
-                        if (element.getInt("strikes") >= 3 && index >= 0) {
-                            adapter.getUsers().get(index).setUserIsLocked(true);
+                        if (!adapter.getUsers().contains(new AdminUser(element.getString(username)))) {
+                            adapter.getUsers().add(new AdminUser(element.getString(username)));
                         }
                     }
                 }
-                adapter.updateLists();
+                final ParseQuery<ParseObject> lockedQuery = ParseQuery.getQuery("Locked");
+                lockedQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> list, ParseException e) {
+                        RVUserAdapter adapter = (RVUserAdapter)rv.getAdapter();
+                        if (e == null) {
+                            for (ParseObject element : list) {
+                                final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
+                                Log.d("user", adapter.getUsers().get(index).getName());
+                                if (element.getInt("strikes") >= 3 && index >= 0) {
+                                    adapter.getUsers().get(index).setUserIsLocked(true);
+                                }
+                            }
+                        }
+                        adapter.updateChangeLists();
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                adapter.updateChangeLists();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -189,10 +199,10 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                         if (index >= 0) {
                             adapter.getUsers().get(index).setBanned(true);
                         }
+                        adapter.updateChangeLists();
+                        adapter.notifyDataSetChanged();
                     }
                 }
-                adapter.updateLists();
-                adapter.notifyDataSetChanged();
             }
         });
     }

@@ -4,15 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +35,6 @@ import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -64,33 +68,17 @@ public class MovieInfoActivity extends BackToolbarActivity {
      */
     private EditText commentEditText;
     /**
-     * Photo for movie
-     */
-    private AppCompatImageView movPic;
-    /**
-     * Summary of movie
-     */
-    private TextView synopsis;
-    /**
      * Comment on the movie
      */
     private String comment;
     /**
-     * Button to submit rating
-     */
-    private Button commentButton;
-    /**
      * MovieInfo Activity
      */
-    private MovieInfoActivity thisActivity = this;
+    private final MovieInfoActivity thisActivity = this;
     /**
      * Current movie object
      */
     private com.mymovieapp.Movie movieObject;
-    /**
-     * RecyclerView
-     */
-    private RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,23 +87,24 @@ public class MovieInfoActivity extends BackToolbarActivity {
         final TextView movieTitle = (TextView) findViewById(R.id.tv_movie_title);
         starBar = (RatingBar) findViewById(R.id.rb_star_bar);
         commentEditText = (EditText) findViewById(R.id.et_comment);
-        movPic = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
-        synopsis = (TextView) findViewById(R.id.tV_synopsis);
-        rv = (RecyclerView) findViewById(R.id.comments_rv);
+
+        AppCompatImageView movPic = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
+        TextView synopsis = (TextView) findViewById(R.id.tV_synopsis);
+        makeTextViewResizable(synopsis, 3, "View More", true);
         movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
         starBar.setRating(0);
         movieName = movieObject.getName();
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(movieName);
         }
-        if (movieObject.getSynopsis().equals("")) {
-            synopsis.setText("No synopsis.");
+        if ("".equals(movieObject.getSynopsis())) {
+            synopsis.setText(R.string.NoSynopsis);
         } else {
             synopsis.setText(movieObject.getSynopsis());
         }
         new DownloadImageTask(movPic).execute(movieObject.getPhotoID());
         movieTitle.setText(movieName);
-        commentButton = (Button) findViewById(R.id.btn_comment);
+        Button commentButton = (Button) findViewById(R.id.btn_comment);
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,7 +159,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
         });
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
-        final RVCommentsAdapter adapter = new RVCommentsAdapter(activity, movieObject.getName());
+        final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName());
         rv.setAdapter(adapter);
         final LinearLayoutManager llm = new LinearLayoutManager(activity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -180,7 +169,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
-                    final RVCommentsAdapter adapter = new RVCommentsAdapter(activity, movieObject.getName());
+                    final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName());
                     final LinearLayoutManager llm = new LinearLayoutManager(activity);
                     llm.setOrientation(LinearLayoutManager.VERTICAL);
                     rv.setLayoutManager(llm);
@@ -237,18 +226,113 @@ public class MovieInfoActivity extends BackToolbarActivity {
         return true;
     }
 
+
+
+    public static void makeTextViewResizable(final TextView tv,
+                                             final int maxLine, final String expandText, final boolean viewMore) {
+
+        if (tv.getTag() == null) {
+            tv.setTag(tv.getText());
+        }
+        ViewTreeObserver vto = tv.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+
+                ViewTreeObserver obs = tv.getViewTreeObserver();
+                obs.removeGlobalOnLayoutListener(this);
+                if (maxLine == 0) {
+                    int lineEndIndex = tv.getLayout().getLineEnd(0);
+                    String text = tv.getText().subSequence(0,
+                            lineEndIndex - expandText.length() + 1)
+                            + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(tv.getText()
+                                            .toString(), tv, maxLine, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                } else if (maxLine > 0 && tv.getLineCount() >= maxLine) {
+                    int lineEndIndex = tv.getLayout().getLineEnd(maxLine - 1);
+                    String text = tv.getText().subSequence(0,
+                            lineEndIndex - expandText.length() + 1)
+                            + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(tv.getText()
+                                            .toString(), tv, maxLine, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                } else {
+                    int lineEndIndex = tv.getLayout().getLineEnd(
+                            tv.getLayout().getLineCount() - 1);
+                    String text = tv.getText().subSequence(0, lineEndIndex)
+                            + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(tv.getText()
+                                            .toString(), tv, lineEndIndex, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                }
+            }
+        });
+
+    }
+
+    private static SpannableStringBuilder addClickablePartTextViewResizable(
+            final String strSpanned, final TextView tv, final int maxLine,
+            final String spanableText, final boolean viewMore) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
+
+        if (strSpanned.contains(spanableText)) {
+            ssb.setSpan(
+                    new ClickableSpan() {
+
+                        @Override
+                        public void onClick(View widget) {
+
+                            if (viewMore) {
+                                tv.setLayoutParams(tv.getLayoutParams());
+                                tv.setText(tv.getTag().toString(),
+                                        TextView.BufferType.SPANNABLE);
+                                tv.invalidate();
+                                makeTextViewResizable(tv, -5, "...Read Less",
+                                        false);
+                                tv.setTextColor(Color.BLACK);
+                            } else {
+                                tv.setLayoutParams(tv.getLayoutParams());
+                                tv.setText(tv.getTag().toString(),
+                                        TextView.BufferType.SPANNABLE);
+                                tv.invalidate();
+                                makeTextViewResizable(tv, 5, "...Read More",
+                                        true);
+                                tv.setTextColor(Color.BLACK);
+                            }
+
+                        }
+                    }, strSpanned.indexOf(spanableText),
+                    strSpanned.indexOf(spanableText) + spanableText.length(), 0);
+
+        }
+        return ssb;
+
+    }
+
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         /**
          * Image view
          */
-        private ImageView bmImage;
+        private final ImageView bmImage;
 
         /**
          * To display image
-         * @param bmImage image to display
+         * @param i image to display
          */
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
+        public DownloadImageTask(ImageView i) {
+            this.bmImage = i;
         }
 
         /**
@@ -262,8 +346,6 @@ public class MovieInfoActivity extends BackToolbarActivity {
             try {
                 final InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (MalformedURLException e) {
-                Log.d("e", String.valueOf(e));
             } catch (IOException e) {
                 Log.d("e", String.valueOf(e));
             }
@@ -279,4 +361,5 @@ public class MovieInfoActivity extends BackToolbarActivity {
         }
 
     }
+
 }

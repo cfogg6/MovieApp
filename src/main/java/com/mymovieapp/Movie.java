@@ -3,58 +3,55 @@ package com.mymovieapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Honey on 3/29/2016.
- */
 public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
 
     /**
      * Title of movie
      */
-    private String name;
+    private final String name;
     /**
      * Date of movie
      */
-    private String date;
+    private final String date;
     /**
      * Photo URL of movie
      */
-    private String photoId;
+    private final String photoId;
     /**
      * Synopsis of movie
      */
-    private String synopsis;
+    private final String synopsis;
     /**
      * MPAA rating and runtime of movie
      */
-    private String ratingRuntime;
+    private final String ratingRuntime;
     /**
      * ID of movie
      */
-    private String id;
+    private final String id;
     /**
      * Rating of movie
      */
-    private Rating rating;
+    private final Rating rating;
 
     /**
      * instance of movie
      * @param n name of movie
      * @param d date of when movie was released
-     * @param p picture of movie
-     * @param s summary of movie
-     * @param r Rating (G, PG, etc) and runtime of movie
+     * @param pic picture of movie
+     * @param sum summary of movie
+     * @param ratingRun Rating (G, PG, etc) and runtime of movie
      * @param i id that rotten tomatoes distinguishes movies by
-     * @param ra average rating considering users' inputs
+     * @param avgRating average rating considering users' inputs
      */
-    public Movie(String n, String d, String p, String s, String r, String i, Rating ra) {
+    public Movie(String n, String d, String pic, String sum, String ratingRun, String i, Rating avgRating) {
         this.name = n;
         this.date = d;
-        this.photoId = p;
-        this.synopsis = s;
-        this.ratingRuntime = r;
+        this.photoId = pic;
+        this.synopsis = sum;
+        this.ratingRuntime = ratingRun;
         this.id = i;
-        this.rating = ra;
+        this.rating = avgRating;
     }
 
     /**
@@ -123,8 +120,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
      * @return true if movies are similar, false if not
      */
     public boolean equals(Object o) {
-        return (o instanceof com.mymovieapp.Movie)
-                && (this.getName().equals((((com.mymovieapp.Movie) o).getName())));
+        return o instanceof Movie && this.getName().equals((((Movie) o).getName()));
     }
 
     /**
@@ -174,7 +170,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     public String getRatingRuntime() { return ratingRuntime; }
 
     /**
-     * gets avergage rating
+     * gets average rating
      * @return Rating
      */
     public Rating getRating() {

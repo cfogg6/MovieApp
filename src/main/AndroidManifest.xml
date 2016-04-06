@@ -67,7 +67,14 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name" >
-
+        </activity>
+        <activity
+            android:name=".AdminToolbarDrawerActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".BackToolbarActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".SearchManagerActivity"

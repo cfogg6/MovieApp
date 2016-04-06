@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Ratings for a movie, includes a list of double ratings for a movie and a method to get their
@@ -15,15 +16,15 @@ public class Rating implements Parcelable, Comparable {
     /**
      * Name of movie
      */
-    private String name;
+    private final String name;
     /**
      * User who rated it
      */
-    private String username;
+    private final String username;
     /**
      * List of ratings associated with movie
      */
-    private ArrayList<Double> list = new ArrayList<>();
+    private final List<Double> list = new ArrayList<>();
 
     /**
      * Create Rating
@@ -48,7 +49,14 @@ public class Rating implements Parcelable, Comparable {
 
     @Override
     public boolean equals(Object other) {
-        return (other instanceof Rating) && name.equals(((Rating)other).name);
+        if (other == null) {
+            return false;
+        } else if (!(other instanceof Rating)) {
+            return false;
+        }
+
+        return (name.equals(((Rating) other).name));
+        //return (other instanceof Rating) && name.equals(((Rating)other).name);
     }
 
     /**

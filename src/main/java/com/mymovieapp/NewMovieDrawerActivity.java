@@ -34,10 +34,6 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
      * List of movies
      */
     private JSONArray listOfMovies;
-    /**
-     * The tab to start the screen on
-     */
-    private int startTab = 0;
 
     /**
      * List of Movie objects
@@ -94,7 +90,7 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getTag() != null && tab.getTag().equals("DVD Tab")) {
+                if (tab.getTag() != null && "DVD Tab".equals((tab.getTag()))) {
                     showNewDVDs();
                 } else {
                     showNewReleases();
@@ -114,7 +110,7 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
         tabLayout.addTab(dvdTab);
         tabLayout.addTab(releasesTab);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        startTab = getIntent().getIntExtra("tab", 0);
+        int startTab = getIntent().getIntExtra("tab", 0);
         if (startTab == 0) {
             dvdTab.select();
         } else {

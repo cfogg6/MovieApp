@@ -30,10 +30,6 @@ import java.util.List;
  */
 public class SearchManagerActivity extends BackToolbarActivity {
     /**
-     * Url for the API call for search
-     */
-    private String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
-    /**
      * Current activity
      */
     private final Activity activity = this;
@@ -110,7 +106,7 @@ public class SearchManagerActivity extends BackToolbarActivity {
      * @param intent passed from another activity
      */
     private void handleIntent(Intent intent) {
-
+        String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             final String query = intent.getStringExtra(SearchManager.QUERY);
             Log.e("SEARCH MANAGER ACTIVITY", "Searching for " + query);

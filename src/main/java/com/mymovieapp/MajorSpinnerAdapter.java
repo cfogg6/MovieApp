@@ -19,6 +19,10 @@ public class MajorSpinnerAdapter extends BaseAdapter{
      * The activity housing the spinner
      */
     private Activity activity;
+    /**
+     * Determines dark spinnet theme
+     */
+    private boolean isDark = false;
 
     /**
      * Constructor for Major Spinner adapter
@@ -27,6 +31,16 @@ public class MajorSpinnerAdapter extends BaseAdapter{
      */
     public MajorSpinnerAdapter(Activity act) {
         this.activity = act;
+    }
+
+    /**
+     * Constructor for setting spinner theme
+     * @param act activity
+     * @param isDk sets is dark
+     */
+    public MajorSpinnerAdapter(Activity act, Boolean isDk) {
+        this.activity = act;
+        this.isDark = isDk;
     }
 
     /**
@@ -77,10 +91,18 @@ public class MajorSpinnerAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        if (view == null || !!("NON_DROPDOWN").equals(view.getTag().toString())) {
-            view = activity.getLayoutInflater().inflate(R.layout.
-                    toolbar_spinner_item_dark, parent, false);
-            view.setTag("NON_DROPDOWN");
+        if (isDark) {
+            if (view == null || !!("NON_DROPDOWN").equals(view.getTag().toString())) {
+                view = activity.getLayoutInflater().inflate(R.layout.
+                        toolbar_spinner_item_dark, parent, false);
+                view.setTag("NON_DROPDOWN");
+            }
+        } else {
+            if (view == null || !!("NON_DROPDOWN").equals(view.getTag().toString())) {
+                view = activity.getLayoutInflater().inflate(R.layout.
+                        toolbar_spinner_item, parent, false);
+                view.setTag("NON_DROPDOWN");
+            }
         }
         final TextView textView = (TextView) view.findViewById(android.R.id.text1);
         textView.setText(getTitle(position));

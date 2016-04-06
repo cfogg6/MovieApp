@@ -1,15 +1,13 @@
 package com.mymovieapp;
 
 import android.app.Activity;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-
+import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,7 +15,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.parse.ParseUser;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,13 +26,27 @@ import java.util.List;
  * New DVDs and New Releases screen with a Tab selector for the RecycleView Card Lists.
  */
 public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
-    final Activity activity = this;
-    JSONArray listOfMovies;
+    /**
+     * Current Activity
+     */
+    private final Activity activity = this;
+    /**
+     * List of movies
+     */
+    private JSONArray listOfMovies;
+    /**
+     * The tab to start the screen on
+     */
+    private int startTab = 0;
 
+    /**
+     * List of Movie objects
+     */
     private List<com.mymovieapp.Movie> movies;
 
     /**
      * Get data from Parse
+     * @throws JSONException in case of JSON error
      */
     private void initializeData() throws JSONException {
         movies = new ArrayList<>();
@@ -64,19 +75,22 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_movie);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Browse New");
+        }
 
         showNewDVDs();
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        final Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             myToolbar.setElevation(0);
         }
 
         //Initialize Tab Layout
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.movie_tabs);
-        TabLayout.Tab dvdTab = tabLayout.newTab().setText("New DVDs");
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.movie_tabs);
+        final TabLayout.Tab dvdTab = tabLayout.newTab().setText("New DVDs");
         dvdTab.setTag("DVD Tab");
-        TabLayout.Tab releasesTab = tabLayout.newTab().setText("New Releases");
+        final TabLayout.Tab releasesTab = tabLayout.newTab().setText("New Releases");
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -100,13 +114,19 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
         tabLayout.addTab(dvdTab);
         tabLayout.addTab(releasesTab);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        startTab = getIntent().getIntExtra("tab", 0);
+        if (startTab == 0) {
+            dvdTab.select();
+        } else {
+            releasesTab.select();
+        }
     }
 
     /**
      * Update list to show new DVDs
      */
     private void showNewDVDs() {
-        String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=yedukp76ffytfuy24zsqk7f5";
+        final String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=yedukp76ffytfuy24zsqk7f5";
         final RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "&page_limit=20",
                 new Response.Listener<String>() {
@@ -117,24 +137,24 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
                             try {
                                 initializeData();
                             } catch (JSONException e) {
-                                e.printStackTrace();
+                                Log.d("e", String.valueOf(e));
                             }
-                            RecyclerView rv = (RecyclerView) findViewById(R.id.mov_rv);
+                            final RecyclerView rv = (RecyclerView) findViewById(R.id.mov_rv);
                             rv.setHasFixedSize(true);
-                            LinearLayoutManager llm = new LinearLayoutManager(activity);
+                            final LinearLayoutManager llm = new LinearLayoutManager(activity);
                             llm.setOrientation(LinearLayoutManager.VERTICAL);
                             rv.setLayoutManager(llm);
-                            RVMovAdapter adapter = new RVMovAdapter(movies);
+                            final RVMovAdapter adapter = new RVMovAdapter(movies);
                             rv.setAdapter(adapter);
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.d("e", String.valueOf(e));
                         }
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
         queue.add(stringRequest);
     }
 
@@ -142,7 +162,7 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
      * Update list to show new releases
      */
     private void showNewReleases() {
-        String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=yedukp76ffytfuy24zsqk7f5";
+        final String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=yedukp76ffytfuy24zsqk7f5";
         final RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "&page_limit=20",
                 new Response.Listener<String>() {
@@ -154,41 +174,25 @@ public class NewMovieDrawerActivity extends ToolbarDrawerActivity {
                             try {
                                 initializeData();
                             } catch (JSONException e) {
-                                e.printStackTrace();
+                                Log.d("e", String.valueOf(e));
                             }
                             //Initialize RecycleView, Layout Manager, and Adapter
-                            RecyclerView rv = (RecyclerView) findViewById(R.id.mov_rv);
+                            final RecyclerView rv = (RecyclerView) findViewById(R.id.mov_rv);
                             rv.setHasFixedSize(true);
-                            LinearLayoutManager llm = new LinearLayoutManager(activity);
+                            final LinearLayoutManager llm = new LinearLayoutManager(activity);
                             llm.setOrientation(LinearLayoutManager.VERTICAL);
                             rv.setLayoutManager(llm);
-                            RVMovAdapter adapter = new RVMovAdapter(movies);
+                            final RVMovAdapter adapter = new RVMovAdapter(movies);
                             rv.setAdapter(adapter);
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.d("e", String.valueOf(e));
                         }
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
         queue.add(stringRequest);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 }

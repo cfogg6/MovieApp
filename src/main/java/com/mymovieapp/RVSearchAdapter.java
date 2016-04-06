@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -26,35 +24,16 @@ import java.util.List;
 public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.SearchViewHolder> {
 
     /**
-     * ViewHolder Class following the ViewHolder Android Pattern. Establishes views held inside
-     * the movie cards that this adapter sets.
+     * List of movies returned by the search call
      */
-    public static class SearchViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        RelativeLayout cvLayout;
-        TextView movName;
-        ImageView movPhoto;
-        RatingBar starBar;
-
-        SearchViewHolder(View itemView) {
-            super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.searchCardView);
-            cvLayout = (RelativeLayout)itemView.findViewById(R.id.cv_layout);
-            movName = (TextView)itemView.findViewById(R.id.movie_name);
-            movPhoto = (ImageView) itemView.findViewById(R.id.movie_photo);
-            starBar = (RatingBar) itemView.findViewById(R.id.mov_rating);
-        }
-    }
-
-    List<com.mymovieapp.Movie> movies;
-    static com.mymovieapp.Movie movieToPass = new com.mymovieapp.Movie("", "", "", "", "", "", null);
+    private List<com.mymovieapp.Movie> movies;
 
     /**
      * Constructor for the adapter that sets the movies list to argument.
-     * @param movies List of movies to set the cards to
+     * @param m List of movies to set the cards to
      */
-    RVSearchAdapter(List<com.mymovieapp.Movie> movies) {
-        this.movies = movies;
+    RVSearchAdapter(List<com.mymovieapp.Movie> m) {
+        this.movies = m;
     }
 
     @Override
@@ -64,7 +43,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
 
     @Override
     public SearchViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext())
+        final View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.search_card, viewGroup, false);
         return new SearchViewHolder(v);
     }
@@ -79,7 +58,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
         searchViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
+                final Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
                 it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov);
                 v.getContext().startActivity(it);
 
@@ -87,34 +66,71 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
         });
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
+    /**
+     * ViewHolder Class following the ViewHolder Android Pattern. Establishes views held inside
+     * the movie cards that this adapter sets.
+     */
+    public static class SearchViewHolder extends RecyclerView.ViewHolder {
+        //private CardView cv;
+        /**
+         * Layout
+         */
+        private RelativeLayout cvLayout;
+        /**
+         * title of movie
+         */
+        private TextView movName;
+        /**
+         * picture of movie
+         */
+        private ImageView movPhoto;
+        /**
+         * rating for movie
+         */
+        private RatingBar starBar;
+
+        /**
+         * View
+         * @param itemView item view
+         */
+        SearchViewHolder(View itemView) {
+            super(itemView);
+            //cv = (CardView)itemView.findViewById(R.id.searchCardView);
+            cvLayout = (RelativeLayout)itemView.findViewById(R.id.cv_layout);
+            movName = (TextView)itemView.findViewById(R.id.movie_name);
+            movPhoto = (ImageView) itemView.findViewById(R.id.movie_photo);
+            starBar = (RatingBar) itemView.findViewById(R.id.mov_rating);
+        }
     }
 
     /**
      * Class to download images
      */
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+        /**
+         * image
+         */
+        private ImageView bmImage;
 
         /**
          * Create image downloader
-         * @param bmImage Image to download
+         * @param i Image to download
          */
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
+        public DownloadImageTask(ImageView i) {
+            this.bmImage = i;
         }
 
         @Override
         protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
+            final String urldisplay = urls[0];
             Bitmap mIcon11 = null;
             try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
+                final InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (MalformedURLException e) {
+                Log.d("e", String.valueOf(e));
             } catch (IOException e) {
+                Log.d("e", String.valueOf(e));
             }
             return mIcon11;
         }

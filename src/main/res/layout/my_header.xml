@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="190dp"
-    android:theme="@style/AppTheme">
+    android:layout_width="match_parent" android:layout_height="160dp"
+    android:theme="@style/AppTheme"
+    android:background="#ffdddddd">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="76dp"
@@ -12,8 +13,10 @@
         android:src="@mipmap/bucket"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,26 +24,24 @@
         android:textSize="20sp"
         android:textColor="#000"
         android:textStyle="bold"
-        android:gravity="left"
+        android:gravity="start"
         android:text="@string/Username"
         android:paddingBottom="4dp"
         android:id="@+id/tV_username_header"
-        android:layout_above="@+id/tV_email_header"
-        android:layout_alignLeft="@+id/profile_image"
-        android:layout_alignStart="@+id/profile_image"
-        android:layout_alignRight="@+id/profile_image"
-        android:layout_alignEnd="@+id/profile_image" />
+        android:layout_alignTop="@+id/profile_image"
+        android:layout_toRightOf="@+id/profile_image"
+        android:layout_toEndOf="@+id/profile_image"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tV_email_header"
-        android:gravity="left"
+        android:gravity="start"
         android:text="@string/Email"
         android:layout_marginBottom="8dp"
         android:textSize="20sp"
         android:textColor="#000"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/tV_username_header"
         android:layout_alignLeft="@+id/tV_username_header"
         android:layout_alignStart="@+id/tV_username_header"/>
 </RelativeLayout>

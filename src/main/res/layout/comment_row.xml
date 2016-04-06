@@ -40,6 +40,7 @@
         android:layout_below="@+id/rb_star_bar" />
 
     <ImageView
+        android:contentDescription="@string/flagged_comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/iv_flagged"

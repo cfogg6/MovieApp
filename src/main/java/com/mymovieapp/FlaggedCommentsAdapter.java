@@ -1,4 +1,5 @@
 package com.mymovieapp;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,24 +10,27 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class FlaggedCommentsAdapter extends ArrayAdapter {
     /**
      * Layout Inflator
      */
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
     /**
      * Context
      */
-    private Context context;
+    private final Context context;
     /**
      * Comments list
      */
-    private ArrayList<FlaggedComment> comments = new ArrayList<>();
+    private List<FlaggedComment> comments = new ArrayList<>();
 
     /**
      * Creates a new Flagged Comments Adapter
@@ -43,7 +47,7 @@ public class FlaggedCommentsAdapter extends ArrayAdapter {
      * Update the list of comments
      * @param c new list of comments
      */
-    public void updateComments(ArrayList<FlaggedComment> c) {
+    public void updateComments(List<FlaggedComment> c) {
         this.comments = c;
     }
 

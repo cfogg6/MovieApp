@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/rb_star_bar"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/tv_movie_title" />
+            android:layout_below="@+id/tV_synopsis" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,14 +40,16 @@
             android:layout_below="@+id/rb_star_bar" />
 
         <EditText
+            android:inputType="textCapSentences"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/et_comment"
             android:layout_below="@+id/tv_comment"
             android:layout_centerHorizontal="true"
-            android:capitalize="sentences"
             android:layout_alignLeft="@+id/rb_star_bar"
-            android:layout_alignRight="@+id/rb_star_bar" />
+            android:layout_alignStart="@+id/rb_star_bar"
+            android:layout_alignRight="@+id/rb_star_bar"
+            android:layout_alignEnd="@+id/rb_star_bar"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -61,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tV_synopsis"
-            android:layout_below="@+id/comments_rv"
+            android:layout_below="@+id/tv_movie_title"
             android:padding="16dp"/>
 
         <android.support.v7.widget.RecyclerView

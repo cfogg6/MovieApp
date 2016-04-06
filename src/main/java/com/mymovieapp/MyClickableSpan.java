@@ -1,7 +1,7 @@
 package com.mymovieapp;
 
 /**
- * Created by Corey on 4/4/16.
+ * Span that is clickable
  */
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
@@ -14,8 +14,8 @@ public class MyClickableSpan extends ClickableSpan {
         /**
          * Constructor
          */
-        public MyClickableSpan(boolean isUnderline) {
-            this.isUnderline = isUnderline;
+        public MyClickableSpan(boolean isUnderlined) {
+            this.isUnderline = isUnderlined;
         }
 
         @Override

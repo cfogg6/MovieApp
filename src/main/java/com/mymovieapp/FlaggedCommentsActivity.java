@@ -17,7 +17,7 @@ public class FlaggedCommentsActivity extends AdminToolbarDrawerActivity {
     /**
      * List of flagged comments
      */
-    private ArrayList<FlaggedComment> comments = new ArrayList<>();
+    private final List<FlaggedComment> comments = new ArrayList<>();
     /**
      * ListView to display comments
      */

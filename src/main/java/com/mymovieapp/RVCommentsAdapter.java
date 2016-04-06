@@ -1,20 +1,20 @@
 package com.mymovieapp;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -24,27 +24,21 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
     /**
      * List of comments
      */
-    private List<Comment> comments = new ArrayList<>();
+    private final List<Comment> comments = new ArrayList<>();
     /**
      * List of users
      */
-    private List<AdminUser> users  = new ArrayList<>();
-    /**
-     * Current context
-     */
-    private Context context;
+    private final List<AdminUser> users  = new ArrayList<>();
     /**
      * Title
      */
-    private String title;
+    private final String title;
 
     /**
      * Constructor that sets the context of the adapter and the list of users to the argument list.
-     * @param parentActivity The parent activity of the callee
      * @param t String t
      */
-    public RVCommentsAdapter(Activity parentActivity, String t)  {
-        context = parentActivity;
+    public RVCommentsAdapter(String t)  {
         this.title = t;
     }
 
@@ -80,7 +74,7 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
         userViewHolder.profPhoto.setImageResource(R.mipmap.bucket);
         userViewHolder.comment.setText(comments.get(i).comment);
         userViewHolder.starBar.setRating((float) comments.get(i).rating);
-        userViewHolder.updateFlag();
+        userViewHolder.updateCommentFlag();
     }
 
        /**
@@ -97,15 +91,15 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
         /**
          * Comment string
          */
-        private String comment;
+        private final String comment;
         /**
          * Rating associated with comment
          */
-        private double rating;
+        private final double rating;
         /**
          * User who provided comment
          */
-        private AdminUser user;
+        private final AdminUser user;
 
         /**
          * Constructor for a new comment
@@ -126,45 +120,37 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
         */
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         /**
-         * CV Layout
-         */
-        private RelativeLayout cvLayout;
-        /**
          * Username
          */
-        private TextView username;
+        private final TextView username;
         /**
          * Comment
          */
-        private TextView comment;
+        private final TextView comment;
         /**
          * Movie picture
          */
-        private CircleImageView profPhoto;
+        private final CircleImageView profPhoto;
         /**
          * Starbar to show rating value
          */
-        private RatingBar starBar;
+        private final RatingBar starBar;
         /**
          * Image
          */
-        private ImageView flaggedImage;
-        /**
-         * whether or not the comment is flagged
-         */
-        private boolean isFlagged;
+        private final ImageView flaggedImage;
         /**
          * title of movie
          */
-        private String title;
+        private final String title;
         /**
          * comment
          */
-        private String commentString;
+        private final String commentString;
         /**
          * username
          */
-        private String usernameString;
+        private final String usernameString;
 
         /**
          * Userview Holder
@@ -175,7 +161,6 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
          */
         UserViewHolder(View itemView, String t, String c, String u) {
             super(itemView);
-            cvLayout = (RelativeLayout) itemView.findViewById(R.id.cv_layout);
             username = (TextView) itemView.findViewById(R.id.user_name);
             profPhoto = (CircleImageView) itemView.findViewById(R.id.profile_image);
             comment = (TextView) itemView.findViewById(R.id.tv_comment);
@@ -184,13 +169,13 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
             this.title = t;
             this.commentString = c;
             this.usernameString = u;
-            updateFlag();
+            updateCommentFlag();
         }
 
         /**
          * Update the flag of the comment
          */
-        public void updateFlag() {
+        public void updateCommentFlag() {
             final ParseQuery<ParseObject> query = ParseQuery.getQuery("FlaggedComments");
             query.whereEqualTo("username", usernameString);
             query.whereEqualTo("title", title);

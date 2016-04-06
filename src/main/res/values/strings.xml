@@ -50,6 +50,15 @@
     <string name="Administrator">Administrator</string>
     <string name="AdministrationTools">Administration Tools</string>
     <string name="NoSynopsis">No synopsis.</string>
+    <string name="menu_search">menu_search</string>
+    <string name="sign_out">Sign out</string>
+    <string name="flagged_comments">Flagged Comments</string>
+    <string name="users">Users</string>
+    <string name="search">Search</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="browse_new_mov">Browse New Movies</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
     <string-array name="majors_array">
         <item>Computer Science</item>
         <item>Computational Media</item>

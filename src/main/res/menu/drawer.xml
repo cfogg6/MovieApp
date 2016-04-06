@@ -5,32 +5,32 @@
         <item android:id="@+id/home"
             android:checked="false"
             android:icon="@drawable/ic_home_24dp"
-            android:title="Home"/>
+            android:title="@string/home"/>
 
         <item android:id="@+id/profile"
             android:checked="false"
             android:icon="@drawable/profile_person"
-            android:title="Profile"/>
+            android:title="@string/profile"/>
 
         <item android:id="@+id/browse_new"
             android:checked="false"
             android:icon="@drawable/ic_movies_24dp"
-            android:title="Browse New Movies"/>
+            android:title="@string/browse_new_mov"/>
 
         <item android:id="@+id/recommendations"
             android:checked="false"
             android:icon="@drawable/ic_recommendation_24dp"
-            android:title="Recommendations"/>
+            android:title="@string/recommendations"/>
 
         <item android:id="@+id/search"
             android:checked="false"
             android:icon="@drawable/ic_search_24dp"
-            android:title="Search"/>
+            android:title="@string/search"/>
 
         <item android:id="@+id/signout"
             android:checked="false"
             android:icon="@drawable/ic_logout_24dp"
-            android:title="Sign out"/>
+            android:title="@string/sign_out"/>
 
     </group>
 </menu>

@@ -15,6 +15,7 @@
         android:clickable="true"
         android:id="@+id/cv_layout">
         <ImageView
+            android:contentDescription="@string/Movie_Not_Found"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_alignParentTop="true"

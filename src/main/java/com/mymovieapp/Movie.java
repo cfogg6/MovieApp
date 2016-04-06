@@ -8,50 +8,50 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     /**
      * Title of movie
      */
-    private String name;
+    private final String name;
     /**
      * Date of movie
      */
-    private String date;
+    private final String date;
     /**
      * Photo URL of movie
      */
-    private String photoId;
+    private final String photoId;
     /**
      * Synopsis of movie
      */
-    private String synopsis;
+    private final String synopsis;
     /**
      * MPAA rating and runtime of movie
      */
-    private String ratingRuntime;
+    private final String ratingRuntime;
     /**
      * ID of movie
      */
-    private String id;
+    private final String id;
     /**
      * Rating of movie
      */
-    private Rating rating;
+    private final Rating rating;
 
     /**
      * instance of movie
-     * @param name name of movie
-     * @param date date of when movie was released
-     * @param picture picture of movie
-     * @param summary summary of movie
-     * @param ratingRuntime Rating (G, PG, etc) and runtime of movie
-     * @param id id that rotten tomatoes distinguishes movies by
-     * @param avRating average rating considering users' inputs
+     * @param n name of movie
+     * @param d date of when movie was released
+     * @param pic picture of movie
+     * @param sum summary of movie
+     * @param ratingRun Rating (G, PG, etc) and runtime of movie
+     * @param i id that rotten tomatoes distinguishes movies by
+     * @param avgRating average rating considering users' inputs
      */
-    public Movie(String name, String date, String picture, String summary, String ratingRuntime, String id, Rating avRating) {
-        this.name = name;
-        this.date = date;
-        this.photoId = picture;
-        this.synopsis = summary;
-        this.ratingRuntime = ratingRuntime;
-        this.id = id;
-        this.rating = avRating;
+    public Movie(String n, String d, String pic, String sum, String ratingRun, String i, Rating avgRating) {
+        this.name = n;
+        this.date = d;
+        this.photoId = pic;
+        this.synopsis = sum;
+        this.ratingRuntime = ratingRun;
+        this.id = i;
+        this.rating = avgRating;
     }
 
     /**
@@ -120,10 +120,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
      * @return true if movies are similar, false if not
      */
     public boolean equals(Object o) {
-        if (!(o instanceof Movie)) {
-            return false;
-        }
-        return this.getName().equals((((com.mymovieapp.Movie) o).getName()));
+        return o instanceof Movie && this.getName().equals((((Movie) o).getName()));
     }
 
     /**

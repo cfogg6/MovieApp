@@ -29,7 +29,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
     /**
      * Username String literal
      */
-    private final String username = "username";
+    private static final String username = "username";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,25 +58,25 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                     //All Users
                     case 0:
                         ((RVUserAdapter) rv.getAdapter()).setMode("ALL");
-                        ((RVUserAdapter) rv.getAdapter()).updateLists();
+                        ((RVUserAdapter) rv.getAdapter()).updateChangeLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                     //Active Users
                     case 1:
                         ((RVUserAdapter) rv.getAdapter()).setMode("UNLOCKED");
-                        ((RVUserAdapter) rv.getAdapter()).updateLists();
+                        ((RVUserAdapter) rv.getAdapter()).updateChangeLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                     //All Locked Users
                     case 2:
                         ((RVUserAdapter) rv.getAdapter()).setMode("LOCKED");
-                        ((RVUserAdapter) rv.getAdapter()).updateLists();
+                        ((RVUserAdapter) rv.getAdapter()).updateChangeLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                     //All Banned Users
                     case 3:
                         ((RVUserAdapter) rv.getAdapter()).setMode("BANNED");
-                        ((RVUserAdapter) rv.getAdapter()).updateLists();
+                        ((RVUserAdapter) rv.getAdapter()).updateChangeLists();
                         rv.getAdapter().notifyDataSetChanged();
                         break;
                 }
@@ -111,7 +111,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                         }
                     }
                 }
-                adapter.updateLists();
+                adapter.updateChangeLists();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -125,7 +125,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                         if (element.getInt("strikes") >= 3 && index >= 0) {
                             adapter.getUsers().get(index).setUserIsLocked(true);
                         }
-                        adapter.updateLists();
+                        adapter.updateChangeLists();
                         adapter.notifyDataSetChanged();
                     }
                     final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
@@ -141,7 +141,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                                     }
                                 }
                             }
-                            adapter.updateLists();
+                            adapter.updateChangeLists();
                             adapter.notifyDataSetChanged();
                         }
                     });
@@ -181,11 +181,11 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                                 }
                             }
                         }
-                        adapter.updateLists();
+                        adapter.updateChangeLists();
                         adapter.notifyDataSetChanged();
                     }
                 });
-                adapter.updateLists();
+                adapter.updateChangeLists();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -199,7 +199,7 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                         if (index >= 0) {
                             adapter.getUsers().get(index).setBanned(true);
                         }
-                        adapter.updateLists();
+                        adapter.updateChangeLists();
                         adapter.notifyDataSetChanged();
                     }
                 }

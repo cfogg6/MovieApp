@@ -4,16 +4,16 @@
         <item android:id="@+id/users"
             android:checked="false"
             android:icon="@drawable/profile_person"
-            android:title="Users"/>
+            android:title="@string/users"/>
 
         <item android:id="@+id/flag_com"
             android:checked="false"
             android:icon="@drawable/ic_flag_24dp"
-            android:title="Flagged Comments"/>
+            android:title="@string/flagged_comments"/>
 
         <item android:id="@+id/signout"
             android:checked="false"
             android:icon="@drawable/ic_logout_24dp"
-            android:title="Sign out"/>
+            android:title="@string/sign_out"/>
     </group>
 </menu>

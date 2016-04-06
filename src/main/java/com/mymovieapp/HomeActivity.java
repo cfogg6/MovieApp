@@ -39,11 +39,11 @@ public class HomeActivity extends ToolbarDrawerActivity {
     /**
      * List of new releases
      */
-    private List<Movie> newMovies = new ArrayList<>();
+    private final List<Movie> newMovies = new ArrayList<>();
     /**
      * List of new DVDs
      */
-    private List<Movie> newDVDs = new ArrayList<>();
+    private final List<Movie> newDVDs = new ArrayList<>();
 
     /**
      * Set all the data

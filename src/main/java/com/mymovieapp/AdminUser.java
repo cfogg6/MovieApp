@@ -7,7 +7,7 @@ public class AdminUser implements Comparable<AdminUser> {
     /**
      * Name of user
      */
-    private String name;
+    private final String name;
     /**
      * Is the user account locked
      */

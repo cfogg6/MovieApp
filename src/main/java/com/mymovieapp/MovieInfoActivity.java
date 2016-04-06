@@ -10,9 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -34,6 +32,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -69,33 +68,17 @@ public class MovieInfoActivity extends BackToolbarActivity {
      */
     private EditText commentEditText;
     /**
-     * Photo for movie
-     */
-    private AppCompatImageView movPic;
-    /**
-     * Summary of movie
-     */
-    private TextView synopsis;
-    /**
      * Comment on the movie
      */
     private String comment;
     /**
-     * Button to submit rating
-     */
-    private Button commentButton;
-    /**
      * MovieInfo Activity
      */
-    private MovieInfoActivity thisActivity = this;
+    private final MovieInfoActivity thisActivity = this;
     /**
      * Current movie object
      */
     private com.mymovieapp.Movie movieObject;
-    /**
-     * RecyclerView
-     */
-    private RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +88,9 @@ public class MovieInfoActivity extends BackToolbarActivity {
         starBar = (RatingBar) findViewById(R.id.rb_star_bar);
         commentEditText = (EditText) findViewById(R.id.et_comment);
 
-        movPic = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
-        synopsis = (TextView) findViewById(R.id.tV_synopsis);
+        AppCompatImageView movPic = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
+        TextView synopsis = (TextView) findViewById(R.id.tV_synopsis);
         makeTextViewResizable(synopsis, 3, "View More", true);
-        rv = (RecyclerView) findViewById(R.id.comments_rv);
         movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
         starBar.setRating(0);
         movieName = movieObject.getName();
@@ -122,7 +104,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
         }
         new DownloadImageTask(movPic).execute(movieObject.getPhotoID());
         movieTitle.setText(movieName);
-        commentButton = (Button) findViewById(R.id.btn_comment);
+        Button commentButton = (Button) findViewById(R.id.btn_comment);
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +159,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
         });
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
-        final RVCommentsAdapter adapter = new RVCommentsAdapter(activity, movieObject.getName());
+        final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName());
         rv.setAdapter(adapter);
         final LinearLayoutManager llm = new LinearLayoutManager(activity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -187,7 +169,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
-                    final RVCommentsAdapter adapter = new RVCommentsAdapter(activity, movieObject.getName());
+                    final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName());
                     final LinearLayoutManager llm = new LinearLayoutManager(activity);
                     llm.setOrientation(LinearLayoutManager.VERTICAL);
                     rv.setLayoutManager(llm);
@@ -244,46 +226,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
         return true;
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        /**
-         * Image view
-         */
-        private ImageView bmImage;
 
-        /**
-         * To display image
-         * @param i image to display
-         */
-        public DownloadImageTask(ImageView i) {
-            this.bmImage = i;
-        }
-
-        /**
-         * Display image
-         * @param urls url of picture
-         * @return image as a bitmap
-         */
-        protected Bitmap doInBackground(String... urls) {
-            final String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                final InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (IOException e) {
-                Log.d("e", String.valueOf(e));
-            }
-            return mIcon11;
-        }
-
-        /**
-         * Display the image
-         * @param result Bitmap input
-         */
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-
-    }
 
     public static void makeTextViewResizable(final TextView tv,
                                              final int maxLine, final String expandText, final boolean viewMore) {
@@ -375,6 +318,47 @@ public class MovieInfoActivity extends BackToolbarActivity {
 
         }
         return ssb;
+
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        /**
+         * Image view
+         */
+        private final ImageView bmImage;
+
+        /**
+         * To display image
+         * @param i image to display
+         */
+        public DownloadImageTask(ImageView i) {
+            this.bmImage = i;
+        }
+
+        /**
+         * Display image
+         * @param urls url of picture
+         * @return image as a bitmap
+         */
+        protected Bitmap doInBackground(String... urls) {
+            final String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                final InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (IOException e) {
+                Log.d("e", String.valueOf(e));
+            }
+            return mIcon11;
+        }
+
+        /**
+         * Display the image
+         * @param result Bitmap input
+         */
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
 
     }
 

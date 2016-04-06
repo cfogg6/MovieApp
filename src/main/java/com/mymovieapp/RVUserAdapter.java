@@ -67,7 +67,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     public RVUserAdapter(Activity parentActivity, List<AdminUser> u)  {
         context = parentActivity;
         this.users = u;
-        updateLists();
+        updateChangeLists();
     }
 
     /**
@@ -81,7 +81,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     /**
      * Method to update the lists regarding changes made in the tabs.
      */
-    public void updateLists() {
+    public void updateChangeLists() {
         for (AdminUser user: users) {
             if (user.isLocked()) {
                 if (!lockedUsers.contains(user)) {
@@ -291,6 +291,14 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
     }
 
     /**
+     * Set mode of the adapter
+     * @param mod the mode
+     */
+    public void setMode(String mod) {
+        this.mode = mod;
+    }
+
+    /**
      * ViewHolder Class following the ViewHolder Android Pattern. Establishes views held inside
      * the movie cards that this adapter sets.
      */
@@ -327,7 +335,5 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
         }
     }
 
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
+
 }

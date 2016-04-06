@@ -31,7 +31,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
     /**
      * ArrayList of ratings
      */
-    private ArrayList<Rating> ratings = new ArrayList<>();
+    private final List<Rating> ratings = new ArrayList<>();
     /**
      * Recycler View
      */
@@ -39,7 +39,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
     /**
      * List of movies
      */
-    private ArrayList<com.mymovieapp.Movie> movies = new ArrayList<>();
+    private List<com.mymovieapp.Movie> movies = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

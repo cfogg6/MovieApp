@@ -36,22 +36,22 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
 
     /**
      * instance of movie
-     * @param n name of movie
-     * @param d date of when movie was released
-     * @param p picture of movie
-     * @param s summary of movie
-     * @param r Rating (G, PG, etc) and runtime of movie
-     * @param i id that rotten tomatoes distinguishes movies by
-     * @param ra average rating considering users' inputs
+     * @param name name of movie
+     * @param date date of when movie was released
+     * @param picture picture of movie
+     * @param summary summary of movie
+     * @param ratingRuntime Rating (G, PG, etc) and runtime of movie
+     * @param id id that rotten tomatoes distinguishes movies by
+     * @param avRating average rating considering users' inputs
      */
-    public Movie(String n, String d, String p, String s, String r, String i, Rating ra) {
-        this.name = n;
-        this.date = d;
-        this.photoId = p;
-        this.synopsis = s;
-        this.ratingRuntime = r;
-        this.id = i;
-        this.rating = ra;
+    public Movie(String name, String date, String picture, String summary, String ratingRuntime, String id, Rating avRating) {
+        this.name = name;
+        this.date = date;
+        this.photoId = picture;
+        this.synopsis = summary;
+        this.ratingRuntime = ratingRuntime;
+        this.id = id;
+        this.rating = avRating;
     }
 
     /**
@@ -120,8 +120,10 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
      * @return true if movies are similar, false if not
      */
     public boolean equals(Object o) {
-        return (o instanceof com.mymovieapp.Movie)
-                && (this.getName().equals((((com.mymovieapp.Movie) o).getName())));
+        if (!(o instanceof Movie)) {
+            return false;
+        }
+        return this.getName().equals((((com.mymovieapp.Movie) o).getName()));
     }
 
     /**

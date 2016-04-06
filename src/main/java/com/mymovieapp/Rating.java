@@ -48,7 +48,18 @@ public class Rating implements Parcelable, Comparable {
 
     @Override
     public boolean equals(Object other) {
-        return (other instanceof Rating) && name.equals(((Rating)other).name);
+        if (other == null) {
+            return false;
+        } else if (!(other instanceof Rating)) {
+            return false;
+        }
+
+        if (name.equals(((Rating) other).name)) {
+            return true;
+        } else {
+            return false;
+        }
+        //return (other instanceof Rating) && name.equals(((Rating)other).name);
     }
 
     /**

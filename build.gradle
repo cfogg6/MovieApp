@@ -26,6 +26,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -34,6 +35,8 @@ android {
         }
     }
 }
+
+ext.supportVersion = '23.2.0'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -46,4 +49,16 @@ dependencies {
     compile files('libs/Parse-1.13.0.jar')
     compile files('libs/bolts-tasks-1.4.0.jar')
     compile files('libs/volley.jar')
+
+    compile "com.android.support:appcompat-v7:${project.ext.supportVersion}"
+
+    androidTestCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
+    androidTestCompile 'com.android.support.test:rules:0.3'
+    androidTestCompile ('com.android.support.test:runner:0.3') {
+        // test:runner is out of step with its support-annotations version. Exclude that & import it
+        // separately to avoid mixing dependency versions in the combined classpath.
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile "com.android.support:support-annotations:${project.ext.supportVersion}"
 }

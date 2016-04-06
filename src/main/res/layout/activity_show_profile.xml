@@ -17,6 +17,7 @@
         android:layout_below="@+id/my_toolbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:paddingLeft="10dp"
         android:minHeight="180dp"
         android:minWidth="140dp"
         android:maxHeight="180dp"

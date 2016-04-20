@@ -35,6 +35,11 @@ public class HomeActivity extends ToolbarDrawerActivity {
      * List of movies returned by JSON request
      */
     private JSONArray listOfMovies;
+    private String imageOfMovie;
+
+    private RecyclerView rv1;
+    private RecyclerView rv2;
+    private com.mymovieapp.Movie toAdd;
 
     /**
      * List of new releases
@@ -50,24 +55,107 @@ public class HomeActivity extends ToolbarDrawerActivity {
      * @param movies list of movies
      * @throws JSONException in case JSON is bad
      */
-    private void initializeData(List<Movie> movies) throws JSONException {
+    private void initializeData(final List<Movie> movies) throws JSONException {
         for (int i = 0; i < listOfMovies.length(); i++) {
+            final int index = i;
             //Assign name, date, details, and photo to the movies array
             final String nameOfMovie = listOfMovies.getJSONObject(i).getString("title");
             final String dateOfMovie = listOfMovies.getJSONObject(i).getString("year");
-            final String imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
             final String synopsisOfMovie = listOfMovies.getJSONObject(i).getString("synopsis");
             final String ratingRuntimeOfMovie = listOfMovies.getJSONObject(i).getString("mpaa_rating") +
                     " Rating " +
                     listOfMovies.getJSONObject(i).getString("runtime") + " min";
             double ratingOfMovie = listOfMovies.getJSONObject(i).getJSONObject("ratings").getInt("audience_score");
             ratingOfMovie = ratingOfMovie / 20;
-
             final Rating ratingToAdd = new Rating(nameOfMovie, ParseUser.getCurrentUser().getUsername());
             ratingToAdd.addRating(ratingOfMovie);
-            final String idOfMovie = listOfMovies.getJSONObject(i).getString("id");
-            final com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, idOfMovie, ratingToAdd);
-            movies.add(i, toAdd);
+
+            toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, null, synopsisOfMovie, ratingRuntimeOfMovie, null, ratingToAdd);
+
+            try {
+                final String imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
+                toAdd.setId(imdbOfMovie);
+                String urlOMDB = "http://www.omdbapi.com/?i=tt" + toAdd.getId() + "&plot=short&r=json";
+                RequestQueue queue = Volley.newRequestQueue(this);
+                final StringRequest request = new StringRequest(Request.Method.GET, urlOMDB,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject result = new JSONObject(response);
+                                    imageOfMovie = result.getString("Poster");
+                                    //imageOfMovie = "http://ia.media-imdb.com/images/M/MV5BOTMyMjEyNzIzMV5BMl5BanBnXkFtZTgwNzIyNjU0NzE@._V1_SX300.jpg";
+                                    ((RVSearchAdapter) rv2.getAdapter()).movies.get(index).setImage(imageOfMovie);
+                                } catch (JSONException e) {
+                                }
+                                rv2.getAdapter().notifyDataSetChanged();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {}
+                        });
+                queue.add(request);
+
+                toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, imdbOfMovie, ratingToAdd);
+            } catch (JSONException e) {
+                imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
+                toAdd.setImage(imageOfMovie);
+            }
+            movies.add(toAdd);
+                    }
+    }
+
+    private void initializeDataDVDS(final List<Movie> movies) throws JSONException {
+        for (int i = 0; i < listOfMovies.length(); i++) {
+            final int index = i;
+            //Assign name, date, details, and photo to the movies array
+            final String nameOfMovie = listOfMovies.getJSONObject(i).getString("title");
+            final String dateOfMovie = listOfMovies.getJSONObject(i).getString("year");
+            final String synopsisOfMovie = listOfMovies.getJSONObject(i).getString("synopsis");
+            final String ratingRuntimeOfMovie = listOfMovies.getJSONObject(i).getString("mpaa_rating") +
+                    " Rating " +
+                    listOfMovies.getJSONObject(i).getString("runtime") + " min";
+            double ratingOfMovie = listOfMovies.getJSONObject(i).getJSONObject("ratings").getInt("audience_score");
+            ratingOfMovie = ratingOfMovie / 20;
+            final Rating ratingToAdd = new Rating(nameOfMovie, ParseUser.getCurrentUser().getUsername());
+            ratingToAdd.addRating(ratingOfMovie);
+
+            toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, null, synopsisOfMovie, ratingRuntimeOfMovie, null, ratingToAdd);
+
+            try {
+                final String imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
+                toAdd.setId(imdbOfMovie);
+                String urlOMDB = "http://www.omdbapi.com/?i=tt" + toAdd.getId() + "&plot=short&r=json";
+                RequestQueue queue = Volley.newRequestQueue(this);
+                final StringRequest request = new StringRequest(Request.Method.GET, urlOMDB,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject result = new JSONObject(response);
+                                    imageOfMovie = result.getString("Poster");
+                                    //imageOfMovie = "http://ia.media-imdb.com/images/M/MV5BOTMyMjEyNzIzMV5BMl5BanBnXkFtZTgwNzIyNjU0NzE@._V1_SX300.jpg";
+                                    ((RVSearchAdapter) rv1.getAdapter()).movies.get(index).setImage(imageOfMovie);
+                                } catch (JSONException e) {
+                                }
+                                rv1.getAdapter().notifyDataSetChanged();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {}
+                        });
+                queue.add(request);
+
+                toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, imdbOfMovie, ratingToAdd);
+            } catch (JSONException e) {
+                imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
+                toAdd.setImage(imageOfMovie);
+            }
+            //toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, imdbOfMovie, ratingToAdd);
+            movies.add(toAdd);
+            Log.d("image of movie", String.valueOf(imageOfMovie));
         }
     }
 
@@ -111,22 +199,22 @@ public class HomeActivity extends ToolbarDrawerActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        //Initialize RecycleView, Layout Manager, and Adapter
+                        rv1 = (RecyclerView) findViewById(R.id.home_rv1);
+                        rv1.setHasFixedSize(true);
+                        final LinearLayoutManager llm = new LinearLayoutManager(activity);
+                        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        rv1.setLayoutManager(llm);
+                        final RVSearchAdapter adapter = new RVSearchAdapter(newDVDs);
+                        rv1.setAdapter(adapter);
                         // Display the first 500 characters of the response string.
                         try {
                             listOfMovies = new JSONObject(response).getJSONArray("movies");
                             try {
-                                initializeData(newDVDs);
+                                initializeDataDVDS(newDVDs);
                             } catch (JSONException e) {
                                 Log.d("e", String.valueOf(e));
                             }
-                            //Initialize RecycleView, Layout Manager, and Adapter
-                            final RecyclerView rv = (RecyclerView) findViewById(R.id.home_rv1);
-                            rv.setHasFixedSize(true);
-                            final LinearLayoutManager llm = new LinearLayoutManager(activity);
-                            llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-                            rv.setLayoutManager(llm);
-                            final RVSearchAdapter adapter = new RVSearchAdapter(newDVDs);
-                            rv.setAdapter(adapter);
                         } catch (JSONException e) {
                             Log.d("e", String.valueOf(e));
                         }
@@ -148,6 +236,14 @@ public class HomeActivity extends ToolbarDrawerActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        //Initialize RecycleView, Layout Manager, and Adapter
+                        rv2 = (RecyclerView) findViewById(R.id.home_rv2);
+                        rv2.setHasFixedSize(true);
+                        final LinearLayoutManager llm = new LinearLayoutManager(activity);
+                        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        rv2.setLayoutManager(llm);
+                        final RVSearchAdapter adapter = new RVSearchAdapter(newMovies);
+                        rv2.setAdapter(adapter);
                         // Display the first 500 characters of the response string.
                         try {
                             listOfMovies = new JSONObject(response).getJSONArray("movies");
@@ -156,14 +252,6 @@ public class HomeActivity extends ToolbarDrawerActivity {
                             } catch (JSONException e) {
                                 Log.d("e", String.valueOf(e));
                             }
-                            //Initialize RecycleView, Layout Manager, and Adapter
-                            final RecyclerView rv = (RecyclerView) findViewById(R.id.home_rv2);
-                            rv.setHasFixedSize(true);
-                            final LinearLayoutManager llm = new LinearLayoutManager(activity);
-                            llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-                            rv.setLayoutManager(llm);
-                            final RVSearchAdapter adapter = new RVSearchAdapter(newMovies);
-                            rv.setAdapter(adapter);
                         } catch (JSONException e) {
                             Log.d("e", String.valueOf(e));
                         }

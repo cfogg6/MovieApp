@@ -80,13 +80,20 @@ public class LoginActivity extends Activity {
                                         try {
                                             final ParseObject strikeObject = lockedQuery.getFirst();
                                             final int strikes = strikeObject.getInt("strikes");
-                                            if (strikes < 3) {
+                                            if (strikes < 2) {
                                                 Log.d("strikes", String.valueOf(strikes + 1));
                                                 strikeObject.put("strikes", strikes + 1);
                                                 strikeObject.saveInBackground();
                                                 Toast.makeText(LoginActivity.this,
                                                         "Incorrect Password. You have "
                                                                 + (3 - (strikes + 1)) + " attempts remaining.",
+                                                        Toast.LENGTH_SHORT).show();
+                                            } else if (strikes == 2) {
+                                                Log.d("strikes", String.valueOf(strikes + 1));
+                                                strikeObject.put("strikes", strikes + 1);
+                                                strikeObject.saveInBackground();
+                                                Toast.makeText(LoginActivity.this,
+                                                        "Too many incorrect attempts. Account has been locked.",
                                                         Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Toast.makeText(LoginActivity.this,

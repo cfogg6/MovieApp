@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 
 import com.parse.FindCallback;
@@ -175,7 +174,6 @@ public class AdminActivity extends AdminToolbarDrawerActivity {
                         if (e == null) {
                             for (ParseObject element : list) {
                                 final int index = adapter.getUsers().lastIndexOf(new AdminUser(element.getString(username)));
-                                Log.d("user", adapter.getUsers().get(index).getName());
                                 if (element.getInt("strikes") >= 3 && index >= 0) {
                                     adapter.getUsers().get(index).setUserIsLocked(true);
                                 }

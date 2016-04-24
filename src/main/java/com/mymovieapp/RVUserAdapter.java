@@ -270,7 +270,7 @@ public class RVUserAdapter extends RecyclerView.Adapter<RVUserAdapter.UserViewHo
                             }
                             lockedUsers.remove(currentList.get(i));
                             userViewHolder.userStatus.setImageResource(R.drawable.ic_check_24dp);
-                            if ("UNLOCKED".equals(mode)) {
+                            if ("LOCKED".equals(mode)) {
                                 dialog.dismiss();
                                 notifyDataSetChanged();
                             }

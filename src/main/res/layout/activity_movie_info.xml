@@ -59,7 +59,7 @@
             android:layout_below="@+id/et_comment"
             android:layout_centerHorizontal="true" />
 
-        <TextView
+        <com.mymovieapp.ExpandableTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tV_synopsis"

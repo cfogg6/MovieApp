@@ -13,6 +13,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -83,11 +85,12 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
         * @param username user who is giving the comment
         * @param rating the rating the user is giving
         */
-    public void addComment(String comment, String username, double rating) {
-        comments.add(new Comment(comment, rating, users.get(users.lastIndexOf(new AdminUser(username)))));
+    public void addComment(String comment, String username, double rating, Date date) {
+        comments.add(new Comment(comment, rating, users.get(users.lastIndexOf(new AdminUser(username))), date));
+        Collections.sort(comments);
     }
 
-    private class Comment {
+    private class Comment implements Comparable<Comment> {
         /**
          * Comment string
          */
@@ -96,6 +99,10 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
          * Rating associated with comment
          */
         private final double rating;
+        /**
+         * Date submitted
+         */
+        Date date;
         /**
          * User who provided comment
          */
@@ -107,10 +114,23 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
          * @param r rating
          * @param u user
          */
-        public Comment(String c, double r, AdminUser u) {
+        public Comment(String c, double r, AdminUser u, Date date) {
             this.comment = c;
             this.rating = r;
             this.user = u;
+            this.date = date;
+        }
+
+        /**
+         * Compare two comments based on date
+         * @param comment comment begin compared
+         * @return Returns compareTo result
+         */
+        public int compareTo(Comment comment) {
+            if (!(comment instanceof Comment)) {
+                return -1;
+            }
+            return comment.date.compareTo(this.date);
         }
     }
 

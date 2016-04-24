@@ -120,7 +120,12 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
      * @return true if movies are similar, false if not
      */
     public boolean equals(Object o) {
-        return o instanceof Movie && this.getName().equals((((Movie) o).getName()));
+        if (o== null){
+            return false;
+        } else if (!(o instanceof Movie)) {
+            return false;
+        }
+        return this.getName().equals((((Movie) o).getName()));
     }
 
     /**

@@ -54,21 +54,34 @@ public class LoginActivity extends Activity {
                                 if (parseUser != null) {
                                     final ParseQuery query = ParseQuery.getQuery("Locked");
                                     query.whereEqualTo("username", username);
+                                    final ParseObject user;
+                                    ParseObject user1;
                                     try {
-                                        final ParseObject user = query.getFirst();
-                                        ParseObject.createWithoutData("Locked", user.getObjectId()).deleteInBackground();
+                                        user1 = query.getFirst();
                                     } catch (ParseException e1) {
-                                        Log.d("e1", String.valueOf(e1));
+                                        user1 = null;
                                     }
-                                    final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
-                                    bannedQuery.whereEqualTo("username", username);
-                                    try {
-                                        bannedQuery.getFirst();
-                                        Toast.makeText(LoginActivity.this, "This user is banned.", Toast.LENGTH_SHORT).show();
-                                    } catch (ParseException e1) {
-                                        final Intent it = new Intent(LoginActivity.this, HomeActivity.class);
-                                        it.putExtra("Login", true);
-                                        startActivity(it);
+                                    user = user1;
+                                    if (user == null || user.getDouble("strikes") < 3) {
+                                        if (user != null) {
+                                            ParseObject.createWithoutData("Locked", user.getObjectId()).deleteInBackground();
+                                        }
+                                        final ParseQuery<ParseObject> bannedQuery = ParseQuery.getQuery("Banned");
+                                        bannedQuery.whereEqualTo("username", username);
+                                        try {
+                                            bannedQuery.getFirst();
+                                            Toast.makeText(LoginActivity.this, "This user is banned.", Toast.LENGTH_SHORT).show();
+                                        } catch (ParseException e1) {
+                                            final Intent it = new Intent(LoginActivity.this, HomeActivity.class);
+                                            it.putExtra("Login", true);
+                                            startActivity(it);
+                                        }
+                                    } else {
+                                        Toast.makeText(LoginActivity.this,
+                                                "No attempts remaining. Contact an Admin " +
+                                                        "to unlock your account",
+                                                Toast.LENGTH_SHORT).show();
+                                        ParseUser.logOut();
                                     }
                                 } else {
                                     ParseQuery query = ParseQuery.getQuery("_User");

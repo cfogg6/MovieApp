@@ -49,7 +49,8 @@
             android:layout_alignLeft="@+id/rb_star_bar"
             android:layout_alignStart="@+id/rb_star_bar"
             android:layout_alignRight="@+id/rb_star_bar"
-            android:layout_alignEnd="@+id/rb_star_bar"/>
+            android:layout_alignEnd="@+id/rb_star_bar"
+            android:imeOptions="actionDone" />
 
         <Button
             android:layout_width="wrap_content"
@@ -59,7 +60,7 @@
             android:layout_below="@+id/et_comment"
             android:layout_centerHorizontal="true" />
 
-        <TextView
+        <com.mymovieapp.ExpandableTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tV_synopsis"

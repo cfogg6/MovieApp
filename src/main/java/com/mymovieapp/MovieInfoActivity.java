@@ -102,37 +102,43 @@ public class MovieInfoActivity extends BackToolbarActivity {
             synopsis.setText(movieObject.getSynopsis());
         }
         new DownloadImageTask(movPic).execute(movieObject.getPhotoID());
-        movieTitle.setText(movieName);
+        if (movieTitle != null) {
+            movieTitle.setText(movieName);
+        }
         Button commentButton = (Button) findViewById(R.id.btn_comment);
-        commentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (rating == 0) {
-                    Toast.makeText(MovieInfoActivity.this, "Please provide a rating", Toast.LENGTH_SHORT).show();
-                } else {
-                    movieInfo = new ParseObject("Ratings");
-                    movieInfo.put("username", ParseUser.getCurrentUser().getUsername());
-                    movieInfo.put("major", ParseUser.getCurrentUser().get("major"));
-                    movieInfo.put("title", movieTitle.getText());
-                    movieInfo.put("rating", rating);
-                    movieInfo.put("photoId", movieObject.getPhotoID());
-                    movieInfo.put("synopsis", movieObject.getSynopsis());
-                    movieInfo.put("ratingRuntime", movieObject.getRatingRuntime());
-                    movieInfo.put("date", movieObject.getDate());
-                    movieInfo.put("movieId", movieObject.getId());
-                    movieInfo.saveInBackground();
-                    comment = commentEditText.getText().toString();
-                    movieInfo.put("comment", comment);
-                    Toast.makeText(v.getContext(), "Rating Submitted!", Toast.LENGTH_SHORT).show();
-                    movieInfo.saveInBackground();
-                    commentEditText.setText("");
-                    ((RVCommentsAdapter)rv.getAdapter()).addComment(comment,
-                            ParseUser.getCurrentUser().getUsername(), rating, new Date());
-                    starBar.setRating(0);
-                    rv.getAdapter().notifyDataSetChanged();
+        if (commentButton != null) {
+            commentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (rating == 0) {
+                        Toast.makeText(MovieInfoActivity.this, "Please provide a rating", Toast.LENGTH_SHORT).show();
+                    } else {
+                        movieInfo = new ParseObject("Ratings");
+                        movieInfo.put("username", ParseUser.getCurrentUser().getUsername());
+                        movieInfo.put("major", ParseUser.getCurrentUser().get("major"));
+                        movieInfo.put("title", movieTitle.getText());
+                        movieInfo.put("rating", rating);
+                        movieInfo.put("photoId", movieObject.getPhotoID());
+                        movieInfo.put("synopsis", movieObject.getSynopsis());
+                        movieInfo.put("ratingRuntime", movieObject.getRatingRuntime());
+                        movieInfo.put("date", movieObject.getDate());
+                        movieInfo.put("movieId", movieObject.getId());
+                        movieInfo.saveInBackground();
+                        comment = commentEditText.getText().toString();
+                        movieInfo.put("comment", comment);
+                        Toast.makeText(v.getContext(), "Rating Submitted!", Toast.LENGTH_SHORT).show();
+                        movieInfo.saveInBackground();
+                        commentEditText.setText("");
+                        final InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        ((RVCommentsAdapter)rv.getAdapter()).addComment(comment,
+                                ParseUser.getCurrentUser().getUsername(), rating, new Date());
+                        starBar.setRating(0);
+                        rv.getAdapter().notifyItemInserted(0);
+                    }
                 }
-            }
-        });
+            });
+        }
         starBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float r, boolean fromUser) {

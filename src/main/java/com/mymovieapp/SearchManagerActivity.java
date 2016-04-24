@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.parse.ParseUser;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +42,10 @@ public class SearchManagerActivity extends BackToolbarActivity {
     /**
      * List of movies we will display
      */
-    private List<Movie> searchMovies;
+    private List<Movie> searchMovies = new ArrayList<>();
+    private RecyclerView rv;
+    private com.mymovieapp.Movie toAdd;
+    private String imageOfMovie;
 
     /**
      * Initializes the list of movie based on reult of search query
@@ -49,10 +54,10 @@ public class SearchManagerActivity extends BackToolbarActivity {
     private void initializeData() throws JSONException {
         searchMovies = new ArrayList<>();
         for (int i = 0; i < listOfMovies.length(); i++) {
+            final int index = i;
             //Assign name, date, details, and photo to the movies array
             String nameOfMovie = listOfMovies.getJSONObject(i).getString("title");
             String dateOfMovie = listOfMovies.getJSONObject(i).getString("year");
-            String imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
             String synopsisOfMovie = listOfMovies.getJSONObject(i).getString("synopsis");
             String ratingRuntimeOfMovie = listOfMovies.getJSONObject(i).getString("mpaa_rating") +
                     " Rating " +
@@ -62,12 +67,41 @@ public class SearchManagerActivity extends BackToolbarActivity {
 
             Rating ratingToAdd = new Rating(nameOfMovie, ParseUser.getCurrentUser().getUsername());
             ratingToAdd.addRating(ratingOfMovie);
-            String idOfMovie = listOfMovies.getJSONObject(i).getString("id");
-            com.mymovieapp.Movie toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, idOfMovie, ratingToAdd);
-            searchMovies.add(i, toAdd);
+
+            toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, null, synopsisOfMovie, ratingRuntimeOfMovie, null, ratingToAdd);
+
+            try {
+                String imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
+                toAdd.setId(imdbOfMovie);
+                String urlOMDB = "http://www.omdbapi.com/?i=tt" + toAdd.getId() + "&plot=short&r=json";
+                RequestQueue queue = Volley.newRequestQueue(this);
+                final StringRequest request = new StringRequest(Request.Method.GET, urlOMDB,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject result = new JSONObject(response);
+                                    imageOfMovie = result.getString("Poster");
+                                    ((RVSearchAdapter) rv.getAdapter()).movies.get(index).setImage(imageOfMovie);
+                                } catch (JSONException e) {
+                                }
+                                rv.getAdapter().notifyDataSetChanged();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {}
+                        });
+                queue.add(request);
+
+                toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, imdbOfMovie, ratingToAdd);
+            } catch (JSONException e) {
+                imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
+                toAdd.setImage(imageOfMovie);
+            }
+            searchMovies.add(toAdd);
         }
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,7 +117,6 @@ public class SearchManagerActivity extends BackToolbarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_login, menu);
-
         // Associate Searchable with the SearchView
         final SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -91,7 +124,9 @@ public class SearchManagerActivity extends BackToolbarActivity {
                 (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconified(false);
+        if (!Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
+            searchView.setIconified(false);
+        }
         return true;
     }
 
@@ -120,7 +155,7 @@ public class SearchManagerActivity extends BackToolbarActivity {
                         public void onResponse(String response) {
                             try {
                                 listOfMovies = new JSONObject(response).getJSONArray("movies");
-                                final RecyclerView rv = (RecyclerView) findViewById(R.id.search_rv);
+                                rv = (RecyclerView) findViewById(R.id.search_rv);
                                 rv.setHasFixedSize(true);
                                 final GridLayoutManager glm = new GridLayoutManager(activity, 2);
                                 rv.setLayoutManager(glm);

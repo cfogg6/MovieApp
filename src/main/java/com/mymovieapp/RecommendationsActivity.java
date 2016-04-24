@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -119,7 +123,8 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                             ratings.add(newRating);
                         }
 
-                        com.mymovieapp.Movie tempMovie = (new com.mymovieapp.Movie(element.getString("title"),
+                        Movie tempMovie = null;
+                        tempMovie = (new Movie(element.getString("title"),
                                 element.getString("date"),
                                 element.getString("photoId"),
                                 element.getString("synopsis"),

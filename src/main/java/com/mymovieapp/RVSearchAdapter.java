@@ -25,7 +25,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     /**
      * List of movies returned by the search call
      */
-    private List<com.mymovieapp.Movie> movies;
+    public List<com.mymovieapp.Movie> movies;
 
     /**
      * Constructor for the adapter that sets the movies list to argument.
@@ -122,14 +122,18 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
         @Override
         protected Bitmap doInBackground(String... urls) {
             final String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                final InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (IOException e) {
-                Log.d("e", String.valueOf(e));
+            if (urldisplay != null) {
+                Bitmap mIcon11 = null;
+                try {
+                    final InputStream in = new java.net.URL(urldisplay).openStream();
+                    mIcon11 = BitmapFactory.decodeStream(in);
+                } catch (IOException e) {
+                    Log.d("e", String.valueOf(e));
+                }
+                return mIcon11;
+            } else {
+                return null;
             }
-            return mIcon11;
         }
 
         @Override

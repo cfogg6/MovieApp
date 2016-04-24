@@ -16,7 +16,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     /**
      * Photo URL of movie
      */
-    private final String photoId;
+    private String photoId;
     /**
      * Synopsis of movie
      */
@@ -28,7 +28,7 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
     /**
      * ID of movie
      */
-    private final String id;
+    private String id;
     /**
      * Rating of movie
      */
@@ -180,5 +180,13 @@ public class Movie implements Parcelable, Comparable<com.mymovieapp.Movie> {
      */
     public Rating getRating() {
         return rating;
+    }
+
+    public void setImage(String url) {
+        photoId = url;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -26,7 +26,7 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
     /**
      * List of movies
      */
-    private List<com.mymovieapp.Movie> movies;
+    public List<com.mymovieapp.Movie> movies;
 
     /**
      * Constructor for the adapter that sets the movies list to argument.
@@ -70,6 +70,7 @@ public class RVMovAdapter extends RecyclerView.Adapter<RVMovAdapter.MovieViewHol
         movieViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //
                 final Intent it = new Intent(v.getContext(), MovieInfoActivity.class);
                 it.putExtra("SALTY_POPCORN_CURRENT_MOVIE", mov);
                 v.getContext().startActivity(it);

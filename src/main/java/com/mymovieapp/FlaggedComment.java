@@ -19,6 +19,11 @@ public class FlaggedComment {
      */
     private final String username;
     /**
+     * Rating of Comment
+     */
+    private final double rating;
+
+    /**
      * Whether or not the comment is deleted or not
      */
     private boolean commentIsDeleted = false;
@@ -29,10 +34,11 @@ public class FlaggedComment {
      * @param c comment that was flagged
      * @param u username of user that made comment
      */
-    public FlaggedComment(String t, String c, String u) {
+    public FlaggedComment(String t, String c, String u, double r) {
         this.title = t;
         this.comment = c;
         this.username = u;
+        this.rating = r;
     }
 
     /**
@@ -60,6 +66,14 @@ public class FlaggedComment {
     }
 
     /**
+     * gets rating of the comment
+     * @return double rating
+     */
+    public double getRating() {
+        return rating;
+    }
+
+    /**
      * checks if comment is deleted
      * @return true if deleted, false if not
      */
@@ -74,4 +88,6 @@ public class FlaggedComment {
     public void setDeleted(boolean b) {
         this.commentIsDeleted = b;
     }
+
+
 }

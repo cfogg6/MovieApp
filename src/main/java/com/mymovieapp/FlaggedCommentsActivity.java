@@ -1,12 +1,15 @@
 package com.mymovieapp;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.widget.ListView;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +21,10 @@ public class FlaggedCommentsActivity extends AdminToolbarDrawerActivity {
      * List of flagged comments
      */
     private final List<FlaggedComment> comments = new ArrayList<>();
-    /**
-     * ListView to display comments
-     */
-    private ListView listView;
+    //**
+    // * ListView to display comments
+    // */
+    //private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +33,17 @@ public class FlaggedCommentsActivity extends AdminToolbarDrawerActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Flagged Comments");
         }
-        listView = (ListView) findViewById(R.id.lv_flagged_comments);
-        listView.setAdapter(new FlaggedCommentsAdapter(this, 0));
+        final RecyclerView rv = (RecyclerView) findViewById(R.id.rv_flagged_comments);
+        if (rv != null) {
+            rv.setHasFixedSize(true);
+            final LinearLayoutManager llm = new LinearLayoutManager(this);
+            rv.setLayoutManager(llm);
+            final RVFlaggedCommentsAdapter adapter = new RVFlaggedCommentsAdapter(this, comments);
+            rv.setAdapter(adapter);
+        }
+
+        //listView = (ListView) findViewById(R.id.lv_flagged_comments);
+        //listView.setAdapter(new FlaggedCommentsAdapter(this, 0));
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("FlaggedComments");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -40,11 +52,13 @@ public class FlaggedCommentsActivity extends AdminToolbarDrawerActivity {
                     for (ParseObject element : list) {
                         comments.add(new FlaggedComment(element.getString("title"),
                                 element.getString("comment"),
-                                element.getString("username")));
+                                element.getString("username"),element.getDouble("rating")));
                     }
                 }
-                ((FlaggedCommentsAdapter) listView.getAdapter()).updateComments(comments);
-                ((FlaggedCommentsAdapter) listView.getAdapter()).notifyDataSetChanged();
+                if (rv != null) {
+                    ((RVFlaggedCommentsAdapter) rv.getAdapter()).updateComments(comments);
+                    rv.getAdapter().notifyDataSetChanged();
+                }
             }
         });
     }

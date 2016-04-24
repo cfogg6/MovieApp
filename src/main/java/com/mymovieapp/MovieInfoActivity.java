@@ -15,7 +15,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
@@ -105,33 +104,35 @@ public class MovieInfoActivity extends BackToolbarActivity {
         new DownloadImageTask(movPic).execute(movieObject.getPhotoID());
         movieTitle.setText(movieName);
         Button commentButton = (Button) findViewById(R.id.btn_comment);
-        commentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (rating == 0) {
-                    Toast.makeText(MovieInfoActivity.this, "Please provide a rating", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (movieInfo == null) {
-                        movieInfo = new ParseObject("Ratings");
-                        movieInfo.put("username", ParseUser.getCurrentUser().getUsername());
-                        movieInfo.put("major", ParseUser.getCurrentUser().get("major"));
-                        movieInfo.put("title", movieTitle.getText());
+        if (commentButton != null) {
+            commentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (rating == 0) {
+                        Toast.makeText(MovieInfoActivity.this, "Please provide a rating", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (movieInfo == null) {
+                            movieInfo = new ParseObject("Ratings");
+                            movieInfo.put("username", ParseUser.getCurrentUser().getUsername());
+                            movieInfo.put("major", ParseUser.getCurrentUser().get("major"));
+                            movieInfo.put("title", movieTitle.getText());
+                            movieInfo.saveInBackground();
+                        }
+                        movieInfo.put("rating", rating);
+                        movieInfo.put("photoId", movieObject.getPhotoID());
+                        movieInfo.put("synopsis", movieObject.getSynopsis());
+                        movieInfo.put("ratingRuntime", movieObject.getRatingRuntime());
+                        movieInfo.put("date", movieObject.getDate());
+                        movieInfo.put("movieId", movieObject.getId());
+                        movieInfo.saveInBackground();
+                        comment = commentEditText.getText().toString();
+                        movieInfo.put("comment", comment);
+                        Toast.makeText(v.getContext(), "Rating Submitted!", Toast.LENGTH_SHORT).show();
                         movieInfo.saveInBackground();
                     }
-                    movieInfo.put("rating", rating);
-                    movieInfo.put("photoId", movieObject.getPhotoID());
-                    movieInfo.put("synopsis", movieObject.getSynopsis());
-                    movieInfo.put("ratingRuntime", movieObject.getRatingRuntime());
-                    movieInfo.put("date", movieObject.getDate());
-                    movieInfo.put("movieId", movieObject.getId());
-                    movieInfo.saveInBackground();
-                    comment = commentEditText.getText().toString();
-                    movieInfo.put("comment", comment);
-                    Toast.makeText(v.getContext(), "Rating Submitted!", Toast.LENGTH_SHORT).show();
-                    movieInfo.saveInBackground();
                 }
-            }
-        });
+            });
+        }
         starBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float r, boolean fromUser) {
@@ -147,20 +148,23 @@ public class MovieInfoActivity extends BackToolbarActivity {
         /**
          * Makes keyboard disappear when you click away from an EditText field
          */
-        newDVDLinearLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (!(v instanceof EditText)) {
-                    final InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (newDVDLinearLayout != null) {
+            newDVDLinearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!(v instanceof EditText)) {
+                        final InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
                 }
-                return true;
-            }
-        });
+            });
+        }
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
         final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName());
-        rv.setAdapter(adapter);
+        if (rv != null) {
+            rv.setAdapter(adapter);
+        }
         final LinearLayoutManager llm = new LinearLayoutManager(activity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
@@ -189,10 +193,12 @@ public class MovieInfoActivity extends BackToolbarActivity {
                                 }
                             }
                             final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
-                            rv.setAdapter(adapter);
-                            llm.setOrientation(LinearLayoutManager.VERTICAL);
-                            rv.setLayoutManager(llm);
-                            (rv.getAdapter()).notifyDataSetChanged();
+                            if (rv != null) {
+                                rv.setAdapter(adapter);
+                                llm.setOrientation(LinearLayoutManager.VERTICAL);
+                                rv.setLayoutManager(llm);
+                                (rv.getAdapter()).notifyDataSetChanged();
+                            }
                         }
                     });
                 }

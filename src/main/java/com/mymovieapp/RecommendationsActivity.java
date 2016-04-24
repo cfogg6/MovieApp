@@ -5,18 +5,16 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,12 +48,14 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendations);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Recommendations");
+            getSupportActionBar().setTitle("Recommendations by Degree");
         }
 
         final Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            myToolbar.setElevation(0);
+            if (myToolbar != null) {
+                myToolbar.setElevation(0);
+            }
         }
 
         final Toolbar spinBar = (Toolbar) findViewById(R.id.spinner_toolbar);
@@ -64,7 +64,9 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                 .inflate(R.layout.toolbar_spinner,spinBar, false);
         final Toolbar.LayoutParams lp = new Toolbar.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        spinBar.addView(spinnerContainer, lp);
+        if (spinBar != null) {
+            spinBar.addView(spinnerContainer, lp);
+        }
 
         final MajorSpinnerAdapter spinnerAdapter = new MajorSpinnerAdapter(this, false);
         spinnerAdapter.addItems(
@@ -87,7 +89,9 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
 
         //Initialize RecycleView, Layout Manager, and Adapter
         rv = (RecyclerView) findViewById(R.id.mov_rv);
-        rv.setHasFixedSize(true);
+        if (rv != null) {
+            rv.setHasFixedSize(true);
+        }
         final LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
@@ -123,7 +127,7 @@ public class RecommendationsActivity extends ToolbarDrawerActivity {
                             ratings.add(newRating);
                         }
 
-                        Movie tempMovie = null;
+                        Movie tempMovie;
                         tempMovie = (new Movie(element.getString("title"),
                                 element.getString("date"),
                                 element.getString("photoId"),

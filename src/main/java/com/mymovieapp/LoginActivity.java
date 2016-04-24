@@ -1,8 +1,12 @@
 package com.mymovieapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -23,6 +28,8 @@ import com.parse.RequestPasswordResetCallback;
  * Login screen that authenticates with Parse database. Determines user or admin.
  */
 public class LoginActivity extends Activity {
+
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,16 +159,45 @@ public class LoginActivity extends Activity {
         forgotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser.requestPasswordResetInBackground("honeychawla96@gmail.com", new RequestPasswordResetCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            //Email sent
-                        } else {
-                            Log.d("e", String.valueOf(e));
-                        }
+                // Use the AlertDialog.Builder to configure the AlertDialog.
+                AlertDialog.Builder alertDialogBuilder =
+                        new AlertDialog.Builder(context)
+                                .setTitle("Reset Password")
+                                .setMessage("Enter your account's email")
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // Set up the input
+                final EditText input = new EditText(context);
+                input.setHint("Email Address");
+                input.setHeight(25);
+                input.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
+                alertDialogBuilder.setView(input,27,0,27,0);
+
+                alertDialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, int which) {
+                        ParseUser.requestPasswordResetInBackground(input.getText().toString(),
+                                new RequestPasswordResetCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    //Email sent
+                                    dialog.dismiss();
+                                } else {
+                                    Toast.makeText(LoginActivity.this,
+                                            "Email Invalid", Toast.LENGTH_SHORT).show();
+                                    Log.d("e", String.valueOf(e));
+                                }
+                            }
+                        });
+
                     }
                 });
+
+                alertDialogBuilder.show();
             }
         });
     }

@@ -17,6 +17,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
 
 /**
  * Login screen that authenticates with Parse database. Determines user or admin.
@@ -136,6 +137,23 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 final Intent it = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(it);
+            }
+        });
+
+        final Button forgotButton = (Button) findViewById(R.id.btn_forgotPassword);
+        forgotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.requestPasswordResetInBackground("honeychawla96@gmail.com", new RequestPasswordResetCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            //Email sent
+                        } else {
+                            Log.d("e", String.valueOf(e));
+                        }
+                    }
+                });
             }
         });
     }

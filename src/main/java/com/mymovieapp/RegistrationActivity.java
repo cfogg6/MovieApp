@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -78,10 +79,14 @@ public class RegistrationActivity extends BackToolbarActivity {
 
                     final ParseQuery<ParseUser> userquery = ParseUser.getQuery();
                     userquery.whereEqualTo("username", usernametxt);
+
+                    final ParseQuery<ParseObject> adminQuery = ParseQuery.getQuery("Admin");
+                    adminQuery.whereEqualTo("username", usernametxt);
+
                     final ParseQuery<ParseUser> mailquery = ParseUser.getQuery();
                     mailquery.whereEqualTo("email", emailtxt);
                     try {
-                        if (userquery.count() > 0) {
+                        if (userquery.count() > 0 || adminQuery.count() > 0) {
                             Toast.makeText(RegistrationActivity.this,
                                     "Username is Taken",
                                     Toast.LENGTH_LONG).show();

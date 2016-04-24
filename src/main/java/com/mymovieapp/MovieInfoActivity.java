@@ -127,9 +127,10 @@ public class MovieInfoActivity extends BackToolbarActivity {
                     Toast.makeText(v.getContext(), "Rating Submitted!", Toast.LENGTH_SHORT).show();
                     movieInfo.saveInBackground();
                     commentEditText.setText("");
-                    starBar.setRating(0);
                     ((RVCommentsAdapter)rv.getAdapter()).addComment(comment,
                             ParseUser.getCurrentUser().getUsername(), rating, new Date());
+                    starBar.setRating(0);
+                    rv.getAdapter().notifyDataSetChanged();
                 }
             }
         });

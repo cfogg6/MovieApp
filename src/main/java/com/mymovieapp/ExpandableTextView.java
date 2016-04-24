@@ -18,7 +18,7 @@ import android.view.View;
  */
 public class ExpandableTextView extends TextView {
     private static final int DEFAULT_TRIM_LENGTH = 200;
-    private static final String ELLIPSIS = "...";
+    private static final String ELLIPSIS = "[...]";
 
     private CharSequence originalText;
     private CharSequence trimmedText;

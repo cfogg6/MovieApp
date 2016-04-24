@@ -75,7 +75,6 @@
         android:id="@+id/btn_forgotPassword"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/btn_registration"
-        android:layout_alignRight="@+id/btn_registration"
-        android:layout_alignEnd="@+id/btn_registration" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

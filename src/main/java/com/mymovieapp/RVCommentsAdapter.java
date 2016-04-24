@@ -1,6 +1,7 @@
 package com.mymovieapp;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -86,6 +88,7 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
         * @param rating the rating the user is giving
         */
     public void addComment(String comment, String username, double rating, Date date) {
+        Log.d("rating", String.valueOf(rating));
         comments.add(new Comment(comment, rating, users.get(users.lastIndexOf(new AdminUser(username))), date));
         Collections.sort(comments);
     }

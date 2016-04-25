@@ -72,6 +72,9 @@ public class SearchManagerActivity extends BackToolbarActivity {
 
             try {
                 String imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
+                if (imdbOfMovie == null) {
+                    imdbOfMovie = listOfMovies.getJSONObject(i).getString("id");
+                }
                 toAdd.setId(imdbOfMovie);
                 String urlOMDB = "http://www.omdbapi.com/?i=tt" + toAdd.getId() + "&plot=short&r=json";
                 RequestQueue queue = Volley.newRequestQueue(this);

@@ -153,7 +153,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
             } catch (JSONException e) {
                 imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
                 imdbOfMovie = listOfMovies.getJSONObject(i).getString("id");
-                toAdd.setId(imageOfMovie);
+                toAdd.setId(imdbOfMovie);
                 toAdd.setImage(imageOfMovie);
             }
             movies.add(toAdd);

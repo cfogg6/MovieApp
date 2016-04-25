@@ -46,6 +46,7 @@ public class SearchManagerActivity extends BackToolbarActivity {
     private RecyclerView rv;
     private com.mymovieapp.Movie toAdd;
     private String imageOfMovie;
+    private String imdbOfMovie;
 
     /**
      * Initializes the list of movie based on reult of search query
@@ -71,10 +72,7 @@ public class SearchManagerActivity extends BackToolbarActivity {
             toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, null, synopsisOfMovie, ratingRuntimeOfMovie, null, ratingToAdd);
 
             try {
-                String imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
-                if (imdbOfMovie == null) {
-                    imdbOfMovie = listOfMovies.getJSONObject(i).getString("id");
-                }
+                imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
                 toAdd.setId(imdbOfMovie);
                 String urlOMDB = "http://www.omdbapi.com/?i=tt" + toAdd.getId() + "&plot=short&r=json";
                 RequestQueue queue = Volley.newRequestQueue(this);
@@ -99,8 +97,10 @@ public class SearchManagerActivity extends BackToolbarActivity {
 
                 toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, imdbOfMovie, ratingToAdd);
             } catch (JSONException e) {
+                imdbOfMovie = listOfMovies.getJSONObject(i).getString("id");
                 imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
                 toAdd.setImage(imageOfMovie);
+                toAdd.setId(imdbOfMovie);
             }
             searchMovies.add(toAdd);
         }

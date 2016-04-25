@@ -36,6 +36,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
      */
     private JSONArray listOfMovies;
     private String imageOfMovie;
+    private String imdbOfMovie;
 
     private RecyclerView rv1;
     private RecyclerView rv2;
@@ -73,10 +74,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
             toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, null, synopsisOfMovie, ratingRuntimeOfMovie, null, ratingToAdd);
 
             try {
-                String imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
-                if (imdbOfMovie == null) {
-                    imdbOfMovie = listOfMovies.getJSONObject(i).getString("id");
-                }
+                imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
                 toAdd.setId(imdbOfMovie);
                 String urlOMDB = "http://www.omdbapi.com/?i=tt" + toAdd.getId() + "&plot=short&r=json";
                 RequestQueue queue = Volley.newRequestQueue(this);
@@ -87,7 +85,6 @@ public class HomeActivity extends ToolbarDrawerActivity {
                                 try {
                                     JSONObject result = new JSONObject(response);
                                     imageOfMovie = result.getString("Poster");
-                                    //imageOfMovie = "http://ia.media-imdb.com/images/M/MV5BOTMyMjEyNzIzMV5BMl5BanBnXkFtZTgwNzIyNjU0NzE@._V1_SX300.jpg";
                                     ((RVSearchAdapter) rv2.getAdapter()).movies.get(index).setImage(imageOfMovie);
                                 } catch (JSONException e) {
                                 }
@@ -102,11 +99,13 @@ public class HomeActivity extends ToolbarDrawerActivity {
 
                 toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, imdbOfMovie, ratingToAdd);
             } catch (JSONException e) {
+                imdbOfMovie = listOfMovies.getJSONObject(i).getString("id");
                 imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
                 toAdd.setImage(imageOfMovie);
+                toAdd.setId(imdbOfMovie);
             }
             movies.add(toAdd);
-                    }
+        }
     }
 
     private void initializeDataDVDS(final List<Movie> movies) throws JSONException {
@@ -127,7 +126,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
             toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, null, synopsisOfMovie, ratingRuntimeOfMovie, null, ratingToAdd);
 
             try {
-                final String imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
+                imdbOfMovie = listOfMovies.getJSONObject(i).getJSONObject("alternate_ids").getString("imdb");
                 toAdd.setId(imdbOfMovie);
                 String urlOMDB = "http://www.omdbapi.com/?i=tt" + toAdd.getId() + "&plot=short&r=json";
                 RequestQueue queue = Volley.newRequestQueue(this);
@@ -138,7 +137,6 @@ public class HomeActivity extends ToolbarDrawerActivity {
                                 try {
                                     JSONObject result = new JSONObject(response);
                                     imageOfMovie = result.getString("Poster");
-                                    //imageOfMovie = "http://ia.media-imdb.com/images/M/MV5BOTMyMjEyNzIzMV5BMl5BanBnXkFtZTgwNzIyNjU0NzE@._V1_SX300.jpg";
                                     ((RVSearchAdapter) rv1.getAdapter()).movies.get(index).setImage(imageOfMovie);
                                 } catch (JSONException e) {
                                 }
@@ -154,11 +152,11 @@ public class HomeActivity extends ToolbarDrawerActivity {
                 toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, imdbOfMovie, ratingToAdd);
             } catch (JSONException e) {
                 imageOfMovie = listOfMovies.getJSONObject(i).getJSONObject("posters").getString("detailed");
+                imdbOfMovie = listOfMovies.getJSONObject(i).getString("id");
+                toAdd.setId(imageOfMovie);
                 toAdd.setImage(imageOfMovie);
             }
-            //toAdd = new com.mymovieapp.Movie(nameOfMovie, dateOfMovie, imageOfMovie, synopsisOfMovie, ratingRuntimeOfMovie, imdbOfMovie, ratingToAdd);
             movies.add(toAdd);
-            Log.d("image of movie", String.valueOf(imageOfMovie));
         }
     }
 

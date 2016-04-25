@@ -4,20 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableStringBuilder;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +29,7 @@ import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -80,6 +75,11 @@ public class MovieInfoActivity extends BackToolbarActivity {
      */
     private com.mymovieapp.Movie movieObject;
 
+    /**
+     * RecyclerVire to hold comments
+     */
+    private RecyclerView rv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +89,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
         commentEditText = (EditText) findViewById(R.id.et_comment);
 
         AppCompatImageView movPic = (AppCompatImageView) findViewById(R.id.iV_movPhoto);
-        TextView synopsis = (TextView) findViewById(R.id.tV_synopsis);
-        makeTextViewResizable(synopsis, 3, "View More", true);
+        ExpandableTextView synopsis = (ExpandableTextView) findViewById(R.id.tV_synopsis);
         movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
         starBar.setRating(0);
         movieName = movieObject.getName();
@@ -103,43 +102,46 @@ public class MovieInfoActivity extends BackToolbarActivity {
             synopsis.setText(movieObject.getSynopsis());
         }
         new DownloadImageTask(movPic).execute(movieObject.getPhotoID());
-        movieTitle.setText(movieName);
+        if (movieTitle != null) {
+            movieTitle.setText(movieName);
+        }
         Button commentButton = (Button) findViewById(R.id.btn_comment);
-        commentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (rating == 0) {
-                    Toast.makeText(MovieInfoActivity.this, "Please provide a rating", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (movieInfo == null) {
+        if (commentButton != null) {
+            commentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (rating == 0) {
+                        Toast.makeText(MovieInfoActivity.this, "Please provide a rating", Toast.LENGTH_SHORT).show();
+                    } else {
                         movieInfo = new ParseObject("Ratings");
                         movieInfo.put("username", ParseUser.getCurrentUser().getUsername());
                         movieInfo.put("major", ParseUser.getCurrentUser().get("major"));
                         movieInfo.put("title", movieTitle.getText());
+                        movieInfo.put("rating", rating);
+                        movieInfo.put("photoId", movieObject.getPhotoID());
+                        movieInfo.put("synopsis", movieObject.getSynopsis());
+                        movieInfo.put("ratingRuntime", movieObject.getRatingRuntime());
+                        movieInfo.put("date", movieObject.getDate());
+                        movieInfo.put("movieId", movieObject.getId());
                         movieInfo.saveInBackground();
+                        comment = commentEditText.getText().toString();
+                        movieInfo.put("comment", comment);
+                        Toast.makeText(v.getContext(), "Rating Submitted!", Toast.LENGTH_SHORT).show();
+                        movieInfo.saveInBackground();
+                        commentEditText.setText("");
+                        final InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        ((RVCommentsAdapter)rv.getAdapter()).addComment(comment,
+                                ParseUser.getCurrentUser().getUsername(), rating, new Date());
+                        starBar.setRating(0);
+                        rv.getAdapter().notifyItemInserted(0);
                     }
-                    movieInfo.put("rating", rating);
-                    movieInfo.put("photoId", movieObject.getPhotoID());
-                    movieInfo.put("synopsis", movieObject.getSynopsis());
-                    movieInfo.put("ratingRuntime", movieObject.getRatingRuntime());
-                    movieInfo.put("date", movieObject.getDate());
-                    movieInfo.put("movieId", movieObject.getId());
-                    movieInfo.saveInBackground();
-                    comment = commentEditText.getText().toString();
-                    movieInfo.put("comment", comment);
-                    Toast.makeText(v.getContext(), "Rating Submitted!", Toast.LENGTH_SHORT).show();
-                    movieInfo.saveInBackground();
                 }
-            }
-        });
+            });
+        }
         starBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float r, boolean fromUser) {
-
-                if (r < .5f) {
-                    ratingBar.setRating(.5f);
-                    r = .5f;
-                }
                 thisActivity.rating = r;
             }
         });
@@ -147,20 +149,23 @@ public class MovieInfoActivity extends BackToolbarActivity {
         /**
          * Makes keyboard disappear when you click away from an EditText field
          */
-        newDVDLinearLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (!(v instanceof EditText)) {
-                    final InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (newDVDLinearLayout != null) {
+            newDVDLinearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!(v instanceof EditText)) {
+                        final InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
                 }
-                return true;
-            }
-        });
+            });
+        }
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
+        rv = (RecyclerView) findViewById(R.id.comments_rv);
         final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName());
-        rv.setAdapter(adapter);
+        if (rv != null) {
+            rv.setAdapter(adapter);
+        }
         final LinearLayoutManager llm = new LinearLayoutManager(activity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
@@ -185,14 +190,16 @@ public class MovieInfoActivity extends BackToolbarActivity {
                             if (e == null) {
                                 for (ParseObject element : list) {
                                     adapter.addComment(element.getString("comment"), element.getString("username"),
-                                            element.getDouble("rating"));
+                                            element.getDouble("rating"), element.getCreatedAt());
                                 }
                             }
                             final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
-                            rv.setAdapter(adapter);
-                            llm.setOrientation(LinearLayoutManager.VERTICAL);
-                            rv.setLayoutManager(llm);
-                            (rv.getAdapter()).notifyDataSetChanged();
+                            if (rv != null) {
+                                rv.setAdapter(adapter);
+                                llm.setOrientation(LinearLayoutManager.VERTICAL);
+                                rv.setLayoutManager(llm);
+                                (rv.getAdapter()).notifyDataSetChanged();
+                            }
                         }
                     });
                 }
@@ -201,124 +208,8 @@ public class MovieInfoActivity extends BackToolbarActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        final ParseQuery<ParseObject> query = ParseQuery.getQuery("Ratings");
-        query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
-        try {
-            movieObject = (getIntent().getParcelableExtra("SALTY_POPCORN_CURRENT_MOVIE"));
-            movieName = movieObject.getName();
-            query.whereEqualTo("movieId", movieObject.getId());
-            movieInfo = query.getFirst();
-        } catch (com.parse.ParseException e) {
-            Log.d("e", String.valueOf(e));
-        }
-        if (movieInfo != null) {
-            rating = (float) movieInfo.getDouble("rating");
-            comment = movieInfo.getString("comment");
-            commentEditText.setText(comment);
-            starBar.setRating(rating);
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
-    }
-
-
-
-    public static void makeTextViewResizable(final TextView tv,
-                                             final int maxLine, final String expandText, final boolean viewMore) {
-
-        if (tv.getTag() == null) {
-            tv.setTag(tv.getText());
-        }
-        ViewTreeObserver vto = tv.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void onGlobalLayout() {
-
-                ViewTreeObserver obs = tv.getViewTreeObserver();
-                obs.removeGlobalOnLayoutListener(this);
-                if (maxLine == 0) {
-                    int lineEndIndex = tv.getLayout().getLineEnd(0);
-                    String text = tv.getText().subSequence(0,
-                            lineEndIndex - expandText.length() + 1)
-                            + " " + expandText;
-                    tv.setText(text);
-                    tv.setMovementMethod(LinkMovementMethod.getInstance());
-                    tv.setText(
-                            addClickablePartTextViewResizable(tv.getText()
-                                            .toString(), tv, maxLine, expandText,
-                                    viewMore), TextView.BufferType.SPANNABLE);
-                } else if (maxLine > 0 && tv.getLineCount() >= maxLine) {
-                    int lineEndIndex = tv.getLayout().getLineEnd(maxLine - 1);
-                    String text = tv.getText().subSequence(0,
-                            lineEndIndex - expandText.length() + 1)
-                            + " " + expandText;
-                    tv.setText(text);
-                    tv.setMovementMethod(LinkMovementMethod.getInstance());
-                    tv.setText(
-                            addClickablePartTextViewResizable(tv.getText()
-                                            .toString(), tv, maxLine, expandText,
-                                    viewMore), TextView.BufferType.SPANNABLE);
-                } else {
-                    int lineEndIndex = tv.getLayout().getLineEnd(
-                            tv.getLayout().getLineCount() - 1);
-                    String text = tv.getText().subSequence(0, lineEndIndex)
-                            + " " + expandText;
-                    tv.setText(text);
-                    tv.setMovementMethod(LinkMovementMethod.getInstance());
-                    tv.setText(
-                            addClickablePartTextViewResizable(tv.getText()
-                                            .toString(), tv, lineEndIndex, expandText,
-                                    viewMore), TextView.BufferType.SPANNABLE);
-                }
-            }
-        });
-
-    }
-
-    private static SpannableStringBuilder addClickablePartTextViewResizable(
-            final String strSpanned, final TextView tv, final int maxLine,
-            final String spanableText, final boolean viewMore) {
-        SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
-
-        if (strSpanned.contains(spanableText)) {
-            ssb.setSpan(
-                    new ClickableSpan() {
-
-                        @Override
-                        public void onClick(View widget) {
-
-                            if (viewMore) {
-                                tv.setLayoutParams(tv.getLayoutParams());
-                                tv.setText(tv.getTag().toString(),
-                                        TextView.BufferType.SPANNABLE);
-                                tv.invalidate();
-                                makeTextViewResizable(tv, -5, "...Read Less",
-                                        false);
-                                tv.setTextColor(Color.BLACK);
-                            } else {
-                                tv.setLayoutParams(tv.getLayoutParams());
-                                tv.setText(tv.getTag().toString(),
-                                        TextView.BufferType.SPANNABLE);
-                                tv.invalidate();
-                                makeTextViewResizable(tv, 5, "...Read More",
-                                        true);
-                                tv.setTextColor(Color.BLACK);
-                            }
-
-                        }
-                    }, strSpanned.indexOf(spanableText),
-                    strSpanned.indexOf(spanableText) + spanableText.length(), 0);
-
-        }
-        return ssb;
-
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

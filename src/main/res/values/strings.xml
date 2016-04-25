@@ -59,6 +59,7 @@
     <string name="browse_new_mov">Browse New Movies</string>
     <string name="home">Home</string>
     <string name="profile">Profile</string>
+    <string name="forgot_password">Forgot Password?</string>
     <string-array name="majors_array">
         <item>Computer Science</item>
         <item>Computational Media</item>

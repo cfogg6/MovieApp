@@ -91,11 +91,20 @@ public class RVFlaggedCommentsAdapter extends RecyclerView.Adapter<RVFlaggedComm
                                         deletedQuery.whereEqualTo("username", comment.getUsername());
                                         deletedQuery.whereEqualTo("title", comment.getTitle());
                                         deletedQuery.whereEqualTo("comment", comment.getComment());
+                                        deletedQuery.whereEqualTo("rating", comment.getRating());
+                                        final ParseQuery<ParseObject> deletedQueryRating = ParseQuery.getQuery("Ratings");
+                                        deletedQueryRating.whereEqualTo("username", comment.getUsername());
+                                        deletedQueryRating.whereEqualTo("title", comment.getTitle());
+                                        deletedQueryRating.whereEqualTo("comment", comment.getComment());
+                                        deletedQueryRating.whereEqualTo("rating", comment.getRating());
 
                                         try {
                                             final ParseObject lockedObj = deletedQuery.getFirst();
                                             ParseObject.createWithoutData("FlaggedComments", lockedObj.getObjectId()).deleteInBackground();
                                             lockedObj.saveInBackground();
+                                            final ParseObject lockedObj2 = deletedQueryRating.getFirst();
+                                            ParseObject.createWithoutData("Ratings", lockedObj2.getObjectId()).deleteInBackground();
+                                            lockedObj2.saveInBackground();
                                         } catch (ParseException e) {
                                             Log.d("e", String.valueOf(e));
                                         }

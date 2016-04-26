@@ -170,23 +170,27 @@ public class HomeActivity extends ToolbarDrawerActivity {
         showNewReleases();
 
         final Button moreButton1 = (Button) findViewById(R.id.more_btn);
-        moreButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Intent it = new Intent(HomeActivity.this, NewMovieDrawerActivity.class);
-                it.putExtra("tab", 0);
-                startActivity(it);
-            }
-        });
+        if (moreButton1 != null) {
+            moreButton1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Intent it = new Intent(HomeActivity.this, NewMovieDrawerActivity.class);
+                    it.putExtra("tab", 0);
+                    startActivity(it);
+                }
+            });
+        }
         final Button moreButton2 = (Button) findViewById(R.id.more_btn2);
-        moreButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Intent it = new Intent(HomeActivity.this, NewMovieDrawerActivity.class);
-                it.putExtra("tab", 1);
-                startActivity(it);
-            }
-        });
+        if (moreButton2 != null) {
+            moreButton2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Intent it = new Intent(HomeActivity.this, NewMovieDrawerActivity.class);
+                    it.putExtra("tab", 1);
+                    startActivity(it);
+                }
+            });
+        }
     }
 
     /**
@@ -205,7 +209,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
                         final LinearLayoutManager llm = new LinearLayoutManager(activity);
                         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
                         rv1.setLayoutManager(llm);
-                        final RVSearchAdapter adapter = new RVSearchAdapter(newDVDs);
+                        final RVSearchAdapter adapter = new RVSearchAdapter(newDVDs, 1);
                         rv1.setAdapter(adapter);
                         // Display the first 500 characters of the response string.
                         try {
@@ -242,7 +246,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
                         final LinearLayoutManager llm = new LinearLayoutManager(activity);
                         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
                         rv2.setLayoutManager(llm);
-                        final RVSearchAdapter adapter = new RVSearchAdapter(newMovies);
+                        final RVSearchAdapter adapter = new RVSearchAdapter(newMovies, 1);
                         rv2.setAdapter(adapter);
                         // Display the first 500 characters of the response string.
                         try {

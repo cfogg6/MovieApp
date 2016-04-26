@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -28,11 +30,25 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     public List<com.mymovieapp.Movie> movies;
 
     /**
+     * Mode of card to match parent or smaller
+     */
+    private int mode = 0;
+
+    /**
      * Constructor for the adapter that sets the movies list to argument.
      * @param m List of movies to set the cards to
      */
     RVSearchAdapter(List<com.mymovieapp.Movie> m) {
         this.movies = m;
+    }
+    /**
+     * Constructor for the adapter that sets the movies list to argument.
+     * @param m List of movies to set the cards to
+     * @param mode mode of adapter
+     */
+    RVSearchAdapter(List<com.mymovieapp.Movie> m, int mode) {
+        this.movies = m;
+        this.mode = mode;
     }
 
     @Override
@@ -44,6 +60,12 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
     public SearchViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         final View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.search_card, viewGroup, false);
+        if (mode == 1) {
+            CardView cardView = (CardView) v.findViewById(R.id.searchCardView);
+            ViewGroup.LayoutParams params = cardView.getLayoutParams();
+            params.width = 200;
+            cardView.setLayoutParams(params);
+        }
         return new SearchViewHolder(v);
     }
 

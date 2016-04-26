@@ -162,7 +162,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
         }
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         rv = (RecyclerView) findViewById(R.id.comments_rv);
-        final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName());
+        final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName(), activity);
         if (rv != null) {
             rv.setAdapter(adapter);
         }
@@ -174,7 +174,7 @@ public class MovieInfoActivity extends BackToolbarActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     final RecyclerView rv = (RecyclerView) findViewById(R.id.comments_rv);
-                    final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName());
+                    final RVCommentsAdapter adapter = new RVCommentsAdapter(movieObject.getName(), activity);
                     final LinearLayoutManager llm = new LinearLayoutManager(activity);
                     llm.setOrientation(LinearLayoutManager.VERTICAL);
                     rv.setLayoutManager(llm);

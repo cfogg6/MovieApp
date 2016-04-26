@@ -1,5 +1,8 @@
 package com.mymovieapp;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.parse.ParseException;
@@ -17,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -37,6 +40,10 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
      * Title
      */
     private final String title;
+    /**
+     * current context
+     */
+    private Context context;
 
     /**
      * Constructor that sets the context of the adapter and the list of users to the argument list.
@@ -44,6 +51,16 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
      */
     public RVCommentsAdapter(String t)  {
         this.title = t;
+    }
+
+    /**
+     * Constructor that sets the context of the adapter and the list of users to the argument list.
+     * @param t String t
+     * @param c Context of Adapter
+     */
+    public RVCommentsAdapter(String t, Context c)  {
+        this.title = t;
+        this.context = c;
     }
 
        /**
@@ -78,7 +95,60 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
         userViewHolder.profPhoto.setImageResource(R.mipmap.bucket);
         userViewHolder.comment.setText(comments.get(i).comment);
         userViewHolder.starBar.setRating((float) comments.get(i).rating);
-        userViewHolder.updateCommentFlag();
+
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("FlaggedComments");
+        query.whereEqualTo("username", comments.get(i).user.getName());
+        query.whereEqualTo("title", title);
+        query.whereEqualTo("comment", comments.get(i).comment);
+        try {
+            query.getFirst();
+            userViewHolder.flaggedImage.setImageResource(R.drawable.ic_flag_24dp);
+        } catch (ParseException e) {
+            userViewHolder.flaggedImage.setImageResource(R.drawable.ic_check_24dp);
+            userViewHolder.cvLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final int pos = userViewHolder.getAdapterPosition();
+                    final Comment comment = comments.get(pos);
+                    // Use the AlertDialog.Builder to configure the AlertDialog.
+                    AlertDialog.Builder alertDialogBuilder =
+                            new AlertDialog.Builder(context)
+                                    .setTitle("Flag Comment?")
+                                    .setMessage("Do you want to flag the comment?")
+                                    .setPositiveButton("Flag", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            final ParseQuery<ParseObject> query = ParseQuery.getQuery("FlaggedComments");
+                                            query.whereEqualTo("username", comment.user.getName());
+                                            query.whereEqualTo("title", title);
+                                            query.whereEqualTo("comment", comment.comment);
+                                            query.whereEqualTo("rating", comment.rating);
+                                            try {
+                                                query.getFirst();
+                                            } catch (ParseException e) {
+                                                ParseObject commentInfo = new ParseObject("FlaggedComments");
+                                                commentInfo.put("title", title);
+                                                commentInfo.put("comment", comment.comment);
+                                                commentInfo.put("username", comment.user.getName());
+                                                commentInfo.put("rating", comment.rating);
+                                                commentInfo.saveInBackground();
+                                                userViewHolder.flaggedImage.setImageResource(R.drawable.ic_flag_24dp);
+                                            }
+
+                                        }
+                                    })
+                                    .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                    // Show the AlertDialog.
+                    alertDialogBuilder.show();
+                }
+            });
+        }
+
+
     }
 
        /**
@@ -142,6 +212,10 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
         * the movie cards that this adapter sets.
         */
     public static class UserViewHolder extends RecyclerView.ViewHolder {
+       /**
+        * Rel Layout
+        */
+       private RelativeLayout cvLayout;
         /**
          * Username
          */
@@ -189,6 +263,7 @@ public class RVCommentsAdapter extends RecyclerView.Adapter<RVCommentsAdapter.Us
             comment = (TextView) itemView.findViewById(R.id.tv_comment);
             starBar = (RatingBar) itemView.findViewById(R.id.rb_star_bar);
             flaggedImage = (ImageView) itemView.findViewById(R.id.iv_flagged);
+            cvLayout = (RelativeLayout) itemView.findViewById(R.id.cv_layout);
             this.title = t;
             this.commentString = c;
             this.usernameString = u;

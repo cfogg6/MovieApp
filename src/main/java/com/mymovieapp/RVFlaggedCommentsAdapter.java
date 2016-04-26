@@ -109,7 +109,25 @@ public class RVFlaggedCommentsAdapter extends RecyclerView.Adapter<RVFlaggedComm
                                 })
                                 .setNegativeButton("Unflag", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
+                                        comment.setDeleted(true);
+                                        final ParseQuery<ParseObject> deletedQuery = ParseQuery.getQuery("FlaggedComments");
+                                        deletedQuery.whereEqualTo("username", comment.getUsername());
+                                        deletedQuery.whereEqualTo("title", comment.getTitle());
+                                        deletedQuery.whereEqualTo("comment", comment.getComment());
+
+                                        try {
+                                            final ParseObject lockedObj = deletedQuery.getFirst();
+                                            ParseObject.createWithoutData("FlaggedComments", lockedObj.getObjectId()).deleteInBackground();
+                                            lockedObj.saveInBackground();
+                                        } catch (ParseException e) {
+                                            Log.d("e", String.valueOf(e));
+                                        }
+
+                                        comments.remove(comments.get(pos));
+
+                                        dialog.dismiss();
+                                        notifyItemRemoved(pos);
+                                        notifyItemRangeChanged(pos, getItemCount());
                                     }
                                 })
                                 .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {

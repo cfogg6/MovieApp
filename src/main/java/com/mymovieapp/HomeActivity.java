@@ -2,12 +2,15 @@ package com.mymovieapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -15,9 +18,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.parse.ParseUser;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +43,9 @@ public class HomeActivity extends ToolbarDrawerActivity {
     private String imageOfMovie;
     private String imdbOfMovie;
 
+    private ImageView mImageViewFilling;
+    private Button moreButton1;
+    private Button moreButton2;
     private RecyclerView rv1;
     private RecyclerView rv2;
     private com.mymovieapp.Movie toAdd;
@@ -141,6 +149,11 @@ public class HomeActivity extends ToolbarDrawerActivity {
                                 } catch (JSONException e) {
                                 }
                                 rv1.getAdapter().notifyDataSetChanged();
+                                mImageViewFilling.setVisibility(View.INVISIBLE);
+                                View v = findViewById(R.id.view);
+                                v.setVisibility(View.INVISIBLE);
+                                moreButton1.setVisibility(View.VISIBLE);
+                                moreButton2.setVisibility(View.VISIBLE);
                             }
                         },
                         new Response.ErrorListener() {
@@ -164,13 +177,19 @@ public class HomeActivity extends ToolbarDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        moreButton1 = (Button) findViewById(R.id.more_btn);
+        moreButton2 = (Button) findViewById(R.id.more_btn2);
+        mImageViewFilling = (ImageView) findViewById(R.id.anim_imgView);
+        ((AnimationDrawable) mImageViewFilling.getBackground()).start();
+        moreButton1.setVisibility(View.INVISIBLE);
+        moreButton2.setVisibility(View.INVISIBLE);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Home");
         }
+
         showNewDVDs();
         showNewReleases();
 
-        final Button moreButton1 = (Button) findViewById(R.id.more_btn);
         if (moreButton1 != null) {
             moreButton1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -181,7 +200,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
                 }
             });
         }
-        final Button moreButton2 = (Button) findViewById(R.id.more_btn2);
+
         if (moreButton2 != null) {
             moreButton2.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -192,6 +211,7 @@ public class HomeActivity extends ToolbarDrawerActivity {
                 }
             });
         }
+
     }
 
     /**

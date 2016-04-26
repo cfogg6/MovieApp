@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,6 +42,8 @@ public class SearchManagerActivity extends BackToolbarActivity {
      * List of movies returned by the API
      */
     private JSONArray listOfMovies;
+    private ImageView mImageViewFilling;
+    private View v;
     /**
      * List of movies we will display
      */
@@ -87,6 +92,7 @@ public class SearchManagerActivity extends BackToolbarActivity {
                                 } catch (JSONException e) {
                                 }
                                 rv.getAdapter().notifyDataSetChanged();
+
                             }
                         },
                         new Response.ErrorListener() {
@@ -113,7 +119,13 @@ public class SearchManagerActivity extends BackToolbarActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Search Movies");
         }
+        mImageViewFilling = (ImageView) findViewById(R.id.anim_imgView);
+        v = findViewById(R.id.view);
+        v.setVisibility(View.INVISIBLE);
+        mImageViewFilling.setVisibility(View.INVISIBLE);
         handleIntent(getIntent());
+
+
     }
 
     @Override
@@ -146,6 +158,9 @@ public class SearchManagerActivity extends BackToolbarActivity {
     private void handleIntent(Intent intent) {
         String url ="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5";
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            mImageViewFilling.setVisibility(View.VISIBLE);
+            v.setVisibility(View.VISIBLE);
+            ((AnimationDrawable) mImageViewFilling.getBackground()).start();
             final String query = intent.getStringExtra(SearchManager.QUERY);
             Log.e("SEARCH MANAGER ACTIVITY", "Searching for " + query);
             // Instantiate the RequestQueue.
@@ -169,6 +184,8 @@ public class SearchManagerActivity extends BackToolbarActivity {
                                 }
                                 final RVSearchAdapter adapter = new RVSearchAdapter(searchMovies);
                                 rv.setAdapter(adapter);
+                                mImageViewFilling.setVisibility(View.INVISIBLE);
+                                v.setVisibility(View.INVISIBLE);
                             } catch (JSONException e) {
                                 Log.d("e", String.valueOf(e));
                             }

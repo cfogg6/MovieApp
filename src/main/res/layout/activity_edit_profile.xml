@@ -6,6 +6,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
@@ -14,11 +15,13 @@
         android:src="@mipmap/bucket"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:paddingLeft="10dp"
-        android:minHeight="180dp"
-        android:minWidth="140dp"
-        android:maxHeight="180dp"
-        android:maxWidth="140dp" />
+        android:layout_margin="15dp"
+        android:minHeight="100dp"
+        android:minWidth="100dp"
+        android:maxHeight="100dp"
+        android:maxWidth="100dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/grey"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -28,7 +31,7 @@
         android:layout_toRightOf="@+id/imageView"
         android:layout_alignBottom="@+id/imageView"
         android:text="@string/done_editing"
-        android:layout_margin="50dp" />
+        android:layout_margin="30dp" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -116,22 +119,27 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/et_interests"
-        android:layout_marginBottom="23dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginEnd="20dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:inputType="text|textCapSentences"
+        android:inputType="text|textCapSentences|textImeMultiLine|textMultiLine"
+        android:lines="4"
+        android:minLines="2"
+        android:maxLines="3"
+        android:gravity="top|start"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
         android:id="@+id/tV_username"
-        android:layout_above="@+id/tV_name"
+        android:layout_below="@+id/imageView"
         android:layout_alignLeft="@+id/tV_name"
         android:layout_alignStart="@+id/tV_name"
         android:layout_marginBottom="33dp" />

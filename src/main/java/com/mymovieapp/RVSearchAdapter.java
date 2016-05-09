@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class RVSearchAdapter extends RecyclerView.Adapter<RVSearchAdapter.Search
         if (mode == 1) {
             CardView cardView = (CardView) v.findViewById(R.id.searchCardView);
             ViewGroup.LayoutParams params = cardView.getLayoutParams();
-            params.width = 200;
+            params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 169, viewGroup.getResources().getDisplayMetrics());
             cardView.setLayoutParams(params);
         }
         return new SearchViewHolder(v);
